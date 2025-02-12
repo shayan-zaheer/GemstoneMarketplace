@@ -8,9 +8,9 @@ const HeroCard = () => {
     <motion.div
       initial={{ x: 100, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
-      className="max-sm:w-[400px] sm:w-[420px] lg:w-[430px] h-[450px]  bg-[#47494aeb] mt-6 rounded-xl shadow-lg relative mx-auto"
+      className="max-sm:w-[350px] sm:w-[420px] lg:w-[430px] h-[450px]   bg-[#47494aeb] mt-6 rounded-xl shadow-lg relative mx-auto"
     >
-      <div className="overflow-hidden max-sm:w-[370px] sm:w-[380px] lg:w-[90%] h-[320px] mx-auto mt-6 mb-2 rounded-xl">
+      <div className="overflow-hidden max-sm:w-[320px] sm:w-[380px] lg:w-[90%] h-[320px] mx-auto mt-6 mb-2 rounded-xl">
         <img
           src={"/Emerald.png"}
           alt="Gemstone"
