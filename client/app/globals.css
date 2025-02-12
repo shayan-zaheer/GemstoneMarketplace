@@ -6,6 +6,25 @@
   font-family: 'Poppins', sans-serif;
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a; 
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #00E8FC, #D400A5, #6A00F4); 
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #6A00F4, #D400A5, #00E8FC); 
+}
+
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -90,3 +109,14 @@
     @apply transition duration-300 ease-linear hover:translate-x-2 hover:scale-105
   }
 }
+
+@keyframes gradientBG {
+	0%, 100% { background-position: 0% 50%; }
+	50% { background-position: 100% 50%; }
+}
+
+.animate-gradient {
+	animation: gradientBG 5s ease infinite;
+	background-size: 200% 200%;
+}
+

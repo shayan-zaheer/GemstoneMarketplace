@@ -11,10 +11,16 @@ const Navbar = () => {
   const [openSearch, setOpenSearch] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
   return (
-    <nav className="w-full h-20 bg-[#1A1C1F] flex justify-between items-center px-4 fixed top-0 z-50">
+    <nav className="w-full h-20 bg-[#1A1C1F] flex justify-between items-center px-4 fixed top-0 z-50 shadow-lg">
       {/* Left Logo with Project Name Start */}
       <div className="flex items-center space-x-2">
-        <Image src={"/Diamond.png"} alt="Logos" width={50} height={50} />
+        <Image
+          src={"/Diamond.png"}
+          alt="Logos"
+          style={{ width: "auto", height: "auto" }}
+          width={50}
+          height={50}
+        />
         <h1 className="text-white text-xl font-bold pt-2">
           <Link href={"/"}>GEMVAULT</Link>
         </h1>
