@@ -6,6 +6,7 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { Button } from "./ui/button";
+import { ConnectWalletBtn } from "./ConnectWalletBtn";
 
 const Navbar = () => {
   const [openSearch, setOpenSearch] = useState(false);
@@ -74,7 +75,7 @@ const Navbar = () => {
             <Sun className="text-white w-7 h-7" />
           </li>
           <li className="h-16  px-4 flex items-center justify-center">
-            <Button className="navbar-button">Connect Wallet</Button>
+            <ConnectWalletBtn className="navbar-button">Connect Wallet</ConnectWalletBtn>
           </li>
         </ul>
       </div>
@@ -172,9 +173,9 @@ const Navbar = () => {
                 </Link>
               </li>
               <li className="h-16 border-b px-4 flex items-center justify-center">
-                <Button className=" responsive-navbar-button">
+                <ConnectWalletBtn className=" responsive-navbar-button">
                   Connect Wallet
-                </Button>
+                </ConnectWalletBtn>
               </li>
             </ul>
           </motion.div>

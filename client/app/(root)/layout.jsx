@@ -1,14 +1,15 @@
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
-import React, { Children } from "react";
+import Web3Provider from "@/components/Providers";
+import React from "react";
 
 const layout = ({ children }) => {
   return (
-    <main>
+    <Web3Provider>
       <Navbar />
       {children}
       <Footer />
-    </main>
+    </Web3Provider>
   );
 };
 
