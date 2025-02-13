@@ -30,11 +30,12 @@ const HeroCard = () => {
             Emerald
           </h1>
           <p className="text-lg sm:text-xl font-medium text-gray-200 tracking-wide ">
-            Price : <span className="font-semibold text-white">55,000 Rs</span>
+            Price :{" "}
+            <span className="font-semibold text-white italic">55,000 Rs</span>
           </p>
           <p className="text-lg sm:text-xl font-medium text-gray-200 tracking-wide line-clamp-1">
             Owned :{" "}
-            <span className="font-semibold text-white ">
+            <span className="font-semibold text-white italic">
               Shayan Naqvi Jaffri Zaidi
             </span>
           </p>

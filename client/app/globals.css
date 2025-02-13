@@ -108,6 +108,15 @@
   .responsive-menu-links{
     @apply transition duration-300 ease-linear hover:translate-x-2 hover:scale-105
   }
+  .hero-card-trending-div{
+    @apply absolute top-10 left-8 flex items-center gap-x-2 bg-[#343431c4] backdrop-blur-md px-4 py-2 rounded-lg text-white border border-white/20 shadow-lg
+  }
+  .footer-links{
+    @apply hover:translate-x-2 transition-all duration-300 ease-linear 
+  }
+  .footer-links-span{
+    @apply hover:border-b
+  }
 }
 
 @keyframes gradientBG {
