@@ -28,19 +28,19 @@ const Footer = () => {
           </h1>
           <div>
             <ul className="flex items-center justify-center gap-x-4 mt-4">
-              <li className="border-2 border-white rounded-md p-2 hover:bg-white group transition-all duration-300 ease-linear">
+              <li className="border-2 border-white rounded-md p-2 hover:bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4] group transition-all duration-300 ease-linear">
                 <Link href={"/"} className="text-white font-semibold text-lg ">
-                  <FaFacebookF className="text-2xl group-hover:text-black" />
+                  <FaFacebookF className="text-2xl " />
                 </Link>
               </li>
-              <li className="border-2 border-white rounded-md p-2 hover:bg-white group transition-all duration-300 ease-linear">
+              <li className="border-2 border-white rounded-md p-2 hover:bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4]  group transition-all duration-300 ease-linear">
                 <Link href={"/"} className="text-white font-semibold text-lg ">
-                  <FaInstagram className="text-2xl group-hover:text-black" />
+                  <FaInstagram className="text-2xl" />
                 </Link>
               </li>
-              <li className="border-2 border-white rounded-md p-2 hover:bg-white group transition-all duration-300 ease-linear">
+              <li className="border-2 border-white rounded-md p-2 hover:bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4] group transition-all duration-300 ease-linear">
                 <Link href={"/"} className="text-white font-semibold text-lg ">
-                  <FaPinterestP className="text-2xl group-hover:text-black" />
+                  <FaPinterestP className="text-2xl " />
                 </Link>
               </li>
             </ul>

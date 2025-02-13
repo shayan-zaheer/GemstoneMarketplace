@@ -1,6 +1,6 @@
 "use client";
 import React, { useRef } from "react";
-import CollectionCards from "../CollectionCards";
+import GemstoneCard from "@/components/GemstoneCard.jsx"
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/dist/ScrollTrigger";
@@ -41,10 +41,10 @@ const Collections = ({ collectionName, gemstones }) => {
       <h1 className="text-white text-4xl font-bold border-b-4 inline-block border-blue-500 mb-5 max-sm:text-2xl">
         {collectionName} Collection
       </h1>
-      <div className="w-full h-[400px] rounded-2xl p-5 flex items-center overflow-x-hidden bg-[#222528]">
+      <div className="w-full h-[425px] rounded-2xl p-5 flex items-center overflow-x-hidden bg-[#222528]">
         <div ref={cardsRef} className="flex gap-x-5">
           {gemstones.map((gem) => (
-            <CollectionCards key={gem.id} info={gem} />
+            <GemstoneCard key={gem.id} info={gem} />
           ))}
         </div>
       </div>
