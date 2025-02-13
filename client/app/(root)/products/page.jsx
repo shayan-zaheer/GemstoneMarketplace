@@ -1,5 +1,8 @@
+"use client"
 import React from "react";
 import GemstoneCard from "@/components/GemstoneCard";
+import {motion} from "framer-motion"
+
 
 const Products = () => {
   const gemstones = [
@@ -31,14 +34,25 @@ const Products = () => {
       owner: "Michael Starc",
       price: "180ETH",
     },
+    {
+      id: 8,
+      name: "Garnet",
+      image: "/garnet.png",
+      owner: "Robert Downey",
+      price: "165ETH",
+    },
   ];
   return (
-    <div className="relative min-h-screen py-8 px-12 mt-20 bg-slate-500">
-      <div className="flex justify-around">
+    <div className="relative min-h-screen bg-[#1a1c1ff8] py-8 px-12 mt-20 ">
+      <motion.div 
+      initial={{y: 600}}
+      animate={{y:0}}
+      transition={{type: "tween", duration: 0.5}}
+      className="flex flex-wrap justify-evenly">
         {gemstones.map((gem) => (
           <GemstoneCard key={gem.id} info={gem} />
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 };
