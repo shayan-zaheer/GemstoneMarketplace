@@ -8,7 +8,7 @@ const Hero = () => {
     <div className=" w-full md:w-11/12   max-sm:min-h-[830px] sm:min-h-[800px] md:min-h-[900px] lg:min-h-[600px] bg-blue-300 relative mx-auto md:rounded-2xl  md:top-10 lg:top-14">
       <div className="w-full min-h-full flex items-center justify-center absolute inset-0 bg-cover bg-center blur-lg rounded-2xl">
         <Image
-          src={"/Emerald.png"}
+          src={"/ruby.png"}
           alt="Gemstone"
           fill
           className="object-cover rounded-2xl"
