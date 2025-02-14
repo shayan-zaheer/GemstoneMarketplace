@@ -1,0 +1,111 @@
+"use client";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
+import Image from "next/image";
+import React, { useRef } from "react";
+
+gsap.registerPlugin(ScrollTrigger);
+
+const CartCard = ({ item }) => {
+  const cardRef = useRef(null);
+  const innerRef = useRef(null);
+
+  useGSAP(() => {
+    if (!cardRef.current) return;
+
+    gsap.from(cardRef.current, {
+      opacity: 0,
+      y: 100,
+      duration: 0.6,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: cardRef.current,
+        start: "top 80%",
+        toggleActions: "play none none none",
+      },
+    });
+
+    gsap.from(innerRef.current.children, {
+      opacity: 0,
+      y: 50,
+      stagger: 0.2,
+      duration: 0.6,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: cardRef.current,
+        start: "top 75%",
+      },
+    });
+  }, []);
+
+  return (
+    <div
+      ref={cardRef}
+      className="w-11/12 min-h-96 bg-[#2A2D33] mt-8 flex flex-col items-center gap-y-4 py-4 rounded-md mx-auto shadow-2xl shadow-black"
+    >
+      <div className="w-11/12 mx-auto pt-4 flex items-center px-4 text-white gap-x-1 border-b-2 max-sm:text-3xl sm:text-3xl font-semibold lg:justify-center pb-2 lg:text-4xl">
+        <span>{item.name} | </span>
+        <span>{item.carat} CT.</span>
+      </div>
+      <div
+        ref={innerRef}
+        className="w-11/12 mx-auto flex items-center gap-x-2 max-lg:flex-col gap-3 lg:mb-3"
+      >
+        <div className="w-full">
+          <Image
+            src={item.image}
+            alt="GemStone Pic"
+            width={300}
+            height={150}
+            className="mx-auto"
+          />
+        </div>
+        <div className="w-[95%] min-h-60 px-2">
+          <table className="border border-gray-300 w-full text-white sm:text-lg">
+            <tbody>
+              <tr>
+                <th className="detail-label">Owner: </th>
+                <td className="detail-value">{item.owner}</td>
+              </tr>
+              <tr>
+                <th className="detail-label">Price: </th>
+                <td className="detail-value">{item.price} Rs</td>
+              </tr>
+              <tr>
+                <th className="detail-label">Purity: </th>
+                <td className="detail-value">{item.purity}</td>
+              </tr>
+              <tr>
+                <th className="detail-label">Color: </th>
+                <td className="detail-value">{item.color}</td>
+              </tr>
+              <tr>
+                <th className="detail-label">Shape: </th>
+                <td className="detail-value">{item.shape}</td>
+              </tr>
+              <tr>
+                <th className="detail-label">Dimensions: </th>
+                <td className="detail-value">
+                  {item.length} mm x {item.width} mm x {item.height} mm
+                </td>
+              </tr>
+              <tr>
+                <th className="detail-label">Item Number: </th>
+                <td className="detail-value">{item.itemNumber}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <button className="relative px-6 py-3 font-semibold text-white bg-transparent border border-white hover:border-transparent overflow-hidden group rounded-sm">
+          <span className="absolute inset-0 bg-red-700 transition-all duration-300 ease-out transform scale-x-0 origin-left group-hover:scale-x-100"></span>
+          <span className="relative z-10 text-white">Remove from Cart</span>
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default CartCard;

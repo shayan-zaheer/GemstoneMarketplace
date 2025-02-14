@@ -1,17 +1,18 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import GemstoneCard from "@/components/GemstoneCard";
 import { motion } from "framer-motion";
 import { DropdownMenuRadioGroupDemo } from "@/components/Dropdown";
 
 const Products = () => {
-  const gemstones = [
+  const initialGemstones = [
     {
       id: 1,
       name: "Shiny Emerald",
       image: "/emerald.jpg",
       owner: "Joe Burgh",
       price: "150ETH",
+      uploadDate: "2025-02-14T00:00:00.000Z"
     },
     {
       id: 2,
@@ -19,6 +20,7 @@ const Products = () => {
       image: "/diamond.jpg",
       owner: "James Bill",
       price: "200ETH",
+      uploadDate: "2025-02-07T00:00:00.000Z"
     },
     {
       id: 3,
@@ -26,6 +28,7 @@ const Products = () => {
       image: "/sapphire.jpg",
       owner: "Joe Murphy",
       price: "190ETH",
+      uploadDate: "2025-02-06T00:00:00.000Z"
     },
     {
       id: 4,
@@ -33,6 +36,7 @@ const Products = () => {
       image: "/amethyst.jpg",
       owner: "Michael Starc",
       price: "180ETH",
+      uploadDate: "2025-02-11T00:00:00.000Z"
     },
     {
       id: 5,
@@ -40,6 +44,7 @@ const Products = () => {
       image: "/ruby.png",
       owner: "Sarah Lee",
       price: "170ETH",
+      uploadDate: "2025-02-12T00:00:00.000Z"
     },
     {
       id: 6,
@@ -47,6 +52,7 @@ const Products = () => {
       image: "/topaz.png",
       owner: "David Kim",
       price: "160ETH",
+      uploadDate: "2025-02-01T00:00:00.000Z"
     },
     {
       id: 7,
@@ -54,6 +60,7 @@ const Products = () => {
       image: "/opal.png",
       owner: "Emma Watson",
       price: "155ETH",
+      uploadDate: "2025-02-10T00:00:00.000Z"
     },
     {
       id: 8,
@@ -61,8 +68,25 @@ const Products = () => {
       image: "/garnet.png",
       owner: "Robert Downey",
       price: "165ETH",
+      uploadDate: "2025-01-30T00:00:00.000Z"
     },
   ];
+
+  const [gemstones, setGemstones] = useState(initialGemstones);
+  const [position, setPosition] = useState("newest");
+
+  useEffect(() => {
+    let sortedGemstones = [...gemstones]; 
+
+    if (position === "newest") {
+      sortedGemstones.sort((a, b) => new Date(b.uploadDate) - new Date(a.uploadDate));
+    } else if (position === "price") {
+      sortedGemstones.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+    }
+
+    setGemstones(sortedGemstones); 
+  }, [position]);
+
   return (
     <div className="relative min-h-screen bg-[#1a1c1ff8] py-8 px-12 mt-20 ">
       <div className="flex md:justify-end md:mr-20 justify-center">
@@ -70,6 +94,8 @@ const Products = () => {
           ddText="Sort By"
           valuesText={["newest", "price"]}
           values={["Newest", "Price"]}
+          position={position}
+          setPosition={setPosition}
         />
       </div>
       <motion.div
