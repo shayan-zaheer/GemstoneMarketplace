@@ -6,7 +6,7 @@ import { FaInstagram } from "react-icons/fa";
 import { FaPinterestP } from "react-icons/fa";
 const Footer = () => {
   return (
-    <footer className="w-full max-sm:h-[700px] bg-[#222528] pt-44">
+    <footer className="w-full max-sm:h-[535px] bg-[#222528] pt-4">
       <div className="w-full h-11/12 flex max-sm:flex-col sm:flex-col lg:flex-row justify-center lg:mb-5">
         <div className="flex flex-col items-center justify-center w-full">
           <div className="flex items-center space-x-2">

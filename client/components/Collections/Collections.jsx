@@ -1,6 +1,6 @@
 "use client";
 import React, { useRef } from "react";
-import GemstoneCard from "@/components/GemstoneCard.jsx"
+import GemstoneCard from "@/components/GemstoneCard.jsx";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/dist/ScrollTrigger";
