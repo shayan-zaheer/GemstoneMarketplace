@@ -74,7 +74,7 @@ const Products = () => {
   ];
   const data={
     currentPage: 1,
-    totalPages: 1,
+    totalPages: 10,
     gemstoneData: initialGemstones
   }
   const [currentPage, setCurrentPage] = useState(data.currentPage)
@@ -114,6 +114,7 @@ const Products = () => {
           <GemstoneCard key={gem.id} info={gem} />
         ))}
       </motion.div>
+      <hr className="my-10 mx-36 h-[0.1rem] border-none bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4]" />
       <PageNumbering currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={data.totalPages}/>
     </div>
   );
