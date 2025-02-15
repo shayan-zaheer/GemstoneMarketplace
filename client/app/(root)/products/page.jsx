@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import GemstoneCard from "@/components/GemstoneCard";
 import { motion } from "framer-motion";
 import { DropdownMenuRadioGroupDemo } from "@/components/Dropdown";
+import PageNumbering from "@/components/PageNumbering";
 
 const Products = () => {
   const initialGemstones = [
@@ -71,8 +72,13 @@ const Products = () => {
       uploadDate: "2025-01-30T00:00:00.000Z"
     },
   ];
-
-  const [gemstones, setGemstones] = useState(initialGemstones);
+  const data={
+    currentPage: 1,
+    totalPages: 1,
+    gemstoneData: initialGemstones
+  }
+  const [currentPage, setCurrentPage] = useState(data.currentPage)
+  const [gemstones, setGemstones] = useState(data.gemstoneData);
   const [position, setPosition] = useState("newest");
 
   useEffect(() => {
@@ -108,6 +114,7 @@ const Products = () => {
           <GemstoneCard key={gem.id} info={gem} />
         ))}
       </motion.div>
+      <PageNumbering currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={data.totalPages}/>
     </div>
   );
 };
