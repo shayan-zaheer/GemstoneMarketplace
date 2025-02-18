@@ -13,7 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-export function DropdownMenuRadioGroupDemo({ ddText, valuesText, values, position, setPosition }) {
+export function DropdownMenuRadioGroupDemo({ ddText, valuesText, values, sortBy, setSortBy }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -22,7 +22,7 @@ export function DropdownMenuRadioGroupDemo({ ddText, valuesText, values, positio
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 border bg-[#212226] text-white border-white">
-        <DropdownMenuRadioGroup value={position} onValueChange={setPosition} className="text-white">
+        <DropdownMenuRadioGroup value={sortBy} onValueChange={setSortBy} className="text-white">
           {values.map((val, index) => (
             <DropdownMenuRadioItem key={val} value={valuesText[index]}>
               {val}

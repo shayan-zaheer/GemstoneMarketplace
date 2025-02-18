@@ -20,10 +20,12 @@ const sequelize = new Sequelize({
 const startSQL = async () => {
     try {
         await sequelize.authenticate();
-        console.log('PostgreSQL running.');
+        console.log("PostgreSQL running.");
+        await sequelize.sync({ alter: true });
+        console.log("DB synced successfully!");
     } catch (error) {
         console.error('Unable to connect to the database:', error);
     }
 };
 
-module.exports = startSQL;
+module.exports = {sequelize, startSQL};
