@@ -1,11 +1,10 @@
 "use client";
 
-import { ArrowLeft, Cross, Menu, Search, Sun, X } from "lucide-react";
+import { ArrowLeft, Menu, Search, Sun, X } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
-import { Button } from "./ui/button";
 import { ConnectWalletBtn } from "./ConnectWalletBtn";
 
 const Navbar = () => {
@@ -13,7 +12,6 @@ const Navbar = () => {
   const [openMenu, setOpenMenu] = useState(false);
   return (
     <nav className="w-full h-20 bg-[#1A1C1F] flex justify-between items-center px-4 fixed top-0 z-50 shadow-lg">
-      {/* Left Logo with Project Name Start */}
       <div className="flex items-center space-x-2">
         <Image
           src={"/Diamond.png"}
@@ -26,9 +24,7 @@ const Navbar = () => {
           <Link href={"/"}>GEMVAULT</Link>
         </h1>
       </div>
-      {/* Left Logo with Project Name Start */}
 
-      {/* Search Bar in  navbar start */}
       <div
         className="text-white hidden lg:block
       "
@@ -39,9 +35,7 @@ const Navbar = () => {
           className="navbar-input "
         />
       </div>
-      {/* Search Bar in  navbar end */}
 
-      {/* Right Side of Navbar Start */}
       <div className=" hidden lg:flex  ">
         <ul className="flex items-center text-white font-semibold text-lg gap-x-2 ">
           <li className="h-16 px-4 flex items-center">
@@ -71,17 +65,12 @@ const Navbar = () => {
               Cart
             </Link>
           </li>
-          <li>
-            <Sun className="text-white w-7 h-7" />
-          </li>
           <li className="h-16  px-4 flex items-center justify-center">
             <ConnectWalletBtn className="navbar-button">Connect Wallet</ConnectWalletBtn>
           </li>
         </ul>
       </div>
-      {/* Right Side of Navbar End */}
 
-      {/* Responsive Right side of navbar start */}
       <div className="flex items-center space-x-4 lg:hidden">
         <div className="flex items-center space-x-4">
           <Sun className="text-white w-7 h-7" />
@@ -105,9 +94,7 @@ const Navbar = () => {
           )}
         </div>
       </div>
-      {/* Responsive Right side of navbar end */}
 
-      {/* Responsive Search Bar Starts */}
       <AnimatePresence>
         {openSearch && (
           <motion.div
@@ -128,13 +115,10 @@ const Navbar = () => {
               placeholder="Search Gemstones"
               className="responsive-navbar-input "
             />
-            <Sun className="text-white w-7 h-7" />
           </motion.div>
         )}
       </AnimatePresence>
-      {/* Responsive Search Bar Ends */}
-
-      {/* Responsive Menu Starts */}
+      
       <AnimatePresence>
         {openMenu && (
           <motion.div
@@ -181,7 +165,6 @@ const Navbar = () => {
           </motion.div>
         )}
       </AnimatePresence>
-      {/* Responsive Menu Ends */}
     </nav>
   );
 };

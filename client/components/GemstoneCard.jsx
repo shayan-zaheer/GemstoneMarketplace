@@ -27,7 +27,7 @@ const GemstoneCard = ({ info }) => {
           {info.name}
         </CardTitle>
         <CardDescription className="text-white text-lg ">
-          {info.price}
+          {info.price}ETH
         </CardDescription>
       </CardHeader>
       <CardFooter className="text-white">
