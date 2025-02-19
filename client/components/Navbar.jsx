@@ -39,13 +39,13 @@ const Navbar = () => {
       <div className=" hidden lg:flex  ">
         <ul className="flex items-center text-white font-semibold text-lg gap-x-2 ">
           <li className="h-16 px-4 flex items-center">
-            <Link
-              href={"/products?page=1"}
+            <a
+              href="/products"
               className="transition duration-300 ease hover:scale-105"
             >
               {" "}
               Products
-            </Link>
+            </a>
           </li>
           <li className="h-16 px-4  flex items-center">
             <Link
