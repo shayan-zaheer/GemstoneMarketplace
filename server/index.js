@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
 const gemsRoute = require("./routes/gemsRoutes");
+const authRoute = require("./routes/authRoutes");
 const {startSQL} = require("./config/db");
 
 const app = express();
@@ -19,6 +20,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(morgan("dev"));
 
 app.use("/gems", gemsRoute);
+app.use("/auth", authRoute);
 
 startSQL();
 

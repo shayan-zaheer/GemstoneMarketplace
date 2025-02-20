@@ -6,9 +6,11 @@ import { DropdownMenuRadioGroupDemo } from "@/components/Dropdown";
 import PageNumbering from "@/components/PageNumbering";
 import axios from "axios";
 import Loader from "@/components/Loader";
+import { useSearchParams } from "next/navigation";
 
 const Products = () => {
-    const [currentPage, setCurrentPage] = useState(1);
+    const searchParams = useSearchParams();
+    const [currentPage, setCurrentPage] = useState(+searchParams.get("page") || 1);
     const [gemstones, setGemstones] = useState([]);
     const [sortBy, setSortBy] = useState("createdAt");
     const [loading, setLoading] = useState(true);
@@ -35,6 +37,7 @@ const Products = () => {
         };
 
         getAllGems();
+        window.scrollTo({top:0, behavior: "smooth"})
     }, [currentPage, sortBy]);
 
     return (

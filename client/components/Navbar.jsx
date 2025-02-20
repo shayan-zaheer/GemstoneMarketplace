@@ -40,7 +40,7 @@ const Navbar = () => {
         <ul className="flex items-center text-white font-semibold text-lg gap-x-2 ">
           <li className="h-16 px-4 flex items-center">
             <Link
-              href={"/products"}
+              href={"/products?page=1"}
               className="transition duration-300 ease hover:scale-105"
             >
               {" "}
