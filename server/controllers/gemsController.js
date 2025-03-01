@@ -2,8 +2,8 @@ const Gem = require("../models/Gem");
 
 exports.uploadGem = async(request, response) => {
     try{
-        const { name, image, owner, price } = request.body;
-        const gem = await Gem.create({name, image, owner, price});
+        const { name, image, coverImage, owner, price, description  } = request.body;
+        const gem = await Gem.create({name, image, owner, price, coverImage, description});
 
         return response.status(201).json({
             status: "success",
@@ -62,3 +62,28 @@ exports.getAllGems = async(request, response) => {
         });
     }
 };
+
+exports.getGemByID = async(request, response) => {
+    try{
+        const {productID} = request.params;
+        const gem = await Gem.findByPk(productID);
+
+        if(!gem){
+            return response.status(404).json({
+                status: "failure",
+                message: "Gem not found!"
+            });
+        }
+
+        return response.status(200).json({
+            status: "success",
+            gem
+        });
+    } catch(err){
+        console.error(err);
+        return response.status(400).json({
+            status: "failure",
+            message: err.message
+        });
+    }
+}

@@ -12,6 +12,10 @@ const Gem = sequelize.define(
             type: DataTypes.STRING(255),
             allowNull: false,
         },
+        coverImage: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
         owner: {
             type: DataTypes.STRING(255),
             allowNull: false,
@@ -20,7 +24,10 @@ const Gem = sequelize.define(
             type: DataTypes.DECIMAL,
             allowNull: false,
         },
-
+        description: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
     },
     {
         timestamps: true,
