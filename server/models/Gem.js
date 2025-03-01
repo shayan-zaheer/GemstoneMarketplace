@@ -20,11 +20,7 @@ const Gem = sequelize.define(
             type: DataTypes.DECIMAL,
             allowNull: false,
         },
-        uploadDate: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            defaultValue: Date.now
-        },
+
     },
     {
         timestamps: true,

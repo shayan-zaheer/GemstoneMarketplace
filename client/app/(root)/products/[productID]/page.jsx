@@ -18,7 +18,7 @@ const gemstoneData = [
 const Product = () => {
   return (
     <div className="relative top-20 min-h-content mb-20 bg-[#1a1c1ff8] md:pl-12 md:flex md:flex-row-reverse">
-      <div className="md:w-[65%] relative">
+      <div className="md:w-[70%] h-[100vh] relative">
         <img
           src="/diamondCover.jpg"
           alt="Fading Image"
@@ -29,9 +29,11 @@ const Product = () => {
         <h1 className="bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4] text-transparent bg-clip-text text-4xl md:text-6xl font-bold ">
           {gemstoneData[0].name}
         </h1>
+        <span className="mt-1 text-white text-3xl font-semibold">{gemstoneData[0].price}</span>
         <div className="md:mt-8 mt-4">
-            <p className="text-slate-300  md:text-sm text-[0.65rem] italic text-justify">{gemstoneData[0].description}</p>
+            <p className="text-slate-300  md:text-[1rem] tracking-wide text-[0.65rem] italic text-justify">{gemstoneData[0].description}</p>
         </div>
+        <div className="mt-8 text-white text-xl font-semibold">{gemstoneData[0].createdAt}</div>
       </div>
     </div>
   );
