@@ -2,7 +2,7 @@ import Hero from "@/components/Hero/Hero";
 import Collections from "@/components/Collections/Collections";
 import React from "react";
 
-const Home = () => {
+const Home = () => {  
   const gemstones = [
     {
       id: 1,
