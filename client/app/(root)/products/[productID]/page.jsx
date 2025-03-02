@@ -1,5 +1,4 @@
 import IndividualProduct from "@/components/IndividualProduct";
-
 import React from "react";
 
 

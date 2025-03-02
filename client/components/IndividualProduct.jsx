@@ -1,28 +1,36 @@
-
-'use client'
+"use client";
 import axios from "axios";
 import { notFound } from "next/navigation";
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 
+const IndividualProduct = ({ productID }) => {
+  //   const [gem, setGem] = useState({})
+  //  useEffect(()=>{
+  //   const fetchData = async ()=>{
+  //       try{
+  //           const result = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/gems/${productID}`, {withCredentials: true});
+  //           if(result.data.status == "success"){
+  //             setGem(result.data.gem)
+  //           } else {
+  //             throw new Error();
+  //           }
+  //         } catch(err){
+  //           return null;
+  //         }
+  //   }
+  //   fetchData();
 
-const IndividualProduct = ({productID}) => {
-    const [gem, setGem] = useState({})
-   useEffect(()=>{
-    const fetchData = async ()=>{
-        try{
-            const result = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/gems/${productID}`, {withCredentials: true});
-            if(result.data.status == "success"){
-              setGem(result.data.gem)
-            } else {
-              throw new Error();
-            }
-          } catch(err){
-            return null;
-          }
-    }
-    fetchData();
-    
-   },[productID])
+  //  },[productID])
+  const gem = {
+    id: 2,
+    name: "Diamond",
+    price: "200ETH",
+    description:
+      "This breathtaking 1.5-carat diamond features a brilliant cut, exceptional clarity, and dazzling fire, making it the perfect centerpiece for an engagement ring or fine jewelry. Expertly crafted to maximize light reflection, this diamond offers unmatched sparkle and elegance. GIA certified for authenticity and quality, ensuring you receive a truly remarkable gem. Elevate your jewelry collection with this timeless beauty—secure it today!",
+    createdAt: "2025-03-01T20:43:56.437Z",
+    coverImage: "/diamondCover.jpg",
+    image: "/diamond.jpg"
+  };
   return (
     <div className="relative top-20 min-h-content mb-20 bg-[#1a1c1ff8] md:pl-12 md:flex md:flex-row-reverse">
       <div className="md:w-[70%] h-[100vh] relative">
@@ -36,14 +44,20 @@ const IndividualProduct = ({productID}) => {
         <h1 className="bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4] text-transparent bg-clip-text text-4xl md:text-6xl font-bold ">
           {gem.name}
         </h1>
-        <span className="mt-1 text-white text-3xl font-semibold">{gem.price}</span>
+        <span className="mt-1 text-white text-3xl font-semibold">
+          {gem.price}
+        </span>
         <div className="md:mt-8 mt-4">
-            <p className="text-slate-300  md:text-sm text-[0.65rem] italic text-justify">{gem.description}</p>
+          <p className="text-slate-300  md:text-sm text-[0.65rem] italic text-justify">
+            {gem.description}
+          </p>
         </div>
-        <div className="mt-8 text-white text-xl font-semibold">{gem.createdAt}</div>
+        <div className="mt-8 text-white text-xl font-semibold">
+          {gem.createdAt}
+        </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default IndividualProduct
+export default IndividualProduct;
