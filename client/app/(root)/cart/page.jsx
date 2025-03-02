@@ -2,6 +2,7 @@ import CartCard from "@/components/CartCard";
 import { ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import React from "react";
+import CartTotal from "../../../components/CartTotal";
 
 const Cart = () => {
   const cartItems = [
@@ -64,10 +65,13 @@ const Cart = () => {
           <div className="flex-grow border-t-4 border-gray-300"></div>
         </div>
       </div>
-      <div className="w-full min-h-96 flex flex-col gap-y-4  py-4">
-        {cartItems.map((item) => (
-          <CartCard key={item.id} item={item} />
-        ))}
+      <div className="flex w-auto h-auto max-lg:flex-col px-[2%]">
+        <div className="w-full min-h-96 flex flex-col gap-y-4  py-4">
+          {cartItems.map((item) => (
+            <CartCard key={item.id} item={item} />
+          ))}
+        </div>
+        <CartTotal />
       </div>
     </div>
   );

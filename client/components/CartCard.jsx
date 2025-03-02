@@ -42,7 +42,7 @@ const CartCard = ({ item }) => {
   return (
     <div
       ref={cardRef}
-      className="w-11/12 min-h-96 bg-[#2A2D33] mt-8 flex flex-col items-center gap-y-4 py-4 rounded-md mx-auto shadow-2xl shadow-black"
+      className="w-[95%] min-h-96 bg-[#2A2D33]  mt-4 flex flex-col items-center gap-y-4 py-4 rounded-md shadow-2xl shadow-black mx-auto"
     >
       <div className="w-11/12 mx-auto pt-4 flex items-center px-4 text-white gap-x-1 border-b-2 max-sm:text-3xl sm:text-3xl font-semibold lg:justify-center pb-2 lg:text-4xl">
         <span>{item.name} | </span>
@@ -91,7 +91,7 @@ const CartCard = ({ item }) => {
                 </td>
               </tr>
               <tr>
-                <th className="detail-label">Item Number: </th>
+                <th className="detail-label">Item No.: </th>
                 <td className="detail-value">{item.itemNumber}</td>
               </tr>
             </tbody>
