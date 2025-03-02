@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 const PageNumbering = ({ currentPage, totalPages, setCurrentPage }) => {
   const router= useRouter();
   return (
-    <div className="flex justify-center gap-4 mt-5">
+    <div className="flex justify-center gap-4 mb-4">
       <Button
         className="h-12 shadow-2xl bg-transparent border border-2 hover:bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4]"
         disabled={currentPage == 1}
