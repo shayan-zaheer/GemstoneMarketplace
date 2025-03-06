@@ -2,18 +2,26 @@ const {DataTypes} = require("sequelize");
 const {sequelize} = require("../config/db");
 
 const User = sequelize.define("User", {
-    address: {
+    name: {
         type: DataTypes.STRING,
-        primaryKey: true,
         allowNull: false,
     },
-    nonce: {
+    residenceAddress: {
         type: DataTypes.STRING,
-        allowNull: false,
     }, 
-    jwtToken: {
+    contact: {
         type: DataTypes.STRING,
-        allowNull: true,
+    },
+    profileImage: {
+        type: DataTypes.STRING,
+    },
+    cnic: {
+        type: DataTypes.STRING,
+        unique: true,
+    },
+    walletAddress: {
+        type: DataTypes.STRING,
+        unique: true,
     }
 })
 
