@@ -6,21 +6,21 @@ export default function Example({
   open,
   setOpen,
   currentImage,
-  setCurrentImage,
+  setCurrentImage,  
   imagesArr,
 }) {
-  // Function to navigate images
   const handleNext = () => {
-    const currentIndex = imagesArr.indexOf(currentImage);
+    const currentIndex = imagesArr.findIndex((img) => img.path === currentImage);
+    console.log(currentIndex);
     if (currentIndex < imagesArr.length - 1) {
-      setCurrentImage(imagesArr[currentIndex + 1]);
+      setCurrentImage(imagesArr[currentIndex + 1]?.path);
     }
   };
 
   const handlePrev = () => {
-    const currentIndex = imagesArr.indexOf(currentImage);
+    const currentIndex = imagesArr.findIndex((img) => img.path === currentImage);
     if (currentIndex > 0) {
-      setCurrentImage(imagesArr[currentIndex - 1]);
+      setCurrentImage(imagesArr[currentIndex - 1]?.path);
     }
   };
 

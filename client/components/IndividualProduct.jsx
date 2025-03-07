@@ -7,43 +7,44 @@ import ImageModal from "@/components/ImageModal";
 import { FaCartShopping } from "react-icons/fa6";
 
 const IndividualProduct = ({ productID }) => {
-  //   const [gem, setGem] = useState({})
-  //  useEffect(()=>{
-  //   const fetchData = async ()=>{
-  //       try{
-  //           const result = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/gems/${productID}`, {withCredentials: true});
-  //           if(result.data.status == "success"){
-  //             setGem(result.data.gem)
-  //           } else {
-  //             throw new Error();
-  //           }
-  //         } catch(err){
-  //           return null;
-  //         }
-  //   }
-  //   fetchData();
+    const [gem, setGem] = useState({})
+   useEffect(()=>{
+    const fetchData = async ()=>{
+        try{
+            const result = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/gems/${productID}`, {withCredentials: true});
+            console.log(result);
+            if(result.data.status == "success"){
+              setGem(result.data.gem)
+            } else {
+              throw new Error();
+            }
+          } catch(err){
+            return null;
+          }
+    }
+    fetchData();
 
-  //  },[productID])
+   },[productID])
   const [open, setOpen] = useState(false);
   const [currentImage, setCurrentImage] = useState(null);
-  const gem = {
-    id: 2,
-    name: "Diamond",
-    price: "200ETH",
-    description:
-      "This breathtaking 1.5-carat diamond features a brilliant cut, exceptional clarity, and dazzling fire, making it the perfect centerpiece for an engagement ring or fine jewelry. Expertly crafted to maximize light reflection, this diamond offers unmatched sparkle and elegance. GIA certified for authenticity and quality, ensuring you receive a truly remarkable gem. Elevate your jewelry collection with this timeless beauty—secure it today!",
-    createdAt: "2025-03-01T20:43:56.437Z",
-    coverImage: "/diamondCover.jpg",
-    image: "/diamond.jpg",
-    moreImages: [
-      "/diamond1.jpg",
-      "/diamond2.jpg",
-      "/diamond3.jpg",
-      "/diamond4.jpg",
+  // const gem = {
+  //   id: 2,
+  //   name: "Diamond",
+  //   price: "200ETH",
+  //   description:
+  //     "This breathtaking 1.5-carat diamond features a brilliant cut, exceptional clarity, and dazzling fire, making it the perfect centerpiece for an engagement ring or fine jewelry. Expertly crafted to maximize light reflection, this diamond offers unmatched sparkle and elegance. GIA certified for authenticity and quality, ensuring you receive a truly remarkable gem. Elevate your jewelry collection with this timeless beauty—secure it today!",
+  //   createdAt: "2025-03-01T20:43:56.437Z",
+  //   coverImage: "/diamondCover.jpg",
+  //   image: "/diamond.jpg",
+  //   moreImages: [
+  //     "/diamond1.jpg",
+  //     "/diamond2.jpg",
+  //     "/diamond3.jpg",
+  //     "/diamond4.jpg",
   
-    ],
-    owner: "David Laid",
-  };
+  //   ],
+  //   owner: "David Laid",
+  // };
   return (
     <div className="relative top-20 md:min-h-[950px] lg:min-h-[800px]  min-h-content bottom-8 mb-20  bg-[#1a1c1ff8] md:pl-12 md:flex md:flex-row-reverse">
       <motion.div
@@ -67,8 +68,8 @@ const IndividualProduct = ({ productID }) => {
         <h1 className="bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4] text-transparent bg-clip-text text-4xl md:text-6xl font-bold ">
           {gem.name}
         </h1>
-        <span className="mt-1 text-white text-3xl font-semibold">
-          {gem.price}
+        <span className="mt -1 text-white text-3xl font-semibold">
+          {gem.price}ETH
         </span>
         <div className="md:mt-8 mt-4">
           <p className="text-slate-300  md:text-sm text-[0.65rem] italic text-justify">
@@ -80,7 +81,7 @@ const IndividualProduct = ({ productID }) => {
             More Images
           </span>
           <div className="flex flex-row w-full flex-wrap justify-start mt-3 gap-3">
-            {gem.moreImages.map((image, index) => {
+            {gem.moreImages && gem.moreImages.map((image, index) => {
               if (index == 2 && gem.moreImages.length > 3) {
                 return (
                   <div
@@ -95,7 +96,7 @@ const IndividualProduct = ({ productID }) => {
                     <div
                       className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center rounded-lg"
                       onClick={() => {
-                        setCurrentImage(image);
+                        setCurrentImage(image?.path);
                         setOpen(true);
                       }}
                     >
@@ -103,15 +104,15 @@ const IndividualProduct = ({ productID }) => {
                         +{gem.moreImages.length - 3}
                       </span>
                     </div>
-                  </div>
+                  </div>  
                 );
               } else if (index < 2) {
                 return (
                   <img
                     key={index}
-                    src={image}
+                    src={image?.path}
                     onClick={() => {
-                      setCurrentImage(image);
+                      setCurrentImage(image?.path);
                       setOpen(true);
                     }}
                     alt="image"
@@ -134,7 +135,7 @@ const IndividualProduct = ({ productID }) => {
           </span>{" "}
           by{" "}
           <span className="bg-gradient-to-r to-[#00E8FC] via-[#D400A5] from-[#6A00F4] text-transparent bg-clip-text">
-            {gem.owner}
+            {gem?.owner?.name}
           </span>
         </div>
         <div className="relative md:text-xl text-md md:w-48 w-36 my-4 mb-20 bg-blue-500 text-white font-bold rounded-lg shadow-lg ">
