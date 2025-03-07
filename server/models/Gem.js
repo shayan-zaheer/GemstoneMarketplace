@@ -11,11 +11,11 @@ const Gem = sequelize.define(
             allowNull: false,
         },
         image: {
-            type: DataTypes.STRING(255),
+            type: DataTypes.TEXT,
             allowNull: false,
         },
         coverImage: {
-            type: DataTypes.STRING(255),
+            type: DataTypes.TEXT,
             allowNull: true,
         }
         ,
@@ -37,7 +37,11 @@ const Gem = sequelize.define(
     }
 );
 
-Gem.belongsTo(User, { foreignKey: "userId", as: "owner" }); // gem belongs to single user
+Gem.belongsTo(User, { foreignKey: {
+    name:"userId",
+    as:"owner",
+    allowNull:false
+} }); // gem belongs to single user
 User.hasMany(Gem, { foreignKey: "userId" }); // user has many gems
 
 Gem.hasMany(Img, {foreignKey:"gemId" ,as: "moreImages"})  

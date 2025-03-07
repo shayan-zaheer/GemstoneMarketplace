@@ -29,9 +29,6 @@ userId:{
         type: DataTypes.STRING,
         unique: true,
     }
-},
-{
-  freezeTableName: true,
 })
 
 module.exports = User;
