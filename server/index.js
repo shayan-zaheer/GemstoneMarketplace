@@ -4,7 +4,8 @@ const cors = require("cors");
 const morgan = require("morgan");
 const gemsRoute = require("./routes/gemsRoutes");
 const authRoute = require("./routes/authRoutes");
-const {startSQL} = require("./config/db");
+const {startSQL,sequelize} = require("./config/db");
+
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -23,6 +24,12 @@ app.use("/gems", gemsRoute);
 app.use("/auth", authRoute);
 
 startSQL();
+// sequelize.sync({ force: true })
+//   .then(() => {
+//     console.log('Database tables recreated!');
+//   })
+//   .catch((err) => console.error('Error syncing database:', err));
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on PORT ${PORT}`);

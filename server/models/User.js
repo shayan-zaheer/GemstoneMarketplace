@@ -2,6 +2,12 @@ const {DataTypes} = require("sequelize");
 const {sequelize} = require("../config/db");
 
 const User = sequelize.define("User", {
+    
+userId:{
+    type:DataTypes.INTEGER,
+    autoIncrement:true,
+    primaryKey:true
+},
     name: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -23,6 +29,9 @@ const User = sequelize.define("User", {
         type: DataTypes.STRING,
         unique: true,
     }
+},
+{
+  freezeTableName: true,
 })
 
 module.exports = User;

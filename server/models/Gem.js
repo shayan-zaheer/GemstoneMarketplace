@@ -1,6 +1,7 @@
 const { DataTypes } = require("sequelize");
 const User = require("./User");
 const { sequelize } = require("../config/db");
+const Img = require("./Img");
 
 const Gem = sequelize.define(
     "Gem",
@@ -16,6 +17,11 @@ const Gem = sequelize.define(
         coverImage: {
             type: DataTypes.STRING(255),
             allowNull: true,
+        }
+        ,
+        createdAt:{
+            type: DataTypes.DATEONLY,
+            allowNull:false
         },
         price: {
             type: DataTypes.DECIMAL,
@@ -31,7 +37,14 @@ const Gem = sequelize.define(
     }
 );
 
-Gem.belongsTo(User, { foreignKey: "userId" }); // gem belongs to single user
+Gem.belongsTo(User, { foreignKey: "userId", as: "owner" }); // gem belongs to single user
 User.hasMany(Gem, { foreignKey: "userId" }); // user has many gems
+
+Gem.hasMany(Img, {foreignKey:"gemId" ,as: "moreImages"})  
+Img.belongsTo(Gem,{
+    foreignKey:{
+        name:'gemId'
+    }
+})
 
 module.exports = Gem;

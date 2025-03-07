@@ -2,7 +2,9 @@ const Gem = require("../models/Gem");
 
 exports.uploadGem = async(request, response) => {
     try{
+        
         const { name, image, coverImage, owner, price, description  } = request.body;
+        
         const gem = await Gem.create({name, image, owner, price, coverImage, description});
 
         return response.status(201).json({
