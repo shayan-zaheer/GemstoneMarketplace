@@ -1,29 +1,50 @@
 const Gem = require("../models/Gem");
+const Img = require("../models/Img");
+const User = require("../models/User");
 
-exports.uploadGem = async(request, response) => {
-    try{
+
+// Upload multiple images with different keys
+
+
+exports.uploadGem = async (req, response) => {
+    try {
         
-        const { name, image, coverImage,  price, description,userId  } = request.body;
+        console.log(JSON.stringify(req.files))
+        const image = req.files['image']?.[0]?.path
+        const coverImage = req.files['coverImage']?.[0]?.path
+        const moreImages = req.files['moreImages'].map(f=>({
+           path: f.path}))
         
-        const gem = await Gem.create({name, image, userId, price, coverImage, description});
+        
+        let payload = {...req.body,image,coverImage,moreImages}
+        
+            console.log(payload)
+
+        const gem = await Gem.create(payload, {
+            include: [{ model: Img, as: "moreImages" }],
+        });
+
+
+
 
         return response.status(201).json({
             status: "success",
-            gem
+            data:gem,
         });
-    } catch(err){
+    } catch (err) {
+        console.error(err)
         return response.status(400).json({
             status: "fail",
-            message: err.message
+            message: err.message,
         });
     }
 };
 
-exports.getAllGems = async(request, response) => {
-    try{
+exports.getAllGems = async (request, response) => {
+    try {
         let { page, sortBy } = request.query;
 
-        console.log(" !!!!!!!!!! PAGE SORTBY !!!!!!", page, sortBy)
+        console.log(" !!!!!!!!!! PAGE SORTBY !!!!!!", page, sortBy);
 
         const limit = 16; // set by muneer noob
         page = parseInt(page) || 1;
@@ -37,16 +58,21 @@ exports.getAllGems = async(request, response) => {
         const gems = await Gem.findAll({
             offset: skip,
             limit: limit,
-            order: [
-                [sortBy, 'ASC']
+            order: [[sortBy, "ASC"]],
+            attributes:["name","price","description","image"],
+            include: [
+                {
+                    model: User,
+                    as: "owner",
+                    attributes: ["name"],
+                },
             ],
-            attributes:["name", "price","image", "userId", "description"]
         });
 
         if (gems.length === 0) {
             return response.status(404).json({
-                status: 'fail',
-                message: 'Gems not found!'
+                status: "fail",
+                message: "Gems not found!",
             });
         }
 
@@ -55,38 +81,44 @@ exports.getAllGems = async(request, response) => {
             data: {
                 currentPage: page,
                 totalPages: totalPages,
-                gems: gems
-            }
+                gems: gems,
+            },
         });
-    } catch(err){
+
+    } catch (err) {
         return response.status(400).json({
             status: "fail",
-            message: err.message
+            message: err.message,
         });
     }
 };
 
-exports.getGemByID = async(request, response) => {
-    try{
-        const {productID} = request.params;
-        const gem = await Gem.findByPk(productID);
+exports.getGemByID = async (request, response) => {
+    try {
+        const { productID } = request.params;
+        const gem = await Gem.findByPk(productID, {
+            include: [
+                { model: User, as: "owner", attributes: ["name"], },
+                { model: Img, as: "moreImages", attributes: ["path"], },
+            ],
+        });
 
-        if(!gem){
+        if (!gem) {
             return response.status(404).json({
                 status: "failure",
-                message: "Gem not found!"
+                message: "Gem not found!",
             });
         }
 
         return response.status(200).json({
             status: "success",
-            gem
+            gem,
         });
-    } catch(err){
+    } catch (err) {
         console.error(err);
         return response.status(400).json({
             status: "failure",
-            message: err.message
+            message: err.message,
         });
     }
 }
