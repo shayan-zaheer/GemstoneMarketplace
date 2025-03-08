@@ -1,8 +1,7 @@
 "use client";
-
 import { ArrowLeft, Menu, Search, Sun, X } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { ConnectWalletBtn } from "./ConnectWalletBtn";
@@ -10,7 +9,12 @@ import { useSelector } from "react-redux";
 import store from "@/Store/index";
 
 const Navbar = () => {
-  const cartItemsLength = useSelector((store) => store.cart.cartItems.length);
+  const cartItems = useSelector((store) => store.cart.cartItems);
+  const [cartItemsLength, setCartItemsLength] = useState(0);
+
+  useEffect(() => {
+    setCartItemsLength(cartItems.length); // Ensures it updates only on the client
+  }, [cartItems]);
 
   const [openSearch, setOpenSearch] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);

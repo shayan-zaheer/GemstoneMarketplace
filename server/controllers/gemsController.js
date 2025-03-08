@@ -2,17 +2,37 @@ const Gem = require("../models/Gem");
 const Img = require("../models/Img");
 const User = require("../models/User");
 
-exports.uploadGem = async (request, response) => {
+
+// Upload multiple images with different keys
+
+
+exports.uploadGem = async (req, response) => {
     try {
-        const gem = await Gem.create(request.body, {
+        
+        console.log(JSON.stringify(req.files))
+        const image = req.files['image']?.[0]?.path
+        const coverImage = req.files['coverImage']?.[0]?.path
+        const moreImages = req.files['moreImages'].map(f=>({
+           path: f.path}))
+        
+        
+        let payload = {...req.body,image,coverImage,moreImages}
+        
+            console.log(payload)
+
+        const gem = await Gem.create(payload, {
             include: [{ model: Img, as: "moreImages" }],
         });
 
+
+
+
         return response.status(201).json({
             status: "success",
-            gem,
+            data:gem,
         });
     } catch (err) {
+        console.error(err)
         return response.status(400).json({
             status: "fail",
             message: err.message,
@@ -39,6 +59,7 @@ exports.getAllGems = async (request, response) => {
             offset: skip,
             limit: limit,
             order: [[sortBy, "ASC"]],
+            attributes:["id","name","price","description","image"],
             include: [
                 {
                     model: User,
@@ -63,6 +84,7 @@ exports.getAllGems = async (request, response) => {
                 gems: gems,
             },
         });
+
     } catch (err) {
         return response.status(400).json({
             status: "fail",
@@ -99,4 +121,31 @@ exports.getGemByID = async (request, response) => {
             message: err.message,
         });
     }
-};
+}
+
+exports.deleteGem = async (req,res)=>{
+
+try{
+    let {id} = req.params
+id = +id
+    const result = await Gem.destroy({
+        where:{
+            id
+        }
+    })
+
+ console.log(result)
+
+    res.status(204).json({
+        status:"success",
+        message:"Gemstone Deleted successfully"
+    })
+
+    }
+    catch(e){
+res.status(400).json({
+    status:"failed",
+    message:"Gemstone not found"
+})
+    }
+}
