@@ -3,7 +3,7 @@ const Gem = require("../models/Gem");
 exports.uploadGem = async(request, response) => {
     try{
         
-        const { name, image, coverImage, owner, price, description,userId  } = request.body;
+        const { name, image, coverImage,  price, description,userId  } = request.body;
         
         const gem = await Gem.create({name, image, userId, price, coverImage, description});
 
@@ -39,7 +39,8 @@ exports.getAllGems = async(request, response) => {
             limit: limit,
             order: [
                 [sortBy, 'ASC']
-            ]
+            ],
+            attributes:["name", "price","image", "userId", "description"]
         });
 
         if (gems.length === 0) {
@@ -87,5 +88,32 @@ exports.getGemByID = async(request, response) => {
             status: "failure",
             message: err.message
         });
+    }
+}
+
+exports.deleteGem = async (req,res)=>{
+
+try{
+    let {id} = req.params
+id = +id
+    const result = await Gem.destroy({
+        where:{
+            id
+        }
+    })
+
+ console.log(result)
+
+    res.status(204).json({
+        status:"success",
+        message:"Gemstone Deleted successfully"
+    })
+
+    }
+    catch(e){
+res.status(400).json({
+    status:"failed",
+    message:"Gemstone not found"
+})
     }
 }
