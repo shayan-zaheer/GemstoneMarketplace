@@ -1,0 +1,44 @@
+UPLOAD GEM API
+
+http://localhost:8000/gems/upload
+
+Required fields (keep the key name same)
+
+{name, image, coverImage, moreImages,description, price, userId}
+
+Send this in the form of "form data"
+
+
+Form Data Example : 
+ const formData = new FormData();
+
+    // ✅ Append image files
+    formData.append('profile', imgVariable('/path/to/profile.jpg'));
+    formData.append('cover', imgVariable);
+    formData.append('gallery', imgVariable);
+    formData.append('gallery', imgVariable);
+
+    // ✅ Append additional form fields
+    formData.append('username', 'JohnDoe');
+    formData.append('email', 'john@example.com');
+    formData.append('age', '28');
+
+
+-------------------------------
+
+Get ALL Gems
+
+http://localhost:8000/gems
+
+------------------------------
+
+Get Gem By Id
+
+http://localhost:8000/gems/id
+
+
+-----------------------------
+
+Delete Gem
+
+http://localhost:8000/gems/delete/id

@@ -26,6 +26,8 @@ const Products = () => {
         const result = await axios.get(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/gems?page=${currentPage}&sortBy=${sortBy}`
         );
+
+        console.log(result?.data?.data?.gems);
         setGemstones(result?.data?.data?.gems);
         setLoading(false);
         setTotalPages(result?.data?.data?.totalPages);

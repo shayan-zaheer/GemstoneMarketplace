@@ -11,17 +11,12 @@ const Gem = sequelize.define(
             allowNull: false,
         },
         image: {
-            type: DataTypes.STRING(255),
+            type: DataTypes.TEXT,
             allowNull: false,
         },
         coverImage: {
-            type: DataTypes.STRING(255),
+            type: DataTypes.TEXT,
             allowNull: true,
-        }
-        ,
-        createdAt:{
-            type: DataTypes.DATEONLY,
-            allowNull:false
         },
         price: {
             type: DataTypes.DECIMAL,
@@ -37,14 +32,20 @@ const Gem = sequelize.define(
     }
 );
 
-Gem.belongsTo(User, { foreignKey: "userId", as: "owner" }); // gem belongs to single user
+Gem.belongsTo(User, 
+    {
+    as:"owner",
+         foreignKey: {
+    name:"userId",
+    allowNull:false
+} }); // gem belongs to single user
 User.hasMany(Gem, { foreignKey: "userId" }); // user has many gems
 
-Gem.hasMany(Img, {foreignKey:"gemId" ,as: "moreImages"})  
-Img.belongsTo(Gem,{
-    foreignKey:{
-        name:'gemId'
-    }
-})
+Gem.hasMany(Img, { foreignKey: "gemId", as: "moreImages", onDelete: "CASCADE",  }); // Automatically delete related images
+Img.belongsTo(Gem, {
+    foreignKey: {
+        name: "gemId",
+    },
+});
 
 module.exports = Gem;

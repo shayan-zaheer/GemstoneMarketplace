@@ -34,7 +34,7 @@ const GemstoneCard = ({ info }) => {
       </CardHeader>
       <CardFooter className="text-white">
         Owned by{" "}
-        <span className="text-gray-200 ml-2 italic">{info.owner} </span>
+        <span className="text-gray-200 ml-2 italic">{info.owner.name} </span>
       </CardFooter>
     </Card>
   );
