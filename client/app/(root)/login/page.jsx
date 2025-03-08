@@ -28,29 +28,31 @@ const Login = () => {
         </div>
 
         {/* Login Form - Smooth Show/Hide on Click */}
-        <div
-          className={`relative z-10 transition-opacity duration-500 ${
-            isClicked ? "opacity-100" : "opacity-0 pointer-events-none"
-          }`}
-        >
-          <LoginForm />
-        </div>
-
-        {/* Forgot Password & Signup Links */}
-        <div
-          className={`relative z-10 text-white justify-between transition-opacity duration-500 my-3 ${
-            isClicked
-              ? "opacity-100 flex"
-              : "opacity-0 pointer-events-none hidden"
-          }`}
-        >
-          <Link href="/forgot" className="underline text-blue-400">
-            Forgot Your Password?
-          </Link>
-          <Link href="/signup" className="underline text-blue-400">
-            Signup
-          </Link>
-        </div>
+        {isClicked && (
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className={`relative z-10 transition-opacity duration-500 ${
+              isClicked ? "opacity-100" : "opacity-0 pointer-events-none"
+            }`}
+          >
+            <LoginForm />
+            {/* Forgot Password & Signup Links */}
+            <div
+              className={`relative z-10 text-white justify-between transition-opacity duration-500 my-3 ${
+                isClicked
+                  ? "opacity-100 flex"
+                  : "opacity-0 pointer-events-none hidden"
+              }`}
+            >
+              <Link href="/forgot" className="underline text-blue-400">
+                Forgot Your Password?
+              </Link>
+              <Link href="/signup" className="underline text-blue-400">
+                Signup
+              </Link>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
