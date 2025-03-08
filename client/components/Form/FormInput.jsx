@@ -15,7 +15,7 @@ const FormInput = ({ control, name, label, placeholder, type = "text" }) => {
       name={name}
       render={({ field }) => (
         <FormItem>
-          <FormLabel>{label}</FormLabel>
+          <FormLabel style={{ fontSize: "16px" }}>{label}</FormLabel>
           <FormControl>
             <Input {...field} type={type} placeholder={placeholder} />
           </FormControl>

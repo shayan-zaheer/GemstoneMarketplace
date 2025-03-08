@@ -136,6 +136,14 @@
     @apply border-t border-b border-gray-300 w-2/3 px-3 py-2 align-top italic;
   }
   
+  @keyframes borderGlow {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
+}
+
+.animate-border {
+    animation: borderGlow 4s linear infinite;
+}
   
 }
 
