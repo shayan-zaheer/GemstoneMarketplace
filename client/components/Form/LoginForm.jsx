@@ -8,8 +8,10 @@ import FormInput from "./FormInput";
 import FormButton from "../FormButton";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
+  const router = useRouter();
   const form = useForm({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
@@ -20,16 +22,19 @@ const LoginForm = () => {
 
   const onSubmit = async (data) => {
     try {
-    const result = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login`, data);
-    if(result.data.status == "success"){
-      toast.success("You're logged in!");
+      const result = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login`,
+        data
+      );
+      if (result.data.status == "success") {
+        toast.success("You're logged in!");
+        router.push("/");
+      }
+    } catch (error) {
+      toast.error(error.message);
+      console.error("Login Error:", error);
     }
-    
-  } catch (error) {
-    toast.error(error.message);
-    console.error("Login Error:", error);
-  }
-};
+  };
 
   return (
     <Form {...form}>

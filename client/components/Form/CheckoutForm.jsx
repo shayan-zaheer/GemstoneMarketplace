@@ -7,8 +7,14 @@ import { Form } from "../ui/form";
 import FormInput from "./FormInput";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import CartTotal from "../CartTotal";
+import { useSelector } from "react-redux";
 
 const CheckoutForm = () => {
+  const checkoutItem = useSelector((store) => store.checkout.checkoutItem);
+  console.log(checkoutItem);
+  const subtotal = parseInt(checkoutItem.price);
+  const GST = subtotal * 0.15;
+  const total = subtotal + GST;
   const products = [
     {
       name: "Product 1",
@@ -94,29 +100,25 @@ const CheckoutForm = () => {
               <span>Product</span>
               <span>Price</span>
             </div>
-            {products.map((product, index) => (
-              <div
-                key={index}
-                className="w-full flex justify-between px-2 border-b"
-              >
-                <span>
-                  {product.name} {"  "}
-                  <span className="font-bold ml-2"> x {product.quantity}</span>
-                </span>
-                <span>{product.price}</span>
-              </div>
-            ))}
+            <div className="w-full flex justify-between px-2 border-b ">
+              <span className="font-semibold text-lg">
+                {checkoutItem.name} {"  "}
+              </span>
+              <span>{checkoutItem.price}</span>
+            </div>
+            {/* {products.map((product, index) => (
+            ))} */}
             <div className="w-full flex justify-between px-2 font-medium border-b">
               <span>Subtotal</span>
-              <span>50000</span>
+              <span>{subtotal}</span>
             </div>
             <div className="w-full flex justify-between px-2 font-medium border-b">
               <span>GST(15%)</span>
-              <span>12000</span>
+              <span>{GST}</span>
             </div>
             <div className="w-full flex justify-between px-2 font-medium border-b">
               <span>Total</span>
-              <span>62000</span>
+              <span>{total}</span>
             </div>
           </div>
 

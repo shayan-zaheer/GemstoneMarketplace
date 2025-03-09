@@ -10,10 +10,12 @@ import { useAccount } from "wagmi";
 import CustomTooltip from "../Tooltip";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const SignupForm = () => {
   const { address } = useAccount();
   const [selectedFile, setSelectedFile] = useState(null);
+  const router = useRouter();
 
   const form = useForm({
     resolver: zodResolver(signupFormSchema),
@@ -59,6 +61,7 @@ const SignupForm = () => {
       );
       if (result.data.status == "success") {
         toast.success("Your account has been created!");
+        router.push("/login");
       }
     } catch (error) {
       console.error("Signup Error:", error);

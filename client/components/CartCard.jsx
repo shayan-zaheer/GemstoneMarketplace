@@ -1,5 +1,5 @@
 "use client";
-import { cartActions } from "@/Store";
+import { cartActions, checkoutActions } from "@/Store";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
@@ -7,10 +7,12 @@ import Image from "next/image";
 import React, { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { removeFromCart } from "../Store/index.js";
+import { useRouter } from "next/navigation";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const CartCard = ({ item }) => {
+  const router = useRouter();
   const { removeFromCart } = cartActions;
   const dispatch = useDispatch();
   const cardRef = useRef(null);
@@ -47,6 +49,11 @@ const CartCard = ({ item }) => {
   const handleRemove = () => {
     console.log("Removing from cart", item.id);
     dispatch(removeFromCart(item));
+  };
+
+  const handleBuyNow = () => {
+    dispatch(checkoutActions.setCheckoutItem(item));
+    router.push("/checkout");
   };
 
   return (
@@ -104,13 +111,23 @@ const CartCard = ({ item }) => {
           </table>
         </div>
       </div>
-      <div>
+      <div className="w-11/12 mx-auto flex items-center justify-center gap-x-4">
+        {/* Remove Button */}
         <button
           onClick={handleRemove}
           className="relative px-6 py-3 font-semibold text-white bg-transparent border border-white hover:border-transparent overflow-hidden group rounded-sm"
         >
           <span className="absolute inset-0 bg-red-700 transition-all duration-300 ease-out transform scale-x-0 origin-left group-hover:scale-x-100"></span>
           <span className="relative z-10 text-white">Remove from Cart</span>
+        </button>
+
+        {/* Buy Now Button */}
+        <button
+          className="relative px-6 py-3 font-semibold text-white bg-transparent border border-white hover:border-transparent overflow-hidden group rounded-sm"
+          onClick={handleBuyNow}
+        >
+          <span className="absolute inset-0 bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4] transition-all duration-300 ease-out transform scale-x-0 origin-left group-hover:scale-x-100"></span>
+          <span className="relative z-10 text-white">Buy Now</span>
         </button>
       </div>
     </div>
