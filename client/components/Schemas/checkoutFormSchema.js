@@ -8,6 +8,6 @@ export const checkoutFormSchema = z.object({
   city: z.string().min(3, { message: "City must be at least 3 characters long" }),
   country: z.string().min(3, { message: "Country must be at least 3 characters long" }),
   postCode: z.string().regex(/^\d{5}$/, { message: "Postal code must be 5 digits long" }).optional(),
-  paymentMethod: z.enum(["cash", "paypro"], "Select a payment method"),
+  paymentMethod: z.enum(["cod", "paypro"], "Select a payment method"),
 })
 

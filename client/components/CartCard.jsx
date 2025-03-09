@@ -1,13 +1,18 @@
 "use client";
+import { cartActions } from "@/Store";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import Image from "next/image";
 import React, { useRef } from "react";
+import { useDispatch } from "react-redux";
+import { removeFromCart } from "../Store/index.js";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const CartCard = ({ item }) => {
+  const { removeFromCart } = cartActions;
+  const dispatch = useDispatch();
   const cardRef = useRef(null);
   const innerRef = useRef(null);
 
@@ -39,6 +44,11 @@ const CartCard = ({ item }) => {
     });
   }, []);
 
+  const handleRemove = () => {
+    console.log("Removing from cart", item.id);
+    dispatch(removeFromCart(item));
+  };
+
   return (
     <div
       ref={cardRef}
@@ -66,7 +76,7 @@ const CartCard = ({ item }) => {
             <tbody>
               <tr>
                 <th className="detail-label">Owner: </th>
-                <td className="detail-value">{item.owner}</td>
+                <td className="detail-value">{item.owner?.name}</td>
               </tr>
               <tr>
                 <th className="detail-label">Price: </th>
@@ -90,16 +100,15 @@ const CartCard = ({ item }) => {
                   {item.length} mm x {item.width} mm x {item.height} mm
                 </td>
               </tr>
-              <tr>
-                <th className="detail-label">Item No.: </th>
-                <td className="detail-value">{item.itemNumber}</td>
-              </tr>
             </tbody>
           </table>
         </div>
       </div>
       <div>
-        <button className="relative px-6 py-3 font-semibold text-white bg-transparent border border-white hover:border-transparent overflow-hidden group rounded-sm">
+        <button
+          onClick={handleRemove}
+          className="relative px-6 py-3 font-semibold text-white bg-transparent border border-white hover:border-transparent overflow-hidden group rounded-sm"
+        >
           <span className="absolute inset-0 bg-red-700 transition-all duration-300 ease-out transform scale-x-0 origin-left group-hover:scale-x-100"></span>
           <span className="relative z-10 text-white">Remove from Cart</span>
         </button>
