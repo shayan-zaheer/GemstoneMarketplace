@@ -1,8 +1,7 @@
-User API
-1️⃣ Upload User
-📌 Endpoint:
+Auth API
+- Signup API
 
-POST http://localhost:8000/users/upload
+POST http://localhost:8000/auth/signup
 📌 Required fields:
 
 name (string)
@@ -29,7 +28,7 @@ formData.append("password", "securepassword");
 formData.append("residenceAddress", "123 Main St");
 formData.append("contact", "1234567890");
 
-fetch("http://localhost:8000/users/upload", {
+fetch("http://localhost:8000/auth/signup", {
     method: "POST",
     body: formData,
 });

@@ -97,7 +97,7 @@ const SignupForm = () => {
         <FormInput control={form.control} name="cnic" label="CNIC" placeholder="Enter Your CNIC" type="text" />
 
         <CustomTooltip content={form.watch("walletAddress") ? "You have connected your wallet!" : "Click on 'Connect Wallet' to connect your wallet!"}>
-          <FormInput control={form.control} name="walletAddress" label="Wallet Address" placeholder="Your Wallet Address" type="text"  />
+          <FormInput control={form.control} name="walletAddress" label="Wallet Address" placeholder="Your Wallet Address" type="text" disabled />
         </CustomTooltip>
 
         <FormButton text="Sign Up" type="submit" />
