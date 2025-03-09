@@ -1,6 +1,5 @@
 "use client";
 import axios from "axios";
-import { notFound } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import ImageModal from "@/components/ImageModal";
@@ -16,14 +15,16 @@ const IndividualProduct = ({ productID }) => {
     const [loading, setLoading] = useState(true);
     const cartItems = useSelector((store) => store.cart.cartItems);
     const [alreadyInCart, setAlreadyInCart] = useState(false);
+    const dispatch = useDispatch();
+    const [gem, setGem] = useState({});
+    const [open, setOpen] = useState(false);
+    const [currentImage, setCurrentImage] = useState(null);
 
     useEffect(() => {
-        const exists = cartItems.some((item) => item.id == productID);
+        const exists = cartItems.some((item) => item.id === productID);
         setAlreadyInCart(exists);
     }, [cartItems, productID]);
 
-    const dispatch = useDispatch();
-    const [gem, setGem] = useState({});
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -32,36 +33,37 @@ const IndividualProduct = ({ productID }) => {
                     `${process.env.NEXT_PUBLIC_BACKEND_URL}/gems/${productID}`,
                     { withCredentials: true }
                 );
-                console.log(result);
-                if (result.data.status == "success") {
+
+                if (result.data.status === "success") {
                     setGem(result.data.gem);
-                    setLoading(false);
                 } else {
                     throw new Error();
                 }
             } catch (err) {
-                setLoading(false);
                 return null;
+            } finally {
+                setLoading(false);
             }
         };
         fetchData();
     }, [productID]);
-    const [open, setOpen] = useState(false);
-    const [currentImage, setCurrentImage] = useState(null);
+
     const handleAddToCart = () => {
         dispatch(cartActions.addToCart(gem));
         toast.success(`${gem.name} added to cart!`, {
             style: { background: "#333", color: "white" },
         });
     };
+
     const handleRemoveFromCart = () => {
         dispatch(cartActions.removeFromCart(gem));
         toast.success(`${gem.name} removed from cart!`, {
             style: { background: "#333", color: "white" },
         });
     };
+
     return (
-        <div className="relative top-20 md:min-h-[950px] lg:min-h-[800px]  min-h-content bottom-8 mb-20  bg-[#1a1c1ff8] md:pl-12 md:flex md:flex-row-reverse">
+        <div className="relative top-20 md:min-h-[950px] lg:min-h-[800px] min-h-content bottom-8 mb-20 bg-[#1a1c1ff8] md:pl-12 md:flex md:flex-row-reverse">
             {loading ? (
                 <Loader loading={loading} />
             ) : (
@@ -70,28 +72,28 @@ const IndividualProduct = ({ productID }) => {
                         initial={{ x: 600 }}
                         animate={{ x: 0 }}
                         transition={{ type: "tween", duration: 0.3 }}
-                        className="md:w-[68%] md:min-h-[950px] lg:min-h-[800px]  min-h-content  relative flex flex-col align-end"
+                        className="md:w-[68%] md:min-h-[950px] lg:min-h-[800px] min-h-content relative flex flex-col align-end"
                     >
                         <img
                             src={gem.coverImage}
                             alt="Fading Image"
-                            className="w-full h-[300px] md:min-h-[950px] lg:min-h-[800px] min-h-content  object-cover mask-gradient2 md:mask-gradient "
+                            className="w-full h-[300px] md:min-h-[950px] lg:min-h-[800px] min-h-content object-cover mask-gradient2 md:mask-gradient"
                         />
                     </motion.div>
                     <motion.div
                         initial={{ x: -600 }}
                         animate={{ x: 0 }}
                         transition={{ type: "tween", duration: 0.3 }}
-                        className="md:w-[45%] md:pt-10  px-5 min-h-[350px] h-[550px] md:h-[1000px] md:absolute md:z-10 md:left-10 md:top-12"
+                        className="md:w-[45%] md:pt-10 px-5 min-h-[350px] h-[550px] md:h-[1000px] md:absolute md:z-10 md:left-10 md:top-12"
                     >
-                        <h1 className="bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4] text-transparent bg-clip-text text-4xl md:text-6xl font-bold ">
+                        <h1 className="bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4] text-transparent bg-clip-text text-4xl md:text-6xl font-bold">
                             {gem.name}
                         </h1>
-                        <span className="mt -1 text-white text-3xl font-semibold">
+                        <span className="mt-1 text-white text-3xl font-semibold">
                             {gem.price}ETH
                         </span>
                         <div className="md:mt-8 mt-4">
-                            <p className="text-slate-300  md:text-sm text-[0.65rem] italic text-justify">
+                            <p className="text-slate-300 md:text-sm text-[0.65rem] italic text-justify">
                                 {gem.description}
                             </p>
                         </div>
@@ -105,10 +107,9 @@ const IndividualProduct = ({ productID }) => {
                                 setOpen={setOpen}
                             />
                         </div>
-
-                        <div className="md:mt-5 mt-1 text-white text-xl font-medium italic">
+                        <div className="md:mt-5 mt-1 text-white text-xl font-medium">
                             Uploaded on{" "}
-                            <span className="text-blue-400">
+                            <span className="text-blue-400 italic">
                                 {new Date(gem.createdAt).toLocaleString(
                                     "en-GB",
                                     {
@@ -119,14 +120,14 @@ const IndividualProduct = ({ productID }) => {
                                 )}
                             </span>{" "}
                             by{" "}
-                            <span className="bg-gradient-to-r to-[#00E8FC] via-[#D400A5] from-[#6A00F4] text-transparent bg-clip-text">
+                            <span className="bg-gradient-to-r italic to-[#00E8FC] via-[#D400A5] from-[#6A00F4] text-transparent bg-clip-text">
                                 {gem?.owner?.name}
                             </span>
                         </div>
-                        <div className="relative md:text-xl text-md my-4 mb-20  text-white font-bold ">
+                        <div className="relative md:text-xl text-md my-4 mb-20 text-white font-bold">
                             {!alreadyInCart ? (
                                 <button
-                                    className=" flex gap-3 md:w-48 w-36  px-3 md:px-6 bg-blue-600 hover:bg-blue-700 md:py-3 py-2  shadow-lg rounded-lg   hover:cursor-pointer h-full"
+                                    className="flex gap-3 md:w-48 w-36 px-3 md:px-6 bg-blue-600 hover:bg-blue-700 md:py-3 py-2 shadow-lg rounded-lg hover:cursor-pointer h-full"
                                     onClick={handleAddToCart}
                                 >
                                     <FaCartShopping className="translate-y-1" />{" "}
@@ -134,7 +135,7 @@ const IndividualProduct = ({ productID }) => {
                                 </button>
                             ) : (
                                 <button
-                                    className=" flex gap-3  px-3 md:px-6 md:py-3 py-2 hover:bg-red-700  bg-red-600 rounded-lg shadow-lg  hover:cursor-pointer md:w-72 w-64 h-full"
+                                    className="flex gap-3 px-3 md:px-6 md:py-3 py-2 hover:bg-red-700 bg-red-600 rounded-lg shadow-lg hover:cursor-pointer md:w-72 w-64 h-full"
                                     onClick={handleRemoveFromCart}
                                 >
                                     <TbShoppingCartCancel className="translate-y-1 md:text-2xl" />{" "}
