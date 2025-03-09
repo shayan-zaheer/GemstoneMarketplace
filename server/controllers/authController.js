@@ -1,97 +1,60 @@
-const { verifyMessage } = require("ethers");
-const jwt = require("jsonwebtoken");
+const passport = require("passport");
 const User = require("../models/User");
+const upload = require("../utils/multer");
 
-exports.getNonce = async (request, response) => {
-    try {
-        const nonce = Math.random().toString(36).substring(2);
-        const { address } = request.query;
+exports.signUp = async(request, response) => {
+    try{
+        // const existingUser = await User.findOne({where: { email: request.body?.email }});
+        // if (existingUser) return response.status(400).json({ message: "Email already in use" });
 
-        if (address) {
-            await User.upsert({ address, nonce });
-        }
-
-        return response.status(200).json({ nonce });
-    } catch (err) {
-        return response.status(500).json({ status: "error", message: err.message });
-    }
-};
-
-exports.verifySIWE = async (request, response) => {
-    try {
-        const { message, signature } = request.body;
-
-        if (!message || !signature) {
-            return response.status(400).json({
-                status: "fail",
-                message: "Missing data",
+        await new Promise((resolve, reject) => {
+            upload.single("profileImage")(request, response, (err) => {
+                if (err) return reject(err);
+                resolve();
             });
-        }
-
-        const addressMatch = message.match(/Ethereum account:\s*(0x[^\s]+)/);
-        const nonceMatch = message.match(/Nonce:\s*(\w+)/);
-
-        const [, address] = addressMatch;
-        const [, nonce] = nonceMatch;
-
-        const recoveredAddress = verifyMessage(message, signature);
-
-        if (recoveredAddress.toLowerCase() !== address.toLowerCase()) {
-            return response.status(401).json({
-                status: "fail",
-                message: "Invalid signature",
-            });
-        }
-
-        const user = await User.findOne({ where: { address }, raw: true });
-        if (!user || user.nonce !== nonce) {
-            return response.status(401).json({
-                status: "fail",
-                message: "Invalid nonce",
-            });
-        }
-
-        const token = jwt.sign({ address }, process.env.JWT_SECRET, {
-            expiresIn: "1h",
         });
 
-        await User.update({ jwtToken: token }, { where: { address } });
+        const profileImage = request.file ? request.file.path : null;
+        const payload = {...request.body, profileImage};
+        const user = await User.create(payload);
 
-        return response.status(200).json({
+        return response.status(201).json({
             status: "success",
-            token,
+            user
         });
-    } catch (err) {
+    } catch(err){
         console.error(err);
-        return response.status(500).json({
-            status: "fail",
-            message: err.message,
+        return response.status(400).json({
+            status: "failure",
+            message: err.message
         });
     }
-};
+}
 
-exports.logout = async (request, response) => {
-    try {
-        const { address } = request.body;
-        console.log(address);
-
-        if (!address) {
-            return response.status(400).json({
-                status: "fail",
-                message: "Address required",
-            });
-        }
-
-        await User.update({ jwtToken: null }, { where: { address } });
-
-        return response.status(200).json({
-            status: "success",
-            message: "Logged out",
+exports.login = (request, response, next) => {
+    passport.authenticate("local", (err, user, info) => {
+      if (err) return response.status(500).json({ status: "fail", message: "Server error" });
+  
+      if (!user) return response.status(401).json({ status: "fail", message: "Invalid credentials" });
+  
+      request.logIn(user, (err) => {
+        if (err) return response.status(500).json({ status: "fail", message: "Login failed" });
+  
+        response.status(200).json({
+          status: "success",
+          message: "Login successful",
+          user: {
+            id: user.id,
+            email: user.email,
+          },
         });
-    } catch (err) {
-        return response.status(500).json({
-            status: "fail",
-            message: err.message,
-        });
-    }
+      });
+    })(request, response, next);
+  };
+  
+exports.logout = (request, response) => {
+    request.logout(() => {
+      response.status(200).json({ status: "success", message: "Logged out!" });
+    });
 };
+  

@@ -32,16 +32,20 @@ const Gem = sequelize.define(
     }
 );
 
-Gem.belongsTo(User, 
-    {
-    as:"owner",
-         foreignKey: {
-    name:"userId",
-    allowNull:false
-} }); // gem belongs to single user
+Gem.belongsTo(User, {
+    as: "owner",
+    foreignKey: {
+        name: "userId",
+        allowNull: false,
+    },
+}); // gem belongs to single user
 User.hasMany(Gem, { foreignKey: "userId" }); // user has many gems
 
-Gem.hasMany(Img, { foreignKey: "gemId", as: "moreImages", onDelete: "CASCADE",  }); // Automatically delete related images
+Gem.hasMany(Img, {
+    foreignKey: "gemId",
+    as: "moreImages",
+    onDelete: "CASCADE",
+}); // Automatically delete related images
 Img.belongsTo(Gem, {
     foreignKey: {
         name: "gemId",

@@ -1,0 +1,52 @@
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
+const bcrypt = require("bcryptjs");
+const session = require("express-session");
+const User = require("../models/User");
+
+const configurePassport = app => {
+    app.use(session({
+        secret: "secret",
+        saveUninitialized: false,
+        resave: false
+    }));
+
+    app.use(passport.initialize());
+    app.use(passport.session());
+
+    passport.use(
+        new LocalStrategy(
+            { usernameField: "email" },
+            async (email, password, done) => {
+                try {
+                    console.log(email, password);
+                    const user = await User.findOne({ where: { email } });
+
+                    if (!user) {
+                        return done(null, false, { message: "User not found" });
+                    }
+
+                    const isMatch = await bcrypt.compare(password, user.password);
+                    if (!isMatch) return done(null, false, { message: "Incorrect password" });
+
+                    return done(null, user);
+                } catch (err) {
+                    return done(err, null);
+                }
+            }
+        )
+    );
+
+    passport.serializeUser((user, done) => done(null, user.userId));
+
+    passport.deserializeUser(async (id, done) => {
+        try {
+            const user = await User.findByPk(id);
+            return done(null, user);
+        } catch (err) {
+            return done(err, null);
+        }
+    });
+};
+
+module.exports = configurePassport;

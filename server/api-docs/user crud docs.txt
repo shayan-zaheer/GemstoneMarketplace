@@ -1,0 +1,35 @@
+User API
+1️⃣ Upload User
+📌 Endpoint:
+
+POST http://localhost:8000/users/upload
+📌 Required fields:
+
+name (string)
+email (string)
+password (string)
+residenceAddress (string)
+walletAddress (string) => to be fetched by wagmi automatically in frontend
+cnic (string)
+contact (string)
+profileImage (file)
+(Uploaded as multipart/form-data)
+
+📌 FormData Example (Frontend Request):
+
+const formData = new FormData();
+
+// ✅ Append image file
+formData.append("profileImage", imgVariable);
+
+// ✅ Append additional form fields
+formData.append("name", "John Doe");
+formData.append("email", "johndoe@example.com");
+formData.append("password", "securepassword");
+formData.append("residenceAddress", "123 Main St");
+formData.append("contact", "1234567890");
+
+fetch("http://localhost:8000/users/upload", {
+    method: "POST",
+    body: formData,
+});

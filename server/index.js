@@ -6,9 +6,12 @@ const gemsRoute = require("./routes/gemsRoutes");
 const authRoute = require("./routes/authRoutes");
 const userRoute = require("./routes/userRoutes");
 const {startSQL} = require("./config/db");
+const configurePassport = require("./utils/passport");
 
 const app = express();
 const PORT = process.env.PORT || 8000;
+
+configurePassport(app);
 
 app.use(cors({
     origin: ["http://localhost:3000"],
