@@ -97,9 +97,9 @@ const IndividualProduct = ({ productID }) => {
           />
         </div>
 
-        <div className="md:mt-5 mt-1 text-white text-xl font-medium italic">
+        <div className="md:mt-5 mt-1 text-white text-xl font-medium">
           Uploaded on{" "}
-          <span className="text-blue-400">
+          <span className="text-blue-400 italic">
             {new Date(gem.createdAt).toLocaleString("en-GB", {
               day: "numeric",
               month: "short",
@@ -107,7 +107,7 @@ const IndividualProduct = ({ productID }) => {
             })}
           </span>{" "}
           by{" "}
-          <span className="bg-gradient-to-r to-[#00E8FC] via-[#D400A5] from-[#6A00F4] text-transparent bg-clip-text">
+          <span className="bg-gradient-to-r italic to-[#00E8FC] via-[#D400A5] from-[#6A00F4] text-transparent bg-clip-text">
             {gem?.owner?.name}
           </span>
         </div>

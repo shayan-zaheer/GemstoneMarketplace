@@ -13,7 +13,7 @@ import Image from "next/image";
 const GemstoneCard = ({ info }) => {
   const router = useRouter();
   return (
-    <Card className="w-[18rem] bg-[#414848] border-slate-700 shadow-lg ring-slate-500 h-[350px] my-4" onClick={()=>router.push(`/products/${info.id}`)}>
+    <Card className="md:min-w-[18rem] bg-[#414848] border-slate-700 shadow-lg ring-slate-500 md:h-[350px] min-w-[15rem] h-[330px] my-4" onClick={()=>router.push(`/products/${info.id}`)}>
       <CardHeader>
         <CardTitle className="overflow-hidden rounded-tl-xl rounded-tr-xl">
           <Image
