@@ -6,6 +6,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginFormSchema } from "../Schemas/loginFormSchema";
 import FormInput from "./FormInput";
 import FormButton from "../FormButton";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const LoginForm = () => {
   const form = useForm({
@@ -15,9 +17,20 @@ const LoginForm = () => {
       password: "",
     },
   });
-  const onSubmit = (data) => {
-    console.log("Form data", data);
-  };
+
+  const onSubmit = async (data) => {
+    try {
+    const result = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login`, data);
+    if(result.data.status == "success"){
+      toast.success("You're logged in!");
+    }
+    
+  } catch (error) {
+    toast.error(error.message);
+    console.error("Login Error:", error);
+  }
+};
+
   return (
     <Form {...form}>
       <form

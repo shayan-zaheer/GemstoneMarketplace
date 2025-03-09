@@ -2,37 +2,29 @@ const Gem = require("../models/Gem");
 const Img = require("../models/Img");
 const User = require("../models/User");
 
-
-// Upload multiple images with different keys
-
-
-exports.uploadGem = async (req, response) => {
+exports.uploadGem = async (request, response) => {
     try {
-        
-        console.log(JSON.stringify(req.files))
-        const image = req.files['image']?.[0]?.path
-        const coverImage = req.files['coverImage']?.[0]?.path
-        const moreImages = req.files['moreImages'].map(f=>({
-           path: f.path}))
-        
-        
-        let payload = {...req.body,image,coverImage,moreImages}
-        
-            console.log(payload)
+        console.log(JSON.stringify(request.files));
+        const image = request.files["image"]?.[0]?.path;
+        const coverImage = request.files["coverImage"]?.[0]?.path;
+        const moreImages = request.files["moreImages"].map((f) => ({
+            path: f.path,
+        }));
+
+        let payload = { ...request.body, image, coverImage, moreImages };
+
+        console.log(payload);
 
         const gem = await Gem.create(payload, {
             include: [{ model: Img, as: "moreImages" }],
         });
 
-
-
-
         return response.status(201).json({
             status: "success",
-            data:gem,
+            data: gem,
         });
     } catch (err) {
-        console.error(err)
+        console.error("Error Details:", err.message, err.stack);
         return response.status(400).json({
             status: "fail",
             message: err.message,
@@ -59,7 +51,7 @@ exports.getAllGems = async (request, response) => {
             offset: skip,
             limit: limit,
             order: [[sortBy, "ASC"]],
-            attributes:["id","name","price","description","image"],
+            attributes: ["id", "name", "price", "description", "image"],
             include: [
                 {
                     model: User,
@@ -84,7 +76,6 @@ exports.getAllGems = async (request, response) => {
                 gems: gems,
             },
         });
-
     } catch (err) {
         return response.status(400).json({
             status: "fail",
@@ -98,8 +89,8 @@ exports.getGemByID = async (request, response) => {
         const { productID } = request.params;
         const gem = await Gem.findByPk(productID, {
             include: [
-                { model: User, as: "owner", attributes: ["name"], },
-                { model: Img, as: "moreImages", attributes: ["path"], },
+                { model: User, as: "owner", attributes: ["name"] },
+                { model: Img, as: "moreImages", attributes: ["path"] },
             ],
         });
 
@@ -121,31 +112,28 @@ exports.getGemByID = async (request, response) => {
             message: err.message,
         });
     }
-}
+};
 
-exports.deleteGem = async (req,res)=>{
+exports.deleteGem = async (request, res) => {
+    try {
+        let { id } = request.params;
+        id = +id;
+        const result = await Gem.destroy({
+            where: {
+                id,
+            },
+        });
 
-try{
-    let {id} = req.params
-id = +id
-    const result = await Gem.destroy({
-        where:{
-            id
-        }
-    })
+        console.log(result);
 
- console.log(result)
-
-    res.status(204).json({
-        status:"success",
-        message:"Gemstone Deleted successfully"
-    })
-
+        res.status(204).json({
+            status: "success",
+            message: "Gemstone Deleted successfully",
+        });
+    } catch (e) {
+        res.status(400).json({
+            status: "failed",
+            message: "Gemstone not found",
+        });
     }
-    catch(e){
-res.status(400).json({
-    status:"failed",
-    message:"Gemstone not found"
-})
-    }
-}
+};
