@@ -39,7 +39,7 @@ Gem.belongsTo(User, {
         allowNull: false,
     },
 }); // gem belongs to single user
-User.hasMany(Gem, { foreignKey: "userId" }); // user has many gems
+User.hasMany(Gem, { foreignKey: "userId", as: "ownedGemstones", onDelete: "CASCADE" }); // user has many gems
 
 Gem.hasMany(Img, {
     foreignKey: "gemId",
