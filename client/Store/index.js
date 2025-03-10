@@ -1,5 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
+import storage from "redux-persist/lib/storage";
+import { persistReducer, persistStore } from "redux-persist";
+import { combineReducers } from "redux";
 
 const cartSlice = createSlice({
     name: "cart",
@@ -9,10 +12,10 @@ const cartSlice = createSlice({
             state.cartItems.push(action.payload);
         },
         removeFromCart: (state, action) => {
-            state.cartItems = state.cartItems.filter(items => action.payload.id != items.id)
+            state.cartItems = state.cartItems.filter(items => action.payload.id !== items.id);
         },
     }
-})
+});
 
 const userSlice = createSlice({
     name: "user",
@@ -23,11 +26,11 @@ const userSlice = createSlice({
         setUser: (state, action) => {
             state.user = action.payload;
         },
-        removeSession: (state, action) => {
+        removeSession: (state) => {
             state.user = null;
         }
     }
-})
+});
 
 const checkoutSlice = createSlice({
     name: 'checkout',
@@ -40,17 +43,32 @@ const checkoutSlice = createSlice({
             console.log('Checkout Item:', state.checkoutItem);
         }
     }
-})
+});
+
+const persistConfig = {
+    key: "user",
+    storage,
+    whitelist: ["user"]
+};
+
+const rootReducer = combineReducers({
+    cart: cartSlice.reducer,
+    user: persistReducer(persistConfig, userSlice.reducer),
+    checkout: checkoutSlice.reducer
+});
 
 const store = configureStore({
-    reducer: {
-        cart: cartSlice.reducer,
-        user: userSlice.reducer,
-        checkout: checkoutSlice.reducer
-    }
-})
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+          serializableCheck: false,
+    }),
+});
+
+const persistor = persistStore(store);
 
 export const cartActions = cartSlice.actions;
 export const userActions = userSlice.actions;
 export const checkoutActions = checkoutSlice.actions;
-export default store;
+
+export { store, persistor };
