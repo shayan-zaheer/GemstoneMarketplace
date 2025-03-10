@@ -10,6 +10,7 @@ import ProductImages from "@/components/ProductImages";
 import { TbShoppingCartCancel } from "react-icons/tb";
 import toast from "react-hot-toast";
 import Loader from "./Loader";
+import Link from "next/link";
 
 const IndividualProduct = ({ productID }) => {
     const [loading, setLoading] = useState(true);
@@ -120,9 +121,11 @@ const IndividualProduct = ({ productID }) => {
                                 )}
                             </span>{" "}
                             by{" "}
-                            <span className="bg-gradient-to-r italic to-[#00E8FC] via-[#D400A5] from-[#6A00F4] text-transparent bg-clip-text">
-                                {gem?.owner?.name}
-                            </span>
+                            <Link href={`/user/${gem?.owner?.userId}`}>
+                                <span className="bg-gradient-to-r italic to-[#00E8FC] via-[#D400A5] from-[#6A00F4] text-transparent bg-clip-text">
+                                    {gem?.owner?.name}
+                                </span>
+                            </Link>
                         </div>
                         <div className="relative md:text-xl text-md my-4 mb-20 text-white font-bold">
                             {!alreadyInCart ? (

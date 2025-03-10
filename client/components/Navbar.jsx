@@ -19,16 +19,19 @@ const Navbar = () => {
         setCartItemsLength(cartItems.length);
     }, [cartItems]);
 
-    const handleLogout = async() => {
-      try{
-        const result = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/logout`, {withCredentials: true});
-        if(result.data?.status == "success"){
-          dispatch(userActions.removeSession());
+    const handleLogout = async () => {
+        try {
+            const result = await axios.get(
+                `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/logout`,
+                { withCredentials: true }
+            );
+            if (result.data?.status == "success") {
+                dispatch(userActions.removeSession());
+            }
+        } catch (err) {
+            console.error(err);
         }
-      } catch(err){
-        console.error(err);
-      }
-    }
+    };
 
     const [openSearch, setOpenSearch] = useState(false);
     const [openMenu, setOpenMenu] = useState(false);
@@ -67,8 +70,12 @@ const Navbar = () => {
                                     Profile
                                 </Link>
                             </li>
-                            <li className="h-16 px-4 flex items-center relative">
-                                <Link href="/cart" className="hover:scale-105">
+                            <li className="h-16  px-4  flex items-center">
+                                <Link
+                                    href={"/cart"}
+                                    className="relative transition duration-300 ease hover:scale-105"
+                                >
+                                    {" "}
                                     Cart
                                     <span className="absolute -top-2 -right-4 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
                                         {cartItemsLength}
@@ -182,13 +189,14 @@ const Navbar = () => {
                                         </Link>
                                     </li>
                                     <li
-                                        className="h-16 border-b px-4 flex items-center relative"
+                                        className="h-16 border-b px-4 s flex items-center"
                                         onClick={() => setOpenMenu(false)}
                                     >
                                         <Link
-                                            href="/cart"
-                                            className="responsive-menu-links"
+                                            href={"/cart"}
+                                            className="relative responsive-menu-links"
                                         >
+                                            {" "}
                                             Cart
                                             <span className="absolute -top-2 -right-4 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
                                                 {cartItemsLength}
@@ -229,6 +237,11 @@ const Navbar = () => {
                                     </li>
                                 </>
                             )}
+                            <li className="h-16 border-b px-4 flex justify-center items-center cursor-pointer">
+                                <ConnectWalletBtn className="responsive-navbar-button">
+                                    Connect Wallet
+                                </ConnectWalletBtn>
+                            </li>
                         </ul>
                     </motion.div>
                 )}

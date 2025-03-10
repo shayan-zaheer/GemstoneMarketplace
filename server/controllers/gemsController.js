@@ -89,7 +89,7 @@ exports.getGemByID = async (request, response) => {
         const { productID } = request.params;
         const gem = await Gem.findByPk(productID, {
             include: [
-                { model: User, as: "owner", attributes: ["name"] },
+                { model: User, as: "owner", attributes: ["userId", "name"] },
                 { model: Img, as: "moreImages", attributes: ["path"] },
             ],
         });
