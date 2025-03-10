@@ -28,7 +28,9 @@ const LoginForm = () => {
       );
       if (result.data.status == "success") {
         toast.success("You're logged in!");
+        console.log(result.data)
         router.push("/");
+
       }
     } catch (error) {
       toast.error(error.message);
