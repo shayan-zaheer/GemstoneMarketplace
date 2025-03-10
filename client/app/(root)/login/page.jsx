@@ -5,10 +5,10 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
 const Login = () => {
-  const user = useSelector(state => state.user.user);
-  
-  if(user){
-      window.location.href = "http://localhost:3000/";
+  const user = useSelector((state) => state.user.user);
+
+  if (user) {
+    window.location.href = "http://localhost:3000/";
   }
 
   const [isClicked, setIsClicked] = useState(false);
@@ -23,7 +23,7 @@ const Login = () => {
       <div
         onClick={handleClick}
         className={`relative max-sm:w-[350px] sm:w-96 cursor-pointer transition-all duration-500 ease-linear bg-[#2A2D33] p-6 rounded-xl overflow-hidden ${
-          isClicked ? "h-[340px]" : "h-32"
+          isClicked ? "h-[380px]" : "h-32"
         }`}
       >
         <div className="absolute inset-0 bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4] animate-border rounded-xl"></div>

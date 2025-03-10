@@ -4,8 +4,9 @@ const upload = require("../utils/multer");
 
 exports.signUp = async (request, response) => {
     try {
-        const existingUser = await User.findOne({where: { email: request.body?.email }});
-        if (existingUser) return response.status(400).json({ message: "Email already in use" });
+        // const existingUser = await User.findOne({where: { email: request.body?.email }});
+        // if (existingUser) return response.status(400).json({ message: "Email already in use" });
+        console.log(request.body);
 
         await new Promise((resolve, reject) => {
             upload.single("profileImage")(request, response, (err) => {
