@@ -26,6 +26,26 @@ const Gem = sequelize.define(
             type: DataTypes.TEXT,
             allowNull: true,
         },
+        shape: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        color: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        purity: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
+        dimensions: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
+        weight: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
     },
     {
         timestamps: true,
