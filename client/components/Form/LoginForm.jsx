@@ -24,7 +24,7 @@ const LoginForm = () => {
     try {
       const result = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login`,
-        data
+        data, {withCredentials: true}
       );
       if (result.data.status == "success") {
         toast.success("You're logged in!");

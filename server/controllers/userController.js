@@ -22,7 +22,7 @@ exports.getUserById = async(request, response) => {
         });
 
         if(!user){
-            return response.status(400).json({
+            return response.status(404).json({
                 status: "failure",
                 message: "User not found!"
             });

@@ -7,6 +7,7 @@ const authRoute = require("./routes/authRoutes");
 const userRoute = require("./routes/userRoutes");
 const {startSQL} = require("./config/db");
 const configurePassport = require("./utils/passport");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -20,6 +21,7 @@ app.use(cors({
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use(cookieParser());
 
 app.use(morgan("dev"));
 

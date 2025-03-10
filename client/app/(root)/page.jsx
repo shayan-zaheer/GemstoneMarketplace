@@ -1,8 +1,33 @@
-import Hero from "@/components/Hero/Hero";
-import Collections from "@/components/Collections/Collections";
-import React from "react";
+import axios from "axios";
+import { headers } from "next/headers";
+import HomePage from "@/components/Home/Home";
 
-const Home = () => {  
+async function getUser() {
+  try {
+      const headersList = await headers();
+      const cookies = headersList.get("cookie") || "";
+
+      const response = await axios.get("http://localhost:8000/auth/status", {
+          headers: { Cookie: cookies },
+          withCredentials: true,
+      });
+
+      return response.data?.user;
+  } catch (error) {
+      if (error.response?.status === 400) {
+          console.warn("User is not authenticated, returning null.");
+          return null;
+      }
+      
+      console.error("Unexpected error:", error);
+      return null;
+  }
+}
+
+
+const Home = async() => {
+  const userData = await getUser();
+  
   const gemstones = [
     {
       id: 1,
@@ -61,13 +86,8 @@ const Home = () => {
       price: "165ETH",
     },
   ];
-  return (
-    <div className="w-full min-h-[1000px] relative top-20 bg-[#1a1c1ff8] pb-20 mb-20 ">
-      <Hero />
-      <Collections collectionName={"Trending"} gemstones={gemstones} />
-      <Collections collectionName={"Highest Volume"} gemstones={gemstones} />
-    </div>
-  );
-};
+
+  return <HomePage initialUserData={userData} gemstones={gemstones} />;
+}
 
 export default Home;

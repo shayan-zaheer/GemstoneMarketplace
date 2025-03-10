@@ -14,6 +14,21 @@ const cartSlice = createSlice({
     }
 })
 
+const userSlice = createSlice({
+    name: "user",
+    initialState: {
+        user: null
+    },
+    reducers: {
+        setUser: (state, action) => {
+            state.user = action.payload;
+        },
+        removeSession: (state, action) => {
+            state.user = null;
+        }
+    }
+})
+
 const checkoutSlice = createSlice({
     name: 'checkout',
     initialState: {
@@ -30,10 +45,12 @@ const checkoutSlice = createSlice({
 const store = configureStore({
     reducer: {
         cart: cartSlice.reducer,
+        user: userSlice.reducer,
         checkout: checkoutSlice.reducer
     }
 })
 
 export const cartActions = cartSlice.actions;
+export const userActions = userSlice.actions;
 export const checkoutActions = checkoutSlice.actions;
 export default store;

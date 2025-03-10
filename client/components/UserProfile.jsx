@@ -12,63 +12,7 @@ const getUserById = async(id) => {
 
 const UserProfile = async({ userid }) => {
   const user = await getUserById(userid);
-  console.log(user);
-  // const user = {
-  //   userid: 2,
-  //   userName: "Shayan Zaheer",
-  //   profileImage: "/user-profile.png",
-  //   userBio:
-  //     "100% Authentic Gemstone seller. Sold over 10+ certified gemstones",
-  //   ownedGemstones: [
-      
-  //   ],
-  //   soldGemstones: [{
-  //     id: 2,
-  //     name: "Diamond",
-  //     price: "200ETH",
-  //     owner: {
-  //       name: "Shayan",
-  //     },
-  //     image: "/diamond.jpg"
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Diamond",
-  //     price: "200ETH",
-  //     owner: {
-  //       name: "Shayan",
-  //     },
-  //     image: "/diamond.jpg"
-  //   },
-  //   {
-  //     id: 4,
-  //     name: "Diamond",
-  //     price: "200ETH",
-  //     owner: {
-  //       name: "Shayan",
-  //     },
-  //     image: "/diamond.jpg"
-  //   },
-  //   {
-  //     id: 5,
-  //     name: "Diamond",
-  //     price: "200ETH",
-  //     owner: {
-  //       name: "Shayan",
-  //     },
-  //     image: "/diamond.jpg"
-  //   },
-  //   {
-  //     id: 6,
-  //     name: "Diamond",
-  //     price: "200ETH",
-  //     owner: {
-  //       name: "Shayan",
-  //     },
-  //     image: "/diamond.jpg"
-  //   },
-  //   ],
-  // };
+ 
   return (
     <div className="min-h-content relative top-20 mb-20 bg-[#1a1c1ff8]">
       <div className="flex flex-col md:flex-row gap-[0.06rem]  bg-gradient-to-b from-[#00E8FC] via-[#D400A5] to-[#6A00F4]">
@@ -94,13 +38,12 @@ const UserProfile = async({ userid }) => {
           </div>
         </div>
         <div className="md:w-[60%] bg-[#1a1c1ff8] px-5 min-h-content">
-        <UserGemstones gemstones={user?.ownedGemstones} title={"Owned Gemstones"} /> 
-        <UserGemstones gemstones={user?.soldGemstones} title={"Sold Gemstones"}/>
+        <UserGemstones user={user} gemstones={user?.ownedGemstones} title={"Owned Gemstones"} /> 
+        <UserGemstones user={user} gemstones={user?.soldGemstones} title={"Sold Gemstones"}/>
         </div>
       </div>
     </div>
   );
-  return null;
 };
 
 export default UserProfile;

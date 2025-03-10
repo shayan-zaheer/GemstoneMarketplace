@@ -2,8 +2,15 @@
 import SignupForm from "@/components/Form/SignupForm";
 import Link from "next/link";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
 const Signup = () => {
+  const user = useSelector(state => state.user.user);
+
+  if(user){
+    window.location.href = "http://localhost:3000/";
+  }
+
   const [isClicked, setIsClicked] = useState(false);
 
   const handleClick = (e) => {

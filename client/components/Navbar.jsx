@@ -6,14 +6,14 @@ import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { ConnectWalletBtn } from "./ConnectWalletBtn";
 import { useSelector } from "react-redux";
-import store from "@/Store/index";
 
 const Navbar = () => {
+  const user = useSelector(store => store.user.user);
   const cartItems = useSelector((store) => store.cart.cartItems);
   const [cartItemsLength, setCartItemsLength] = useState(0);
 
   useEffect(() => {
-    setCartItemsLength(cartItems.length); // Ensures it updates only on the client
+    setCartItemsLength(cartItems.length);
   }, [cartItems]);
 
   const [openSearch, setOpenSearch] = useState(false);
@@ -55,15 +55,17 @@ const Navbar = () => {
               Products
             </a>
           </li>
-          <li className="h-16 px-4  flex items-center">
-            <Link
-              href={"/profile/2"}
-              className="transition duration-300 ease hover:scale-105"
-            >
-              {" "}
-              Profile
-            </Link>
-          </li>
+          {user && (
+             <li className="h-16 px-4  flex items-center">
+             <Link
+               href={`/user/${user.userId}`}
+               className="transition duration-300 ease hover:scale-105"
+             >
+               {" "}
+               Profile
+             </Link>
+           </li>
+          )}
           <li className="h-16  px-4  flex items-center">
             <Link
               href={"/cart"}
