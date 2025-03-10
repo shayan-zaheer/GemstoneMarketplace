@@ -31,10 +31,24 @@ const UserProfile = async({ userid }) => {
               <span className="flex items-center justify-center text-gray-300 italic text-md leading-tight mt-2 font-medium">
                 {user.residenceAddress}
               </span>
-              <span className="flex items-center justify-center text-gray-300 italic text-md leading-tight mt-2 font-medium">
+              <span className="flex items-center justify-center text-gray-300 italic text-sm leading-tight mt-2 font-medium">
                 {user.walletAddress}
               </span>
             </div>
+              <div className="flex gap-6 mt-5 ">
+                  <div className="flex border gap-1 px-2 items-center border-gray-700 rounded-lg">
+                    <span className="w-1 h-1  rounded-full border border-4 border-green-500"></span>
+                    <span className="text-gray-300">Active: 5</span>
+                  </div>
+                  <div className="flex border gap-1 px-2 items-center border-gray-700 rounded-lg">
+                    <span className="w-1 h-1  rounded-full border border-4 border-red-500"></span>
+                    <span className="text-gray-300">Inactive: 2</span>
+                  </div>
+                  <div className="flex border gap-1 px-2 items-center border-gray-700 rounded-lg">
+                    <span className="w-1 h-1  rounded-full border border-4 border-blue-500"></span>
+                    <span className="text-gray-300">Sold: 5</span>
+                  </div>
+              </div>
           </div>
         </div>
         <div className="md:w-[60%] bg-[#1a1c1ff8] px-5 min-h-content">
