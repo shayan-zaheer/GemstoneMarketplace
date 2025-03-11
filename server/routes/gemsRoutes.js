@@ -20,5 +20,7 @@ const uploadMiddleware = (req, res, next) => {
 router.route("/").get(gemsController.getAllGems).post(uploadMiddleware, gemsController.uploadGem);
 router.route("/:productID").get(gemsController.getGemByID);
 router.route("/delete/:id").delete(gemsController.deleteGem);
+router.route("/update/:id").patch(gemsController.updateGem)
+router.route("/userId/:id").get(gemsController.getGemByUser)
 
 module.exports = router;

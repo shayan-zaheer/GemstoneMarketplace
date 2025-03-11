@@ -42,3 +42,10 @@ http://localhost:8000/gems/id
 Delete Gem
 
 http://localhost:8000/gems/delete/id
+
+
+-----------------------------
+
+Get GEM by userId
+
+http://localhost:8000/gems/userId/1

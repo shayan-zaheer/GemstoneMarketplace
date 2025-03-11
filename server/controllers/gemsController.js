@@ -137,3 +137,62 @@ exports.deleteGem = async (request, res) => {
         });
     }
 };
+
+
+exports.updateGem = async (req,res) =>{
+    try{
+
+        const {body}= req
+        const {id} = req.params
+        console.log(body)
+        const result = await Gem.update({
+            ...body
+        },{
+            where:{
+                id
+            }
+        })
+
+        console.log(result)
+
+        res.status(200).json({
+            status:"Success",
+            message:"Data Updated Successfully",
+            data: result
+        })
+
+    }
+    catch(e){
+        res.status(400).json({
+            status:"Failed",
+            message:e.message
+        })
+    }
+}
+
+
+exports.getGemByUser = async(req,res) =>{
+    try{
+
+        const id = +req.params.id
+
+        const result = await Gem.findAll(
+            {
+                where:{
+                userId:id
+            }
+}        )
+
+res.status(200).json({
+    status:"Success",
+    data:result
+})
+
+    }
+    catch(e){
+        res.status(404).json({
+            status:"Failed",
+            message:e.message
+        })
+    }
+}
