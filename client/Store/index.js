@@ -46,13 +46,13 @@ const checkoutSlice = createSlice({
 });
 
 const persistConfig = {
-    key: "user",
+    key: "root",
     storage,
-    whitelist: ["user"]
+    whitelist: ["user", "cart"]
 };
 
 const rootReducer = combineReducers({
-    cart: cartSlice.reducer,
+    cart: persistReducer(persistConfig, cartSlice.reducer),
     user: persistReducer(persistConfig, userSlice.reducer),
     checkout: checkoutSlice.reducer
 });
@@ -61,8 +61,8 @@ const store = configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
-          serializableCheck: false,
-    }),
+            serializableCheck: false,
+        }),
 });
 
 const persistor = persistStore(store);

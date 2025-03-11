@@ -119,7 +119,7 @@ const IndividualProduct = ({ productID }) => {
                 })}
               </span>{" "}
               by{" "}
-              <Link href={`/user/${gem?.owner?.id}`}>
+              <Link href={`/user/${gem?.owner?.userId}`}>
                 <span className="bg-gradient-to-r italic to-[#00E8FC] via-[#D400A5] from-[#6A00F4] text-transparent bg-clip-text">
                   {gem?.owner?.name}
                 </span>

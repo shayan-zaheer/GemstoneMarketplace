@@ -63,7 +63,7 @@ const CartCard = ({ item }) => {
     >
       <div className="w-11/12 mx-auto pt-4 flex items-center px-4 text-white gap-x-1 border-b-2 max-sm:text-3xl sm:text-3xl font-semibold lg:justify-center pb-2 lg:text-4xl">
         <span>{item.name} | </span>
-        <span>{item.carat} CT.</span>
+        <span>{item.weight} CT.</span>
       </div>
       <div
         ref={innerRef}
@@ -103,9 +103,7 @@ const CartCard = ({ item }) => {
               </tr>
               <tr>
                 <th className="detail-label">Dimensions: </th>
-                <td className="detail-value">
-                  {item.length} mm x {item.width} mm x {item.height} mm
-                </td>
+                <td className="detail-value">{item.dimensions}</td>
               </tr>
             </tbody>
           </table>
