@@ -37,6 +37,7 @@ const IndividualProduct = ({ productID }) => {
 
         if (result.data.status === "success") {
           setGem(result.data.gem);
+          console.log(result.data.gem);
         } else {
           throw new Error();
         }
