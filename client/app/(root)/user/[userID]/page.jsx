@@ -1,15 +1,12 @@
 import UserProfile from "@/components/UserProfile";
 import React from "react";
 
-
-
-const User = async({params}) => {
-  const {userID} = await params;
-  
+const User = async ({ params }) => {
+  const { userID } = await params;
 
   return (
     <>
-    <UserProfile userid={userID} />
+      <UserProfile userid={userID} />
     </>
   );
 };
