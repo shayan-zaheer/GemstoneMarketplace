@@ -128,7 +128,7 @@ const IndividualProduct = ({ productID }) => {
             <div className="relative md:text-xl text-md my-4 mb-20 text-white font-bold">
               {!alreadyInCart ? (
                 <button
-                  className="flex gap-3 md:w-48 w-36 px-3 md:px-6 bg-blue-600 hover:bg-blue-700 md:py-3 py-2 shadow-lg rounded-lg hover:cursor-pointer h-full"
+                  className="flex gap-3 md:w-44 w-36 px-3  bg-blue-600 hover:bg-blue-700 md:py-3 py-2 shadow-lg rounded-lg hover:cursor-pointer h-full"
                   onClick={handleAddToCart}
                 >
                   <FaCartShopping className="translate-y-1" /> Add to Cart
