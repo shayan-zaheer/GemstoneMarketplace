@@ -4,13 +4,13 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import ImageModal from "@/components/ImageModal";
 import { FaCartShopping } from "react-icons/fa6";
-import { cartActions } from "@/Store/index.js";
 import { useDispatch, useSelector } from "react-redux";
 import ProductImages from "@/components/ProductImages";
 import { TbShoppingCartCancel } from "react-icons/tb";
 import toast from "react-hot-toast";
 import Loader from "./Loader";
 import Link from "next/link";
+import { cartActions } from "@/Store/cartSlice";
 
 const IndividualProduct = ({ productID }) => {
   const [loading, setLoading] = useState(true);

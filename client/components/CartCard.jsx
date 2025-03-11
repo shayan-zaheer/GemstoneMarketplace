@@ -1,5 +1,4 @@
 "use client";
-import { cartActions, checkoutActions } from "@/Store";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
@@ -8,12 +7,13 @@ import React, { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { removeFromCart } from "../Store/index.js";
 import { useRouter } from "next/navigation";
+import { checkoutActions } from "@/Store/checkoutSlice.js";
+import { cartActions } from "@/Store/cartSlice.js";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const CartCard = ({ item }) => {
   const router = useRouter();
-  const { removeFromCart } = cartActions;
   const dispatch = useDispatch();
   const cardRef = useRef(null);
   const innerRef = useRef(null);
@@ -48,7 +48,7 @@ const CartCard = ({ item }) => {
 
   const handleRemove = () => {
     console.log("Removing from cart", item.id);
-    dispatch(removeFromCart(item));
+    dispatch(cartActions.removeFromCart(item));
   };
 
   const handleBuyNow = () => {
