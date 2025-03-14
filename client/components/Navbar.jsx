@@ -8,6 +8,8 @@ import { ConnectWalletBtn } from "./ConnectWalletBtn";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { userActions } from "@/Store/userSlice";
+import { store } from "@/Store";
+import { cartActions } from "@/Store/cartSlice";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -26,6 +28,12 @@ const Navbar = () => {
         { withCredentials: true }
       );
       if (result.data?.status == "success") {
+        const currentUser = store.getState().cart.userId;
+        if (currentUser) {
+          const cart = store.getState().cart.cartItems;
+          localStorage.setItem(`cart_${currentUser}`, JSON.stringify(cart));
+        }
+        dispatch(cartActions.clearCart());
         dispatch(userActions.removeSession());
       }
     } catch (err) {

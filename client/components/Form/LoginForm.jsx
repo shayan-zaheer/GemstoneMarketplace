@@ -9,8 +9,11 @@ import FormButton from "../FormButton";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { cartActions } from "@/Store/cartSlice";
+import { useDispatch } from "react-redux";
 
 const LoginForm = () => {
+  const dispatch = useDispatch();
   const router = useRouter();
   const form = useForm({
     resolver: zodResolver(loginFormSchema),
@@ -24,13 +27,14 @@ const LoginForm = () => {
     try {
       const result = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login`,
-        data, {withCredentials: true}
+        data,
+        { withCredentials: true }
       );
       if (result.data.status == "success") {
+        dispatch(cartActions.setUser(result?.data?.user?.id));
         toast.success("You're logged in!");
-        console.log(result.data)
+        console.log(result.data);
         router.push("/");
-
       }
     } catch (error) {
       toast.error(error.message);
