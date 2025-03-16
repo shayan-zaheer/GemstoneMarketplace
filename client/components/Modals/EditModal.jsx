@@ -18,6 +18,8 @@ import { useEffect, useState } from "react";
 import { Edit } from "lucide-react";
 import { useSelector } from "react-redux";
 import FormButton from "../FormButton";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 export function EditModal({ user }) {
   const loggedinUser = useSelector((store) => store.user.user);
@@ -51,29 +53,41 @@ export function EditModal({ user }) {
     }
   }, [loggedinUser, open]);
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     try {
-      const formData = new FormData();
-      for (const key in data) {
-        formData.append(key, data[key]);
-      }
-      if (selectedFile) {
-        formData.append("profileImage", selectedFile);
-      }
-      for (let pair of formData.entries()) {
-        console.log(pair[0] + ", " + pair[1]);
-      }
-      // console.log(formData);
+        const formData = new FormData();
+        Object.keys(data).forEach((key) => {
+            formData.append(key, data[key]);
+        });
+
+        if (selectedFile) {
+            formData.append("profileImage", selectedFile);
+        } 
+
+        const result = await axios.patch(
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/users/${loggedinUser?.userId}`,
+            formData,
+            {
+                withCredentials: true,
+            }
+        );
+
+        if(result.data?.status == "success"){
+          toast.success(result.data?.message)
+        }
     } catch (err) {
-      console.log(err);
+        console.error("❌ Error updating user:", err);
+        toast.error(err.message);
     }
-  };
+};
+
+
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       setSelectedFile(file);
-      setPreview(URL.createObjectURL(file)); // Generate a preview URL
+      setPreview(URL.createObjectURL(file));
     }
   };
 

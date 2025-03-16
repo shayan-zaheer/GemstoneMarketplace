@@ -1,10 +1,12 @@
 "use client";
 import CartCard from "@/components/CartCard";
-import { ShoppingCart } from "lucide-react";
+import { ArrowRight, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import CartTotal from "../../../components/CartTotal";
 import { useSelector } from "react-redux";
+import Link from "next/link";
+import { Arrow } from "@radix-ui/react-tooltip";
 
 const Cart = () => {
   const cartItems = useSelector((store) => store.cart.cartItems);
@@ -22,11 +24,27 @@ const Cart = () => {
         </div>
       </div>
       <div className="flex w-auto h-auto max-lg:flex-col px-[2%]">
-        <div className="w-full min-h-96 flex flex-col gap-y-4  py-4">
-          {cartItems?.map((item) => (
-            <CartCard key={item.id} item={item} />
-          ))}
-        </div>
+        {cartItems.length !== 0 ? (
+          <div className="w-full min-h-96 flex flex-col gap-y-4  py-4">
+            {cartItems?.map((item) => (
+              <CartCard key={item.id} item={item} />
+            ))}
+          </div>
+        ) : (
+          <div className="w-full h-96 flex flex-col justify-center gap-y-4  py-4 text-white text-center">
+            <span className="sm:text-5xl font-bold italic w-11/12 mx-auto">
+              {" "}
+              There is no Items in the Cart
+            </span>
+            <Link
+              href="/products"
+              className="sm:text-3xl w-11/12 mx-auto text-blue-500 font-semibold flex items-center justify-center gap-x-2 hover:text-blue-600 transition-all duration-300 ease-linear hover:scale-105"
+            >
+              <span>Go to Products Page</span>
+              <ArrowRight className="w-8 h-8" />
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );
