@@ -1,13 +1,13 @@
 import { ethers } from "ethers";
-import address from "../../contracts/abis/contractAddress.json";
-import abi from "../../contracts/artifacts/contracts/Government.sol/GovernmentContract.json";
+import address from "@/contracts/abis/contractAddress.json";
+import abi from "@/contracts/artifacts/contracts/Government.sol/GovernmentContract.json";
 
 const { ethereum } = window;
 const contractAddress = address.address;
 const contractAbi = abi.abi;
 
 const connectWallet = async () => {
-  try {
+  try { 
     if (!ethereum) {
       console.log("Make sure you have metamask installed!");
       return;
@@ -37,18 +37,28 @@ const getEthereumContract = async () => {
 };
 
 const registerSeller = async ({ sellerWallet, category }) => {
-    try {
+  try {
       if (!ethereum) return alert("Please install Metamask");
-  
+
+      if (!sellerWallet) {
+          console.error("Seller Wallet is null or undefined!");
+          return;
+      }
+
       const contract = await getEthereumContract();
-      console.log("Contract Address:", contract);
+      if (!contract) {
+          console.error("Failed to load contract.");
+          return;
+      }
+
+      console.log("Calling registerSeller with:", sellerWallet, category);
       const tx = await contract.registerSeller(sellerWallet, category);
       await tx.wait();
-      console.log("successfully added");
-    } catch (err) {
-      reportError(err);
-    }
-  };
+      console.log("Seller successfully registered!");
+  } catch (err) {
+      console.error("Error in registerSeller:", err);
+  }
+};
 
 const getAllSellers = async() => {
     try{

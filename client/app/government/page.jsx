@@ -52,9 +52,17 @@ const GovernmentDashboard = () => {
                 console.error("Error rendering document", error);
             }
         };
-        await registerSeller(formData.walletAddress, formData.categoryName);
+        await registerSeller({
+            sellerWallet: formData.walletAddress,
+            category: formData.categoryName,
+        });
         reader.readAsBinaryString(file);
     };
+
+    const getSellers = async() => {
+        const sellers = await getAllSellers();
+        console.log(sellers);
+    }
 
     return (
         <div className="w-full min-h-screen bg-[#1a1c1ff8] text-white flex flex-col items-center pt-20">
@@ -133,6 +141,12 @@ const GovernmentDashboard = () => {
                     className="w-full py-3 mt-5 bg-blue-500 hover:bg-blue-700"
                 >
                     Submit Certification
+                </Button>
+                <Button
+                    onClick={getSellers}
+                    className="w-full py-3 mt-5 bg-blue-500 hover:bg-blue-700"
+                >
+                    Get Existing Sellers
                 </Button>
             </motion.form>
         </div>
