@@ -3,6 +3,10 @@ const Img = require("../models/Img");
 const User = require("../models/User");
 
 exports.uploadGem = async (request, response) => {
+    console.log("BODY:", request.body);
+    console.log("FILES:", request.files);
+
+
     try {
         console.log(JSON.stringify(request.files));
         const image = request.files["image"]?.[0]?.path;

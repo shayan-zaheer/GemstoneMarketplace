@@ -13,7 +13,6 @@ const GovernmentDashboard = () => {
         categoryName: "",
         ownerName: "",
         walletAddress: "",
-        status: "Pending",
     });
 
     const handleChange = (e) => {
@@ -123,19 +122,6 @@ const GovernmentDashboard = () => {
                         required
                     />
                 </label>
-                <label className="block mb-3">
-                    Status:
-                    <select
-                        name="status"
-                        value={formData.status}
-                        onChange={handleChange}
-                        className="w-full p-2 mt-1 bg-gray-700 border-none rounded"
-                    >
-                        <option value="Pending">Pending</option>
-                        <option value="Approved">Approved</option>
-                        <option value="Rejected">Rejected</option>
-                    </select>
-                </label>
                 <Button
                     type="submit"
                     className="w-full py-3 mt-5 bg-blue-500 hover:bg-blue-700"
@@ -143,6 +129,7 @@ const GovernmentDashboard = () => {
                     Submit Certification
                 </Button>
                 <Button
+                type="button"
                     onClick={getSellers}
                     className="w-full py-3 mt-5 bg-blue-500 hover:bg-blue-700"
                 >

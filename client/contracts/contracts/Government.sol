@@ -51,7 +51,7 @@ contract GovernmentContract {
     function verifySeller(
         address sellerWallet,
         string memory category
-    ) public view returns (bool) {
+    ) external view returns (bool) {
         bytes32 certificateHash = generateCertificateHash(
             sellerWallet,
             category

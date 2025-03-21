@@ -51,12 +51,11 @@ const registerSeller = async ({ sellerWallet, category }) => {
           return;
       }
 
-      console.log("Calling registerSeller with:", sellerWallet, category);
       const tx = await contract.registerSeller(sellerWallet, category);
       await tx.wait();
       console.log("Seller successfully registered!");
   } catch (err) {
-      console.error("Error in registerSeller:", err);
+      console.error(err);
   }
 };
 
