@@ -21,6 +21,7 @@ const IndividualProduct = ({ productID }) => {
   const [gem, setGem] = useState({});
   const [open, setOpen] = useState(false);
   const [currentImage, setCurrentImage] = useState(null);
+  console.log(loggedinUser);
 
   useEffect(() => {
     const exists = cartItems.some((item) => item.id === +productID);
