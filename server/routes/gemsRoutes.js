@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const gemsController = require("../controllers/gemsController");
-const upload = require("../utils/multer")
+const {upload} = require("../utils/multer")
 
 const uploadMiddleware = (req, res, next) => {
     upload.fields([

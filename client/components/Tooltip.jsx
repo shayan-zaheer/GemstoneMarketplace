@@ -5,7 +5,7 @@ const CustomTooltip = ({ children, content }) => (
       <Tooltip.Root>
         <Tooltip.Trigger asChild>{children}</Tooltip.Trigger>
         <Tooltip.Portal>
-          <Tooltip.Content className="bg-gray-800 text-white px-3 py-2 rounded-md shadow-lg" side="top">
+          <Tooltip.Content className="bg-gray-800 text-white px-3 py-2 rounded-md shadow-lg" side="right">
             {content}
             <Tooltip.Arrow className="fill-gray-800" />
           </Tooltip.Content>

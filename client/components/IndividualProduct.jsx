@@ -13,6 +13,7 @@ import Link from "next/link";
 import { cartActions } from "@/Store/cartSlice";
 
 const IndividualProduct = ({ productID }) => {
+  const loggedinUser = useSelector(store => store.user.user);
   const [loading, setLoading] = useState(true);
   const cartItems = useSelector((store) => store.cart.cartItems);
   const [alreadyInCart, setAlreadyInCart] = useState(false);
@@ -20,7 +21,6 @@ const IndividualProduct = ({ productID }) => {
   const [gem, setGem] = useState({});
   const [open, setOpen] = useState(false);
   const [currentImage, setCurrentImage] = useState(null);
-  const loggedinUser = useSelector((store) => store.user.user);
   console.log(loggedinUser);
 
   useEffect(() => {
@@ -53,6 +53,11 @@ const IndividualProduct = ({ productID }) => {
   }, [productID]);
 
   const handleAddToCart = () => {
+    console.log(loggedinUser);
+    if(!loggedinUser){
+      toast.error("You need to log in first!");
+      return;
+    }
     dispatch(cartActions.addToCart(gem));
     toast.success(`${gem.name} added to cart!`, {
       style: { background: "#333", color: "white" },
@@ -60,6 +65,10 @@ const IndividualProduct = ({ productID }) => {
   };
 
   const handleRemoveFromCart = () => {
+    if(!loggedinUser){
+      toast.error("You need to log in first!");
+      return;
+    }
     dispatch(cartActions.removeFromCart(gem));
     toast.success(`${gem.name} removed from cart!`, {
       style: { background: "#333", color: "white" },
@@ -128,25 +137,25 @@ const IndividualProduct = ({ productID }) => {
               </Link>
             </div>
             {loggedinUser?.userId !== gem?.owner?.userId && (
-              <div className="relative md:text-xl text-md my-4 mb-20 text-white font-bold">
-                {!alreadyInCart ? (
-                  <button
-                    className="flex gap-3 md:w-44 w-36 px-3  bg-blue-600 hover:bg-blue-700 md:py-3 py-2 shadow-lg rounded-lg hover:cursor-pointer h-full"
-                    onClick={handleAddToCart}
-                  >
-                    <FaCartShopping className="translate-y-1" /> Add to Cart
-                  </button>
-                ) : (
-                  <button
-                    className="flex gap-3 px-3 md:px-6 md:py-3 py-2 hover:bg-red-700 bg-red-600 rounded-lg shadow-lg hover:cursor-pointer md:w-72 w-64 h-full"
-                    onClick={handleRemoveFromCart}
-                  >
-                    <TbShoppingCartCancel className="translate-y-1 md:text-2xl" />{" "}
-                    Remove From Cart
-                  </button>
-                )}
-              </div>
-            )}
+               <div className="relative md:text-xl text-md my-4 mb-20 text-white font-bold">
+                 {!alreadyInCart ? (
+                   <button
+                     className="flex gap-3 md:w-44 w-36 px-3  bg-blue-600 hover:bg-blue-700 md:py-3 py-2 shadow-lg rounded-lg hover:cursor-pointer h-full"
+                     onClick={handleAddToCart}
+                   >
+                     <FaCartShopping className="translate-y-1" /> Add to Cart
+                   </button>
+                 ) : (
+                   <button
+                     className="flex gap-3 px-3 md:px-6 md:py-3 py-2 hover:bg-red-700 bg-red-600 rounded-lg shadow-lg hover:cursor-pointer md:w-72 w-64 h-full"
+                     onClick={handleRemoveFromCart}
+                   >
+                     <TbShoppingCartCancel className="translate-y-1 md:text-2xl" />{" "}
+                     Remove From Cart
+                   </button>
+                 )}
+               </div>
+             )}
           </motion.div>
           {open && (
             <ImageModal

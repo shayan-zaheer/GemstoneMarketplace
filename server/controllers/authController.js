@@ -1,6 +1,6 @@
 const passport = require("passport");
 const User = require("../models/User");
-const upload = require("../utils/multer");
+const {upload} = require("../utils/multer");
 
 exports.signUp = async (request, response) => {
     try {
