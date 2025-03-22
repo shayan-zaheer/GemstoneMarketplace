@@ -29,17 +29,23 @@ contract GovernmentContract {
         return certifiedSellers[sellerWallet];
     }
 
-function verifySeller(
-    address sellerWallet,
-    string memory category
-) external view returns (bool) {
-    require(sellerWallet != address(0), "You are not the owner of this wallet"); // FIXED
-
-    for (uint8 i = 0; i < certifiedSellers[sellerWallet].length; i++) {
-        if (keccak256(abi.encodePacked(certifiedSellers[sellerWallet][i])) == keccak256(abi.encodePacked(category))) {
-            return true;
+    function verifySeller(
+        address sellerWallet,
+        string memory category
+    ) external view returns (bool) {
+        require(
+            sellerWallet != address(0),
+            "You are not the owner of this wallet"
+        );
+        for (uint8 i = 0; i < certifiedSellers[sellerWallet].length; i++) {
+            if (
+                keccak256(
+                    abi.encodePacked(certifiedSellers[sellerWallet][i])
+                ) == keccak256(abi.encodePacked(category))
+            ) {
+                return true;
+            }
         }
+        return false;
     }
-    return false;
-}
 }

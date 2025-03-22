@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { Form } from "@/components/ui/form";
 import FormInput from "@/components/Form/FormInput";
 import FormButton from "@/components/FormButton";
@@ -8,6 +8,7 @@ import PizZip from "pizzip";
 import Docxtemplater from "docxtemplater";
 import { saveAs } from "file-saver";
 import { registerSeller, getSellerByWallet } from "@/services/blockchain";
+import toast, { Toaster } from "react-hot-toast";
 
 const GovernmentDashboard = () => {
     const form = useForm({
@@ -16,7 +17,7 @@ const GovernmentDashboard = () => {
             ownerName: "",
             walletAddress: "",
             certificate: null,
-            sellerWallet: null
+            sellerWallet: "",
         },
     });
 
@@ -25,54 +26,77 @@ const GovernmentDashboard = () => {
     };
 
     const onSubmit = async (data) => {
-        if (!data.certificate) {
-            alert("Please upload a DOCX template first!");
-            return;
-        }
-
-        const reader = new FileReader();
-        reader.onload = function (event) {
-            try {
-                const content = event.target.result;
-                const zip = new PizZip(content);
-                const doc = new Docxtemplater(zip, {
-                    delimiters: { start: "{{", end: "}}" },
-                });
-                doc.setData({
-                    NAME: data.ownerName,
-                    DATE: new Date().toLocaleDateString(),
-                    CATEGORY: data.categoryName,
-                    ADDRESS: data.walletAddress,
-                });
-                doc.render();
-                const blob = doc.getZip().generate({ type: "blob" });
-                saveAs(blob, "certificate.docx");
-            } catch (error) {
-                console.error("Error rendering document", error);
+        try {
+            if (!data.certificate) {
+                alert("Please upload a valid DOCX template first!");
+                return;
             }
-        };
-        reader.readAsBinaryString(data.certificate);
 
-        await registerSeller({
-            sellerWallet: data.walletAddress,
-            category: data.categoryName,
-        });
+            const hash = await registerSeller({
+                sellerWallet: data.walletAddress,
+                category: data.categoryName,
+            });
+
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                try {
+                    const content = event.target.result;
+                    const zip = new PizZip(content);
+                    const doc = new Docxtemplater(zip, {
+                        delimiters: { start: "{{", end: "}}" },
+                    });
+
+                    doc.setData({
+                        NAME: data.ownerName,
+                        DATE: new Date().toLocaleDateString(),
+                        CATEGORY: data.categoryName,
+                        ADDRESS: data.walletAddress,
+                        HASH: hash || "N/A",
+                    });
+
+                    doc.render();
+                    const blob = doc.getZip().generate({ type: "blob" });
+                    saveAs(blob, "certificate.docx");
+                } catch (error) {
+                    console.error(error);
+                }
+            };
+
+            reader.readAsArrayBuffer(data.certificate);
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     const getSeller = async () => {
         const address = form.watch("sellerWallet");
         const categories = await getSellerByWallet({ sellerWallet: address });
+        if (categories.length == 0) {
+            console.log("realest");
+            toast.error(
+                "This wallet address doesn't hold any gem selling certificate."
+            );
+        }
         console.log(categories);
     };
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white p-4">
+            <Toaster
+                position="bottom-center"
+                toastOptions={{
+                    style: { background: "#333", color: "white" },
+                }}
+            />
             <div className="w-full max-w-2xl bg-gray-800 shadow-lg rounded-lg p-6">
                 <h1 className="text-center text-3xl font-bold bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4] bg-clip-text text-transparent mb-6">
                     Government Certification Authority
                 </h1>
                 <Form {...form}>
-                    <form className="flex flex-col gap-y-4" onSubmit={form.handleSubmit(onSubmit)}>
+                    <form
+                        className="flex flex-col gap-y-4"
+                        onSubmit={form.handleSubmit(onSubmit)}
+                    >
                         <FormInput
                             control={form.control}
                             name="certificate"
@@ -109,7 +133,11 @@ const GovernmentDashboard = () => {
                             placeholder="Enter Wallet Address"
                             type="text"
                         />
-                        <FormButton text="Get Seller by Wallet" type="button" onClick={getSeller} />
+                        <FormButton
+                            text="Get Categories by Wallet"
+                            type="button"
+                            onClick={getSeller}
+                        />
                     </form>
                 </Form>
             </div>

@@ -13,7 +13,12 @@ const layout = ({ children }) => {
             <Provider store={store}>
                 <PersistGate loading={null} persistor={persistor}>
                     <Navbar />
-                    <Toaster position="bottom-center" />
+                    <Toaster
+                        position="bottom-center"
+                        toastOptions={{
+                            style: { background: "#333", color: "white" },
+                        }}
+                    />
                     {children}
                     <Footer />
                 </PersistGate>
