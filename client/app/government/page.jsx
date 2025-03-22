@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Form } from "@/components/ui/form";
 import FormInput from "@/components/Form/FormInput";
 import FormButton from "@/components/FormButton";
@@ -9,8 +9,14 @@ import Docxtemplater from "docxtemplater";
 import { saveAs } from "file-saver";
 import { registerSeller, getSellerByWallet } from "@/services/blockchain";
 import toast, { Toaster } from "react-hot-toast";
+import Loader from "@/components/Loader";
+import SellerCategories from "@/components/Modals/SellerCategories";
 
 const GovernmentDashboard = () => {
+    const [isLoading, setIsLoading] = useState(false);
+    const [categories, setCategories] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+
     const form = useForm({
         defaultValues: {
             categoryName: "",
@@ -31,6 +37,8 @@ const GovernmentDashboard = () => {
                 alert("Please upload a valid DOCX template first!");
                 return;
             }
+            
+            setIsLoading(true);
 
             const hash = await registerSeller({
                 sellerWallet: data.walletAddress,
@@ -63,21 +71,43 @@ const GovernmentDashboard = () => {
             };
 
             reader.readAsArrayBuffer(data.certificate);
+            setIsLoading(false);
         } catch (error) {
             console.error(error);
+            setIsLoading(false);
         }
     };
 
     const getSeller = async () => {
-        const address = form.watch("sellerWallet");
-        const categories = await getSellerByWallet({ sellerWallet: address });
-        if (categories.length == 0) {
-            console.log("realest");
-            toast.error(
-                "This wallet address doesn't hold any gem selling certificate."
-            );
+        try {
+            const address = form.watch("sellerWallet");
+            if(!address){
+                toast.error("Address can not be empty!");
+                return;
+            }
+            setIsLoading(true);
+
+            const categories = await getSellerByWallet({
+                sellerWallet: address,
+            });
+
+            if (categories.length == 0) {
+                toast.error(
+                    "This wallet address doesn't hold any gem selling certificate."
+                );
+                setIsLoading(false);
+                return;
+            }
+            
+            setCategories(categories);
+            setIsLoading(false);
+            setShowModal(true);
+        } catch (err) {
+            console.error(err);
+            toast.error(err.message);
+            setIsLoading(false);
+            setShowModal(false);
         }
-        console.log(categories);
     };
 
     return (
@@ -88,59 +118,67 @@ const GovernmentDashboard = () => {
                     style: { background: "#333", color: "white" },
                 }}
             />
-            <div className="w-full max-w-2xl bg-gray-800 shadow-lg rounded-lg p-6">
-                <h1 className="text-center text-3xl font-bold bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4] bg-clip-text text-transparent mb-6">
-                    Government Certification Authority
-                </h1>
-                <Form {...form}>
-                    <form
-                        className="flex flex-col gap-y-4"
-                        onSubmit={form.handleSubmit(onSubmit)}
-                    >
-                        <FormInput
-                            control={form.control}
-                            name="certificate"
-                            label="Upload Template"
-                            type="file"
-                            handleFileChange={handleFileChange}
-                        />
-                        <FormInput
-                            control={form.control}
-                            name="categoryName"
-                            label="Category Name"
-                            placeholder="Enter Category Name"
-                            type="text"
-                        />
-                        <FormInput
-                            control={form.control}
-                            name="ownerName"
-                            label="Owner Name"
-                            placeholder="Enter Owner Name"
-                            type="text"
-                        />
-                        <FormInput
-                            control={form.control}
-                            name="walletAddress"
-                            label="Wallet Address"
-                            placeholder="Enter Wallet Address"
-                            type="text"
-                        />
-                        <FormButton text="Submit Certification" type="submit" />
-                        <FormInput
-                            control={form.control}
-                            name="sellerWallet"
-                            label="Search Seller by Wallet"
-                            placeholder="Enter Wallet Address"
-                            type="text"
-                        />
-                        <FormButton
-                            text="Get Categories by Wallet"
-                            type="button"
-                            onClick={getSeller}
-                        />
-                    </form>
-                </Form>
-            </div>
+            {showModal && !isLoading && <SellerCategories categories={categories} showModal={showModal} setShowModal={setShowModal} />}
+            {isLoading ? (
+                <Loader />
+            ) : (
+                <div className="w-full max-w-2xl bg-gray-800 shadow-lg rounded-lg p-6">
+                    <h1 className="text-center text-3xl font-bold bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4] bg-clip-text text-transparent mb-6">
+                        Government Certification Authority
+                    </h1>
+                    <Form {...form}>
+                        <form
+                            className="flex flex-col gap-y-4"
+                            onSubmit={form.handleSubmit(onSubmit)}
+                        >
+                            <FormInput
+                                control={form.control}
+                                name="certificate"
+                                label="Upload Template"
+                                type="file"
+                                handleFileChange={handleFileChange}
+                            />
+                            <FormInput
+                                control={form.control}
+                                name="categoryName"
+                                label="Category Name"
+                                placeholder="Enter Category Name"
+                                type="text"
+                            />
+                            <FormInput
+                                control={form.control}
+                                name="ownerName"
+                                label="Owner Name"
+                                placeholder="Enter Owner Name"
+                                type="text"
+                            />
+                            <FormInput
+                                control={form.control}
+                                name="walletAddress"
+                                label="Wallet Address"
+                                placeholder="Enter Wallet Address"
+                                type="text"
+                            />
+                            <FormButton
+                                text="Submit Certification"
+                                type="submit"
+                            />
+                            <FormInput
+                                control={form.control}
+                                name="sellerWallet"
+                                label="Search Seller by Wallet"
+                                placeholder="Enter Wallet Address"
+                                type="text"
+                            />
+                            <FormButton
+                                text="Get Categories by Wallet"
+                                type="button"
+                                onClick={getSeller}
+                            />
+                        </form>
+                    </Form>
+                </div>
+            )}
         </div>
     );
 };
