@@ -1,6 +1,6 @@
 import { ethers } from "ethers";
-import address from "@/contracts/abis/contractAddress.json";
-import abi from "@/contracts/artifacts/contracts/Government.sol/GovernmentContract.json";
+import address from "@/abis/governmentContractAddress.json";
+import abi from "@/artifacts/contracts/Government.sol/GovernmentContract.json";
 
 const contractAddress = address.address;
 const contractAbi = abi.abi;
