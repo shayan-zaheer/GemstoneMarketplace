@@ -8,6 +8,7 @@ import PizZip from "pizzip";
 import Docxtemplater from "docxtemplater";
 import { saveAs } from "file-saver";
 import { registerSeller, getSellerByWallet } from "@/services/blockchain";
+import { verifySeller } from "@/services/gemBlockchain";
 import toast, { Toaster } from "react-hot-toast";
 import Loader from "@/components/Loader";
 import SellerCategories from "@/components/Modals/SellerCategories";
@@ -45,6 +46,7 @@ const GovernmentDashboard = () => {
                 category: data.categoryName,
             });
 
+           
             const reader = new FileReader();
             reader.onload = function (event) {
                 try {
