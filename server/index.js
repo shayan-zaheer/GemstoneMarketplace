@@ -5,6 +5,8 @@ const morgan = require("morgan");
 const gemsRoute = require("./routes/gemsRoutes");
 const authRoute = require("./routes/authRoutes");
 const userRoute = require("./routes/userRoutes");
+const payRoutes = require("./routes/paymentRoutes");
+const chRoutes = require("./routes/checkoutRoutes");
 const {startSQL} = require("./config/db");
 const configurePassport = require("./utils/passport");
 const cookieParser = require("cookie-parser");
@@ -28,6 +30,8 @@ app.use(morgan("dev"));
 app.use("/gems", gemsRoute);
 app.use("/auth", authRoute);
 app.use("/users", userRoute);
+app.use("/pay", payRoutes);
+app.use("/buy", chRoutes);
 
 startSQL();
 
