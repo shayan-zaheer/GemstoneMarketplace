@@ -14,7 +14,7 @@ import axios from "axios";
 const CheckoutForm = ({ makePayment }) => {
   const checkoutItem = useSelector((store) => store.checkout.checkoutItem);
   console.log(checkoutItem);
-  const subtotal = parseInt(checkoutItem.price);
+  const subtotal = +checkoutItem.price;
   const GST = subtotal * 0.15;
   const total = subtotal + GST;
   const products = [
