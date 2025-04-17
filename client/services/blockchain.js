@@ -29,7 +29,7 @@ const connectWallet = async () => {
     }
 };
 
-const getEthereumContract = async () => {
+const getEthereumContract = async (contAdd, contAbi) => {
     const ethereum = getEthereum();
     if (!ethereum) return;
 
@@ -41,7 +41,7 @@ const getEthereumContract = async () => {
 
     const provider = new ethers.BrowserProvider(ethereum);
     const signer = await provider.getSigner();
-    return new ethers.Contract(contractAddress, contractAbi, signer);
+    return new ethers.Contract(contAdd, contAbi, signer);
 };
 
 const registerSeller = async ({ sellerWallet, category }) => {
@@ -54,7 +54,7 @@ const registerSeller = async ({ sellerWallet, category }) => {
             return;
         }
 
-        const contract = await getEthereumContract();
+        const contract = await getEthereumContract(contractAddress,contractAbi);
         if (!contract) {
             console.error("Failed to load contract.");
             return;
@@ -66,7 +66,7 @@ const registerSeller = async ({ sellerWallet, category }) => {
         const provider = new ethers.BrowserProvider(ethereum);
         const txRes = await provider.getTransaction(tx.hash);
 
-        console.log("TXRES:", txRes);
+        // console.log("TXRES:", txRes);
 
         //if we want data from hash, we use the following line
         // const decodedData = contractInterface.parseTransaction({ data: txRes.data });
@@ -87,7 +87,7 @@ const getSellerByWallet = async ({ sellerWallet }) => {
             return;
         }
 
-        const contract = await getEthereumContract();
+        const contract = await getEthereumContract(contractAddress,contractAbi);
         if (!contract) {
             console.error("Failed to load contract.");
             return;
@@ -100,4 +100,4 @@ const getSellerByWallet = async ({ sellerWallet }) => {
     }
 };
 
-export { connectWallet, registerSeller, getSellerByWallet };
+export { connectWallet, registerSeller, getSellerByWallet,getEthereum,getEthereumContract };
