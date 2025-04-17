@@ -5,7 +5,9 @@ const checkoutController = require("../controllers/checkoutController");
 
 
 router
-    .route("/validatePayment").post(checkoutController.validate);
+    .route("/order/:orderId").get(checkoutController.getOrderByOrderId);
+router
+    .route("/order/bId/:buyerId").get(checkoutController.getOrdersByBuyer);
 router
     .route("/checkout").post(checkoutController.checkout);
 

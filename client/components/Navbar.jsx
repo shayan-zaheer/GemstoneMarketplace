@@ -87,6 +87,18 @@ const Navbar = () => {
                   </span>
                 </Link>
               </li>
+              <li className="h-16  px-4  flex items-center">
+                <Link
+                  href={"/myOrders"}
+                  className="relative transition duration-300 ease hover:scale-105"
+                >
+                  {" "}
+                  My Orders
+                  <span className="absolute -top-2 -right-4 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                    {cartItemsLength}
+                  </span>
+                </Link>
+              </li>
               <li
                 className="h-16 px-4 flex items-center cursor-pointer hover:scale-105"
                 onClick={handleLogout}
