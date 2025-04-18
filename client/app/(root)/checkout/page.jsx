@@ -15,6 +15,7 @@ const Checkout = () => {
 
 const makePayment = async(amount,orderId)=>{   
 console.log(amount,orderId)
+
   try{
 
     const safepay = new Safepay({
@@ -33,8 +34,8 @@ console.log(amount,orderId)
   const url = safepay.checkout.create({
       token,
       orderId:orderId,
-      cancelUrl: 'https://9772-125-62-89-94.ngrok-free.app/pay/cancelPayment',
-      redirectUrl: 'https://9772-125-62-89-94.ngrok-free.app/pay/approvePayment',
+      cancelUrl: 'http://localhost:3000/checkout',
+      redirectUrl: 'http://localhost:3000/myOrders',
       source: 'custom',
       webhooks: true
   })

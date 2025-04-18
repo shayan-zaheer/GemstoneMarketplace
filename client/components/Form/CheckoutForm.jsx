@@ -63,9 +63,11 @@ const CheckoutForm = ({ makePayment }) => {
         withCredentials: true
       })
 
-      console.log(res.data.order.orderId)
+      console.log(checkoutItem.price)
 
-      makePayment(checkoutItem.price*100,res.data.order.orderId)
+      let amt = +checkoutItem.price
+
+      makePayment(amt,res.data.order.orderId)
 
     }
     catch (e) {
