@@ -54,7 +54,7 @@ exports.login = (request, response, next) => {
                 status: "success",
                 message: "Login successful",
                 user: {
-                    id: user.userId,
+                    userId: user.userId,
                     email: user.email,
                 },
             });

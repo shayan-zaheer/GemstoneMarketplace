@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { cartActions } from "@/Store/cartSlice";
 import { useDispatch } from "react-redux";
+import { userActions } from "@/Store/userSlice";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -31,10 +32,10 @@ const LoginForm = () => {
         { withCredentials: true }
       );
       if (result.data.status == "success") {
-        dispatch(cartActions.setUser(result?.data?.user?.id));
+        dispatch(userActions.setUser(result?.data?.user));
+        dispatch(cartActions.setUser(result?.data?.user?.userId));
         toast.success("You're logged in!");
         console.log(result.data);
-        router.push("/");
       }
     } catch (error) {
       toast.error(error.message);
