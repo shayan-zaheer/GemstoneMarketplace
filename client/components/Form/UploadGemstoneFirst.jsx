@@ -99,7 +99,7 @@ const UploadGemstoneFirst = ({ setNext, receiveData }) => {
                         <FormInput
                             control={form.control}
                             name="price"
-                            label="Price (ETH)"
+                            label="Price (PKR)"
                             placeholder="Enter Gemstone Price"
                             type="number"
                         />

@@ -8,6 +8,10 @@ const sessionMiddleware = session({
     secret: "secret",
     saveUninitialized: false,
     resave: false,
+    // cookie: {
+    //     maxAge: 7 * 24 * 60 * 60 * 1000,
+    //     httpOnly: true
+    // }
 });
 
 const configurePassport = app => {

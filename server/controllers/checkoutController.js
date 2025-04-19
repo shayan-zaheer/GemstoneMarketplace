@@ -4,9 +4,10 @@ const Gem = require("../models/Gem");
 
 exports.checkout = async (req, res, next) => {
     try {
+
         const { gemId, sellerId } = req.body;
 
-        const buyerId = req.user?.userId;
+        const buyerId = req?.user?.userId;
 
         if (!buyerId || !gemId || !sellerId) {
             return res.status(400).json({ message: "Missing required fields: gemId, sellerId or user not authenticated" });

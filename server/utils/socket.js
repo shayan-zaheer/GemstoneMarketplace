@@ -22,20 +22,16 @@ function initializeSocket(server) {
     );
 
     io.on("connection", (socket) => {
-        const user = socket.handshake.session?.passport?.user;
+        const userId = socket.handshake.session?.passport?.user;
 
-        if (user) {
-            console.log("Authenticated user:", user);
-            clients.set(user.toString(), socket.id);
-        } else {
-            console.log("Unauthenticated socket attempt", socket.id);
+        if (userId) {
+            clients.set(userId.toString(), socket.id);
         }
 
         socket.on("disconnect", () => {
             for (const [key, value] of clients.entries()) {
                 if (value === socket.id) {
                     clients.delete(key);
-                    console.log(`User with ID ${key} has disconnected`);
                     break;
                 }
             }
@@ -46,18 +42,13 @@ function initializeSocket(server) {
 function getIO() {
     if (!io) {
         throw new Error(
-            "Socket.io is not initialized. Call initializeSocket(server) first."
+            "Socket.io not initialized. Call initializeSocket(server)."
         );
     }
     return io;
 }
 
 function getClients() {
-    if (!clients) {
-        throw new Error(
-            "Clients map is not initialized. Ensure the server has called initializeSocket(server)."
-        );
-    }
     return clients;
 }
 

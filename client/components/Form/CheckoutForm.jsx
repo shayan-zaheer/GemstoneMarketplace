@@ -53,10 +53,9 @@ const CheckoutForm = ({ makePayment }) => {
     try {
       const url = 'http://localhost:8000/buy/checkout'
 
-      const gemId = checkoutItem.id
-      const sellerId = checkoutItem.owner.userId
+      const gemId = checkoutItem.id;
+      const sellerId = checkoutItem.owner.userId;
 
-    
       const res = await axios.post(url, {
         gemId, sellerId
       }, {

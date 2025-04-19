@@ -10,12 +10,99 @@ import axios from "axios";
 import { userActions } from "@/Store/userSlice";
 import { store } from "@/Store";
 import { cartActions } from "@/Store/cartSlice";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
     const dispatch = useDispatch();
+    const router = useRouter();
     const user = useSelector((store) => store.user.user);
     const cartItems = useSelector((store) => store.cart.cartItems);
     const [cartItemsLength, setCartItemsLength] = useState(0);
+
+    const handleSessionExpiration = () => {
+        const currentUser = store.getState().cart.userId;
+        if (currentUser) {
+            const cart = store.getState().cart.cartItems;
+            localStorage.setItem(
+                `cart_${currentUser}`,
+                JSON.stringify(cart)
+            );
+        }
+        dispatch(cartActions.clearCart());
+        dispatch(userActions.removeSession());
+        
+        toast.error("Your session has expired. Please log in again.", {
+            duration: 4000,
+            position: "top-center",
+        });
+    };
+
+    useEffect(() => {
+        if (user) {
+            const validateSession = async () => {
+                try {
+                    const response = await axios.get(
+                        `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/check-session`,
+                        { withCredentials: true }
+                    );
+                    
+                } catch (error) {
+                    if (error.response?.status === 401) {
+                        console.log("Session expired, logging out");
+                        handleSessionExpiration();
+                    }
+                }
+            };
+            
+            validateSession();
+            
+            const sessionCheckInterval = setInterval(validateSession, 15 * 60 * 1000);
+            
+            return () => {
+                clearInterval(sessionCheckInterval);
+            };
+        }
+    }, [user, dispatch]);
+
+    useEffect(() => {
+        if (user) {
+            const validateSession = async () => {
+                try {
+                    const response = await axios.get(
+                        `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/check-session`,
+                        { withCredentials: true }
+                    );
+
+                } catch (error) {
+                    if (error.response?.status === 401) {
+                        console.log("Session expired, logging out");
+                        const currentUser = store.getState().cart.userId;
+                        if (currentUser) {
+                            const cart = store.getState().cart.cartItems;
+                            localStorage.setItem(
+                                `cart_${currentUser}`,
+                                JSON.stringify(cart)
+                            );
+                        }
+                        dispatch(cartActions.clearCart());
+                        dispatch(userActions.removeSession());
+                    }
+                }
+            };
+
+            validateSession();
+
+            const sessionCheckInterval = setInterval(
+                validateSession,
+                15 * 60 * 1000
+            );
+
+            return () => {
+                clearInterval(sessionCheckInterval);
+            };
+        }
+    }, [user, dispatch]);
 
     useEffect(() => {
         if (user?.id) {
@@ -56,11 +143,39 @@ const Navbar = () => {
                 }
                 dispatch(cartActions.clearCart());
                 dispatch(userActions.removeSession());
+                router.push("/");
             }
         } catch (err) {
             console.error(err);
         }
     };
+
+    useEffect(() => {
+        const handleVisibilityChange = () => {
+            if (document.visibilityState === 'visible' && user) {
+                const validateSession = async () => {
+                    try {
+                        await axios.get(
+                            `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/check-session`,
+                            { withCredentials: true }
+                        );
+                    } catch (error) {
+                        if (error.response?.status === 401) {
+                            handleSessionExpiration();
+                        }
+                    }
+                };
+                
+                validateSession();
+            }
+        };
+        
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+        
+        return () => {
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+        };
+    }, [user, dispatch]);
 
     const [openSearch, setOpenSearch] = useState(false);
     const [openMenu, setOpenMenu] = useState(false);
@@ -109,6 +224,15 @@ const Navbar = () => {
                                     <span className="absolute -top-2 -right-4 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
                                         {cartItemsLength}
                                     </span>
+                                </Link>
+                            </li>
+                            <li className="h-16  px-4  flex items-center">
+                                <Link
+                                    href={"/myOrders"}
+                                    className="relative transition duration-300 ease hover:scale-105"
+                                >
+                                    {" "}
+                                    My Orders
                                 </Link>
                             </li>
                             <li
@@ -230,6 +354,17 @@ const Navbar = () => {
                                             <span className="absolute -top-2 -right-4 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
                                                 {cartItemsLength}
                                             </span>
+                                        </Link>
+                                    </li>
+                                    <li
+                                        className="h-16 border-b px-4 flex items-center"
+                                        onClick={() => setOpenMenu(false)}
+                                    >
+                                        <Link
+                                            href={`/myOrders`}
+                                            className="responsive-menu-links"
+                                        >
+                                            My Orders
                                         </Link>
                                     </li>
                                     <li
