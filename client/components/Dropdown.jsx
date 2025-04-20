@@ -13,16 +13,18 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-export function DropdownMenuRadioGroupDemo({ ddText, valuesText, values, sortBy, setSortBy }) {
+export function DropdownMenuRadioGroupDemo({ ddText, valuesText, values, stateValue, setStateValue }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" className="w-36 text-md font-bold bg-transparent text-white">
-        <MdSort/> {ddText}
+        <div className={`flex flex-col h-full justify-center items-center rounded-lg p-4 bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4]  animate-gradient p-[0.1rem] `}>
+        <Button variant="outline" className="sm:w-24 w-20 md:w-36 text-xs sm:text-sm md:text-md bg-[#1b1c20] border-none font-bold hover:shadow-[0_0_8px_0.01rem_#00E8FC] hover:bg-[#1b1c20] hover:text-white text-white">
+        <MdSort className="text-white "/> {ddText}
         </Button>
+        </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 border bg-[#212226] text-white border-white">
-        <DropdownMenuRadioGroup value={sortBy} onValueChange={setSortBy} className="text-white">
+        <DropdownMenuRadioGroup value={stateValue} onValueChange={setStateValue} className="text-white">
           {values.map((val, index) => (
             <DropdownMenuRadioItem key={val} value={valuesText[index]}>
               {val}

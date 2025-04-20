@@ -9,6 +9,8 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { DropdownMenuRadioGroupDemo } from "../Dropdown";
+import { useState } from "react";
 
 const data = [
   { day: "1", revenue: 120 },
@@ -44,11 +46,31 @@ const data = [
 ];
 
 const RevenueTrendChart = () => {
+  const [finalValue, setFinalValue] = useState("Sales");
+  const [month, setMonth] = useState("January");
   return (
-    <div className="bg-transparent pb-12 pt-4 px-4 rounded-xl w-full  md:h-[29rem]">
+    <div className="bg-transparent pb-12 pt-4 px-4 rounded-xl w-full  md:h-[29rem] relative">
+      <div className="absolute top-0 left-8 flex md:justify-end  justify-center mt-4">
+        <DropdownMenuRadioGroupDemo
+          ddText={month}
+          valuesText={["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]}
+          values={["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]}
+          stateValue={month}
+          setStateValue={setMonth}
+        />
+      </div>
       <h2 className="bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4]  animate-gradient text-transparent bg-clip-text lg:text-3xl text-xl font-semibold mb-4 text-center">
-        Revenue Trend
+        {finalValue == "Revenue" ? "Revenue Trend" : "Sales Trend"}
       </h2>
+      <div className="absolute top-0 right-4 flex md:justify-end  justify-center mt-4">
+        <DropdownMenuRadioGroupDemo
+          ddText={finalValue}
+          valuesText={["Sales", "Revenue"]}
+          values={["Sales", "Revenue"]}
+          stateValue={finalValue}
+          setStateValue={setFinalValue}
+        />
+      </div>
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={data}>
           <defs>

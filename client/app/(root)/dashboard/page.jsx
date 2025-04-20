@@ -37,7 +37,7 @@ const page = () => {
   ];
   return (
     <div className="relative top-20 mb-20 bg-[#1a1c1ff8] text-white min-h-screen p-8">
-      <div className="flex justify-center items-center h-20 w-full flex-col mb-8 ">
+      <div className="flex justify-center items-center h-20 w-full flex-col mb-4 ">
         <MdSpaceDashboard  className="text-white w-10 h-10 lg:w-20 lg:h-20" />
         <div className=" flex items-center justify-center max-sm:w-11/12 sm:w-9/12 md:w-10/12  gap-x-2 mt-2">
           <div className="flex-grow border-t-4 border-gray-300"></div>
@@ -49,14 +49,14 @@ const page = () => {
       </div>
       <div className="grid md:grid-cols-4 grid-cols-1 auto-rows-auto gap-2 ">
         {cardDetails.map((card, index) => (
-          <div key={index} className="md:h-48 h-32">
+          <div key={index} className="md:h-40 h-32">
             <DashboardCard card={card} />
           </div>
         ))}
         <div className="md:row-span-2 md:col-span-3 bg-[#1b1c20] rounded-lg">
           <DashboardLine />
         </div>
-        <div className="md:row-span-2 bg-[#1b1c20] rounded-lg p-4">
+        <div className="bg-[#1b1c20] md:row-span-2 rounded-lg p-4">
           <PieChart />
         </div>
       </div>

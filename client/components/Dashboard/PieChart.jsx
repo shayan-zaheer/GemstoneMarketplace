@@ -1,5 +1,7 @@
 "use client";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
+import { DropdownMenuRadioGroupDemo } from "../Dropdown";
+import { useState } from "react";
 
 const COLORS = [
   "#00E8FC", // Cyan (matches from-[#00E8FC])
@@ -21,12 +23,19 @@ const DonutChart = () => {
     { name: "Sapphire", value: 2200 },
     { name: "Opal", value: 3000 },
   ];
-  const renderCustomLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
+  const renderCustomLabel = ({
+    cx,
+    cy,
+    midAngle,
+    innerRadius,
+    outerRadius,
+    percent,
+  }) => {
     const RADIAN = Math.PI / 180;
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
     const x = cx + radius * Math.cos(-midAngle * RADIAN);
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
-  
+
     return (
       <text
         x={x}
@@ -41,14 +50,23 @@ const DonutChart = () => {
       </text>
     );
   };
-  
+  const [finalValue, setFinalValue] = useState("Total");
   return (
     <div>
-      <h2 className="bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4]  animate-gradient text-transparent bg-clip-text lg:text-3xl text-xl font-semibold mb-4 text-center">
+      <h2 className="relative bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4]  animate-gradient text-transparent bg-clip-text lg:text-3xl text-xl font-semibold mb-4 text-center">
         Revenue Per Category
       </h2>
+      <div className="top-0 left-8 flex md:justify-center  justify-center mt-4">
+              <DropdownMenuRadioGroupDemo
+                ddText={finalValue}
+                valuesText={["Total", "Average"]}
+                values={["Total", "Average"]}
+                stateValue={finalValue}
+                setStateValue={setFinalValue}
+              />
+            </div>
       <div className="w-full flex justify-center">
-        <PieChart width={400} height={400}>
+        <PieChart width={400} height={320}>
           <Pie
             data={data}
             cx="50%"
@@ -65,6 +83,8 @@ const DonutChart = () => {
               <Cell
                 key={`cell-${index}`}
                 fill={COLORS[index % COLORS.length]}
+                stroke=""
+                strokeWidth={2}
               />
             ))}
           </Pie>
