@@ -8,11 +8,13 @@ import FormInput from "./FormInput";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import CartTotal from "../CartTotal";
 import { useSelector } from "react-redux";
+import axios from "axios";
 
-const CheckoutForm = () => {
+
+const CheckoutForm = ({ makePayment }) => {
   const checkoutItem = useSelector((store) => store.checkout.checkoutItem);
   console.log(checkoutItem);
-  const subtotal = parseInt(checkoutItem.price);
+  const subtotal = +checkoutItem.price;
   const GST = subtotal * 0.15;
   const total = subtotal + GST;
   const products = [
@@ -40,16 +42,47 @@ const CheckoutForm = () => {
       paymentMethod: "cod",
     },
   });
-  const onSubmit = (data) => {
-    console.log("Form data", data);
+  const onSubmit = async (data) => {
+    console.log("PLACING")
+    await makePayment()
   };
+
+
+  const handleCheckout = async () => {
+
+    try {
+      const url = 'http://localhost:8000/buy/checkout'
+
+      const gemId = checkoutItem.id
+      const sellerId = checkoutItem.owner.userId
+
+    
+      const res = await axios.post(url, {
+        gemId, sellerId
+      }, {
+        withCredentials: true
+      })
+
+      console.log(res.data.order.orderId)
+
+      makePayment(checkoutItem.price*100,res.data.order.orderId)
+
+    }
+    catch (e) {
+      console.log(e)
+    }
+
+
+  }
+
+
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-4 mx-auto p-4 border rounded-lg text-white max-sm:w-11/12 sm:w-11/12 flex flex-col gap-y-4 md:flex-row gap-x-4 lg:w-9/12"
       >
-        <div className="w-full h-auto p-2 flex flex-col gap-y-2">
+        {/* <div className="w-full h-auto p-2 flex flex-col gap-y-2">
           <FormInput
             control={form.control}
             name="name"
@@ -92,7 +125,7 @@ const CheckoutForm = () => {
             label="Postal Code"
             placeholder="Enter Your Postal Code"
           />
-        </div>
+        </div> */}
         <div className="w-full h-fit bg-[#2a2c2f9f] p-4 rounded-lg  md:w-8/12">
           <h1 className="text-2xl font-semibold mb-4">Order Summary</h1>
           <div className="w-full min-h-20  flex flex-col gap-y-3  mb-3 ">
@@ -137,7 +170,7 @@ const CheckoutForm = () => {
             </label>
           </RadioGroup>
           <button
-            type="submit"
+            onClick={() => handleCheckout()}
             className="relative px-6 py-2 font-semibold text-white bg-transparent border border-white hover:border-transparent overflow-hidden group rounded-sm mt-2 mx-auto w-full"
           >
             <span className="absolute inset-0 bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4] transition-all duration-300 ease-out transform scale-x-0 origin-left group-hover:scale-x-100"></span>

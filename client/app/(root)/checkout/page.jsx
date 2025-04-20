@@ -5,8 +5,48 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { useSelector } from "react-redux";
+import { Safepay } from '@sfpy/node-sdk'
+import { useRouter } from "next/navigation";
+
 
 const Checkout = () => {
+
+  const router = useRouter()
+
+const makePayment = async(amount,orderId)=>{   
+console.log(amount,orderId)
+  try{
+
+    const safepay = new Safepay({
+      environment: 'sandbox',
+      apiKey: 'sec_53835f34-4c24-43ba-8ac8-f0bd25437e2f',
+      v1Secret: 'bar',
+      webhookSecret: '9c6f91a0823036691448fd7a0f280136e8ad26009c72653753ea6e80366e0500'
+  })
+  
+  const { token } = await safepay.payments.create({
+      currency: "PKR",
+      amount:amount  
+  })
+  // Pass 'token' to create checkout link
+  
+  const url = safepay.checkout.create({
+      token,
+      orderId:orderId,
+      cancelUrl: 'https://9772-125-62-89-94.ngrok-free.app/pay/cancelPayment',
+      redirectUrl: 'https://9772-125-62-89-94.ngrok-free.app/pay/approvePayment',
+      source: 'custom',
+      webhooks: true
+  })
+
+  console.log(url,"PAY HERE")
+  router.push(url)
+}
+catch(e){
+  console.log(e)
+}
+ }  
+
   const checkoutItem = useSelector((store) => store.checkout.checkoutItem);
   const isEmpty = !checkoutItem || Object.keys(checkoutItem).length === 0;
   return (
@@ -21,7 +61,7 @@ const Checkout = () => {
               Billing Details
             </h1>
           </div>
-          <CheckoutForm />
+          <CheckoutForm makePayment={makePayment}/>
         </>
       ) : (
         <div className="w-full h-[65vh]  flex items-center justify-center flex-col mt-10">
