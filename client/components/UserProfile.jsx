@@ -9,13 +9,13 @@ const getUserById = async (id) => {
     );
     return result.data.user;
   } catch (err) {
+    console.log(err)
     return null;
   }
 };
 
 const UserProfile = async ({ userid }) => {
   const user = await getUserById(userid);
-
   return (
     <div className="min-h-content relative top-20 mb-20 bg-[#1a1c1ff8]">
       <div className="flex flex-col md:flex-row gap-[0.06rem]  bg-gradient-to-b from-[#00E8FC] via-[#D400A5] to-[#6A00F4]">
@@ -29,18 +29,18 @@ const UserProfile = async ({ userid }) => {
           <div className=" flex flex-col mx-auto my-8">
             <div className="w-72">
               <img
-                src={user.profileImage}
+                src={user?.profileImage}
                 className="border rounded-full shadow-lg"
                 alt=""
               />
               <span className="flex justify-center text-white font-semibold mt-4  text-3xl">
-                {user.name}
+                {user?.name}
               </span>
               <span className="flex items-center justify-center text-gray-300 italic text-md leading-tight mt-2 font-medium">
-                {user.residenceAddress}
+                {user?.residenceAddress}
               </span>
               <span className="flex items-center justify-center text-gray-300 italic text-sm leading-tight mt-2 font-medium">
-                {user.walletAddress}
+                {user?.walletAddress}
               </span>
             </div>
             <div className="flex gap-6 mt-5 ">
