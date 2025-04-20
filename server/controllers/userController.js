@@ -15,7 +15,7 @@ exports.getUserById = async(request, response) => {
                         {
                             model: User,
                             as: "owner",
-                            attributes: ["name"],
+                            attributes: ["userId, name"],
                         }
                     ]
                 },
@@ -27,7 +27,7 @@ exports.getUserById = async(request, response) => {
                         {
                             model: User,
                             as: "owner",
-                            attributes: ["name"],
+                            attributes: ["userId, name"],
                         }
                     ]
                 },
