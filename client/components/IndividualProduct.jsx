@@ -103,7 +103,7 @@ const IndividualProduct = ({ productID }) => {
               {gem.name}
             </h1>
             <span className="mt-1 text-white text-3xl font-semibold">
-              {gem.price}ETH
+              {gem.price}PKR
             </span>
             <div className="md:mt-8 mt-4">
               <p className="text-slate-300 md:text-sm text-[0.65rem] italic text-justify">

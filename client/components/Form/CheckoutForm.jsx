@@ -53,19 +53,20 @@ const CheckoutForm = ({ makePayment }) => {
     try {
       const url = 'http://localhost:8000/buy/checkout'
 
-      const gemId = checkoutItem.id
-      const sellerId = checkoutItem.owner.userId
+      const gemId = checkoutItem.id;
+      const sellerId = checkoutItem.owner.userId;
 
-    
       const res = await axios.post(url, {
         gemId, sellerId
       }, {
         withCredentials: true
       })
 
-      console.log(res.data.order.orderId)
+      console.log(checkoutItem.price)
 
-      makePayment(checkoutItem.price*100,res.data.order.orderId)
+      let amt = +checkoutItem.price
+
+      makePayment(amt,res.data.order.orderId)
 
     }
     catch (e) {

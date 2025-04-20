@@ -15,9 +15,6 @@ const cartSlice = createSlice({
     },
     setUser: (state, action) => {
       state.userId = action.payload;
-      const savedCart = localStorage.getItem(`cart_${state.userId}`);
-      console.log(savedCart);
-      state.cartItems = savedCart ? JSON.parse(savedCart) : [];
     }
   }
 });

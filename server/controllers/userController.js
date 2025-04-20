@@ -19,6 +19,18 @@ exports.getUserById = async(request, response) => {
                         }
                     ]
                 },
+                {
+                    model: Gem,
+                    as: "soldGemstones",
+                    attributes: ["id", "name", "price", "description", "image"],
+                    include: [
+                        {
+                            model: User,
+                            as: "owner",
+                            attributes: ["name"],
+                        }
+                    ]
+                },
             ],
         });
 

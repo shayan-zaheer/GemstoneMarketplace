@@ -58,14 +58,34 @@ Gem.belongsTo(User, {
         name: "userId",
         allowNull: false,
     },
-}); // gem belongs to single user
-User.hasMany(Gem, { foreignKey: "userId", as: "ownedGemstones", onDelete: "CASCADE" }); // user has many gems
+});
+
+Gem.belongsTo(User, {
+    as: "seller",
+    foreignKey: {
+        name: "soldBy",
+        allowNull: true,
+    },
+});
+
+User.hasMany(Gem, {
+    foreignKey: "userId",
+    as: "ownedGemstones",
+    onDelete: "CASCADE",
+});
+
+User.hasMany(Gem, {
+    foreignKey: "soldBy",
+    as: "soldGemstones",
+    onDelete: "SET NULL",
+});
 
 Gem.hasMany(Img, {
     foreignKey: "gemId",
     as: "moreImages",
     onDelete: "CASCADE",
-}); // Automatically delete related images
+});
+
 Img.belongsTo(Gem, {
     foreignKey: {
         name: "gemId",

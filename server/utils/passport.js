@@ -4,13 +4,18 @@ const bcrypt = require("bcryptjs");
 const session = require("express-session");
 const User = require("../models/User");
 
-const configurePassport = app => {
-    app.use(session({
-        secret: "secret",
-        saveUninitialized: false,
-        resave: false
-    }));
+const sessionMiddleware = session({
+    secret: "secret",
+    saveUninitialized: false,
+    resave: false,
+    // cookie: {
+    //     maxAge: 7 * 24 * 60 * 60 * 1000,
+    //     httpOnly: true
+    // }
+});
 
+const configurePassport = app => {
+    app.use(sessionMiddleware);
     app.use(passport.initialize());
     app.use(passport.session());
 
@@ -48,4 +53,4 @@ const configurePassport = app => {
     });
 };
 
-module.exports = configurePassport;
+module.exports = { configurePassport, sessionMiddleware };

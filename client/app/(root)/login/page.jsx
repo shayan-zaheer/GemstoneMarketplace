@@ -1,15 +1,19 @@
 "use client";
 import LoginForm from "@/components/Form/LoginForm";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 const Login = () => {
+  const router = useRouter();
   const user = useSelector((state) => state.user.user);
 
-  if (user) {
-    window.location.href = "http://localhost:3000/";
-  }
+  useEffect(() => {
+    if (user) {
+      router.replace("/");
+    }
+  }, [user, router]);
 
   const [isClicked, setIsClicked] = useState(false);
 

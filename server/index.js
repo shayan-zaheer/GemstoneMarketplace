@@ -2,13 +2,15 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
+const http = require("http");
 const gemsRoute = require("./routes/gemsRoutes");
 const authRoute = require("./routes/authRoutes");
 const userRoute = require("./routes/userRoutes");
 const payRoutes = require("./routes/paymentRoutes");
 const chRoutes = require("./routes/checkoutRoutes");
-const {startSQL} = require("./config/db");
-const configurePassport = require("./utils/passport");
+const { startSQL } = require("./config/db");
+const { initializeSocket } = require("./utils/socket");
+const { configurePassport } = require("./utils/passport");
 const cookieParser = require("cookie-parser");
 
 const app = express();
@@ -16,13 +18,15 @@ const PORT = process.env.PORT || 8000;
 
 configurePassport(app);
 
-app.use(cors({
-    origin: ["http://localhost:3000"],
-    credentials: true,
-}));
+app.use(
+    cors({
+        origin: ["http://localhost:3000"],
+        credentials: true,
+    })
+);
 
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use(morgan("dev"));
@@ -35,6 +39,11 @@ app.use("/buy", chRoutes);
 
 startSQL();
 
-app.listen(PORT, () => {
-    console.log(`Server is running on PORT ${PORT}`);
+const server = http.createServer(app);
+
+initializeSocket(server);
+
+server.listen(PORT, () => {
+    console.log(`Server is listening on PORT ${PORT}`);
+    console.log(`Running in ${process.env.NODE_ENV} mode`);
 });

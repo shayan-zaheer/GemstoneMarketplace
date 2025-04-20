@@ -1,6 +1,6 @@
 const passport = require("passport");
 const User = require("../models/User");
-const {upload} = require("../utils/multer");
+const { upload } = require("../utils/multer");
 
 exports.signUp = async (request, response) => {
     try {
@@ -54,8 +54,13 @@ exports.login = (request, response, next) => {
                 status: "success",
                 message: "Login successful",
                 user: {
-                    id: user.userId,
+                    userId: user.userId,
                     email: user.email,
+                    residenceAddress: user.residenceAddress,
+                    contact: user.contact,
+                    profileImage: user.profileImage,
+                    cnic: user.cnic,
+                    walletAddress: user.walletAddress,
                 },
             });
         });
@@ -68,4 +73,18 @@ exports.logout = (request, response) => {
             .status(200)
             .json({ status: "success", message: "Logged out!" });
     });
+};
+
+exports.checkSession = async (request, response) => {
+    if (request.isAuthenticated()) {
+        return response.status(200).json({
+            status: "success",
+            message: "Session is valid",
+        });
+    } else {
+        return response.status(401).json({
+            status: "error",
+            message: "Session expired",
+        });
+    }
 };

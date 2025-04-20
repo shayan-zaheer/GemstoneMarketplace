@@ -46,4 +46,9 @@ const Order = sequelize.define("Order", {
     },
 });
 
+Order.belongsTo(Gem, { foreignKey: 'gemId' });
+Order.belongsTo(User, { as: 'Buyer', foreignKey: 'buyerId' });
+Order.belongsTo(User, { as: 'Seller', foreignKey: 'sellerId' });
+
+
 module.exports = Order;

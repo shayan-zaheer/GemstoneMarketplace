@@ -1,55 +1,73 @@
+const Gem = require("../models/Gem");
+const Order = require("../models/Order");
+const { getIO, getClients } = require("../utils/socket");
 
-const Order = require("../models/Order")
+exports.approveURL = async (req, res, next) => {
+    const { order_id } = req.body.data.notification.metadata;
+    try {
+        const io = getIO();
+        const clients = getClients();
 
-exports.approveURL = async(req, res, next) =>{
+        const paymentStatus = req.body.data.notification.state;
+        const transactionId = req.body.data.notification.tracker;
 
-    const {order_id} = req.body.data.notification.metadata
-    try{
+        const [updatedRowsCount, updatedOrders] = await Order.update(
+            { paymentStatus, transactionId },
+            {
+                where: { orderId: order_id },
+                returning: true,
+            }
+        );
 
-        
-        console.log(req.body.data.notification.metadata)
-        
-        
-        const resp = await Order.update(
-{paymentStatus:req.body.data.notification.state},
-{where:{
-    orderId: order_id
-}}
-    )
+        if (updatedRowsCount === 0 || !updatedOrders.length) {
+            return res.status(404).json({ message: "Order not found" });
+        }
 
+        const { buyerId, sellerId, gemId } = updatedOrders[0];
 
-   console.log("RES",resp)
-    
-    res.status(200).json({
-        data: order_id,
-        message:"PAYMENT SUCCESSFUL"
-        
-    })
-}
-catch(e){
-    console.log(e)
+        await Gem.update(
+            {
+                userId: buyerId,
+                soldBy: sellerId,
+            },
+            {
+                where: { id: gemId },
+            }
+        );
+
+        if (clients.has(buyerId)) {
+            io.to(clients.get(buyerId)).emit("paymentSuccess", {
+                orderId: order_id,
+                paymentStatus,
+                transactionId,
+            });
+        }
+
+        res.status(200).json({
+            data: order_id,
+            message: "PAYMENT SUCCESSFUL",
+        });
+    } catch (e) {
+        console.log(e);
+        res.status(400).json({
+            data: order_id,
+            message: e.message,
+        });
+    }
+};
+
+exports.declineURL = async (req, res, next) => {
+    console.log(req.body);
     res.status(400).json({
-        data: order_id,
-        message:e.message
-        
-    })
-    
-}
-}
+        data: { ...req.body },
+        message: "PAYMENT DECLINED",
+    });
+};
 
-exports.declineURL = async(req,res,next)=>{
-    console.log(req.body)
+exports.cancelURL = async (req, res, next) => {
+    console.log(req.body);
     res.status(400).json({
-        data: {...req.body},
-        message:"PAYMENT DECLINED"
-        
-    })
-}
-exports.cancelURL = async(req,res,next)=>{
-    console.log(req.body)
-    res.status(400).json({
-        data: {...req.body},
-        message:"PAYMENT CANCEL"
-
-    })
-}
+        data: { ...req.body },
+        message: "PAYMENT CANCEL",
+    });
+};
