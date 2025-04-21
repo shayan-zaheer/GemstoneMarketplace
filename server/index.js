@@ -12,6 +12,7 @@ const { startSQL } = require("./config/db");
 const { initializeSocket } = require("./utils/socket");
 const { configurePassport } = require("./utils/passport");
 const cookieParser = require("cookie-parser");
+const {sellGem,getHistory} = require("./blockchainInterface/sellGem");
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -36,6 +37,18 @@ app.use("/auth", authRoute);
 app.use("/users", userRoute);
 app.use("/pay", payRoutes);
 app.use("/buy", chRoutes);
+
+
+//just testing blockchain function
+app.get("/test",async (req,res)=>{
+   const data = await getHistory(1);
+//    const data = await sellGem(1,"0xE4336Ca3Aefa5Ce6457A8c36bE8842Ba8B309547");
+    res.status(200).json({
+        status:"Success",
+        message:"Hello",
+        data
+    })
+})
 
 startSQL();
 

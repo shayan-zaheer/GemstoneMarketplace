@@ -44,6 +44,10 @@ const Order = sequelize.define("Order", {
         type: DataTypes.STRING,
         allowNull: true,
     },
+    blockchainTxId:{
+        type: DataTypes.STRING,
+        allowNull: true,
+    }
 });
 
 Order.belongsTo(Gem, { foreignKey: 'gemId' });

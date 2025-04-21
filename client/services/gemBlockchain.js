@@ -7,7 +7,7 @@ const contractAddress = address.address;
 const contractAbi = abi.abi;
 const contractInterface = new ethers.Interface(GovAbi) 
 
-const verifySeller = async (txHash,walletAddress)=>{
+const verifySeller = async (txHash,category)=>{
 
     const ethereum = getEthereum();
     if (!ethereum) return;
@@ -31,9 +31,9 @@ const verifySeller = async (txHash,walletAddress)=>{
 
     //if we want data from hash, we use the following line
     const decodedData = contractInterface.parseTransaction({ data: txRes.data });
-    console.log("TXRES:", decodedData.args[0], address);
+    console.log("TXRES:", decodedData.args);
 
-    return decodedData.args[0].trim() == address.trim();
+    return decodedData.args[0].trim() == address.trim() && decodedData.args[0].trim().toLower() == category.trim().toLower();
 
 
 }
@@ -68,11 +68,11 @@ const uploadGemOnChain = async(gemId,category)=>{
         return;
             }
 
-            const tx = await contract.uploadGem(gemId, category)        
+            // const tx = await contract.sellGem(gemId, category)        
             await tx.wait()
 
 
 }
 
 
-export {verifySeller}
+export {verifySeller,uploadGemOnChain}

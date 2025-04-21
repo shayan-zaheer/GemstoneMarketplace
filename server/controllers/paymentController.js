@@ -1,5 +1,7 @@
+const { sellGem } = require("../blockchainInterface/sellGem");
 const Gem = require("../models/Gem");
 const Order = require("../models/Order");
+const User = require("../models/User");
 const { getIO, getClients } = require("../utils/socket");
 
 exports.approveURL = async (req, res, next) => {
@@ -34,6 +36,13 @@ exports.approveURL = async (req, res, next) => {
                 where: { id: gemId },
             }
         );
+
+        const newOwnerAddress = await User.findByPk(buyerId,{
+            select:['walletAddress']
+        })
+
+
+        if(paymentStatus.toLowerCase() == "paid") await sellGem(gemId,newOwnerAddress)
 
         if (clients.has(buyerId)) {
             io.to(clients.get(buyerId)).emit("paymentSuccess", {

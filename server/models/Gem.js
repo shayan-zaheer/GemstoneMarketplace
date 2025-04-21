@@ -46,6 +46,15 @@ const Gem = sequelize.define(
             type: DataTypes.TEXT,
             allowNull: true,
         },
+        txHash: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
+        isListed: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue:true
+        },
     },
     {
         timestamps: true,

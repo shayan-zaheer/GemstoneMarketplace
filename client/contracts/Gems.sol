@@ -43,7 +43,7 @@ contract GemstoneMarketplace {
         emit GemUploaded(_gemId, msg.sender);
     }
 
-    function sellGem(uint256 _gemId, address _newOwner) external onlyOwner(_gemId) {
+    function sellGem(uint256 _gemId, address _newOwner) external {
         require(_newOwner != address(0), "Invalid new owner");
 
         gems[_gemId].ownershipHistory.push(gems[_gemId].currentOwner);

@@ -1,7 +1,7 @@
 const hre = require("hardhat");
 const fs = require("fs");
 const path = require("path");
-const governmentContractAddress = require("../abis/governmentContractAddress.json")
+const governmentContractAddress = require("../abis/governmentContractAddress.json").address
 
 async function main() {
     // const governmentContractAddress = "0xb034a73Fe798421399b057BC603E018A328b607a";
