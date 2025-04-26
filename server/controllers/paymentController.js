@@ -5,6 +5,13 @@ const User = require("../models/User");
 const { getIO, getClients } = require("../utils/socket");
 
 exports.approveURL = async (req, res, next) => {
+    console.log(req.body.data)
+    if(req.body.data.notification.metadata){
+        return res.status(400).json({
+            status:"failed",
+            message:"Invalid Request"
+        })
+    }
     const { order_id } = req.body.data.notification.metadata;
     try {
         const io = getIO();
