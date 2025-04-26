@@ -7,9 +7,9 @@ const UploadGem = () => {
     const [next, setNext] = useState(false);
     const [gemData, setGemData] = useState("");
 
-    const receiveData = (data) => {
+    const receiveData = async(data) => {
       console.log("Receive Data",data)
-      setGemData(data);
+      setGemData(p=>data);
     }
 
   return (

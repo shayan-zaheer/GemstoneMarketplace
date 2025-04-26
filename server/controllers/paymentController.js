@@ -6,7 +6,7 @@ const { getIO, getClients } = require("../utils/socket");
 
 exports.approveURL = async (req, res, next) => {
     console.log(req.body.data)
-    if(req.body.data.notification.metadata){
+    if(!req.body.data.notification.metadata){
         return res.status(400).json({
             status:"failed",
             message:"Invalid Request"
@@ -49,9 +49,13 @@ exports.approveURL = async (req, res, next) => {
         })
 
 
-        if(paymentStatus.toLowerCase() == "paid") await sellGem(gemId,newOwnerAddress)
+        if(paymentStatus.toLowerCase() == "paid") {
+            const blockData = await sellGem(gemId,newOwnerAddress)
+            
+//from blockData extract blockchain transaction id and store in db
 
-        if (clients.has(buyerId)) {
+            console.log(blockData)
+            if (clients.has(buyerId)) {
             io.to(clients.get(buyerId)).emit("paymentSuccess", {
                 orderId: order_id,
                 paymentStatus,
@@ -63,6 +67,11 @@ exports.approveURL = async (req, res, next) => {
             data: order_id,
             message: "PAYMENT SUCCESSFUL",
         });
+    }
+    res.status(400).json({
+        data: order_id,
+        message: "PAYMENT FAILED",
+    });
     } catch (e) {
         console.log(e);
         res.status(400).json({

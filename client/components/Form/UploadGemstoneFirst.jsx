@@ -53,7 +53,9 @@ const UploadGemstoneFirst = ({ setNext, receiveData }) => {
             formData.append("moreImages", file);
         });
 
-        receiveData(formData);
+        await receiveData(formData);
+
+        
         setNext(true);
     };
     

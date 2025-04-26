@@ -8,6 +8,7 @@ const authRoute = require("./routes/authRoutes");
 const userRoute = require("./routes/userRoutes");
 const payRoutes = require("./routes/paymentRoutes");
 const chRoutes = require("./routes/checkoutRoutes");
+const adRoutes = require("./routes/adminRoutes");
 const { startSQL } = require("./config/db");
 const { initializeSocket } = require("./utils/socket");
 const { configurePassport } = require("./utils/passport");
@@ -37,11 +38,12 @@ app.use("/auth", authRoute);
 app.use("/users", userRoute);
 app.use("/pay", payRoutes);
 app.use("/buy", chRoutes);
+app.use("/admin", adRoutes);
 
 
 //just testing blockchain function
 app.get("/test",async (req,res)=>{
-   const data = await getHistory(1);
+   const data = await getHistory(10);
 //    const data = await sellGem(1,"0xE4336Ca3Aefa5Ce6457A8c36bE8842Ba8B309547");
     res.status(200).json({
         status:"Success",

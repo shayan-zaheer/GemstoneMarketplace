@@ -3,8 +3,8 @@ const Img = require("../models/Img");
 const User = require("../models/User");
 
 exports.uploadGem = async (request, response) => {
-    console.log("BODY:", request.body);
-    console.log("FILES:", request.files);
+    // console.log("BODY:", request.body);
+    // console.log("FILES:", request.files);
 
 
     try {
@@ -15,9 +15,10 @@ exports.uploadGem = async (request, response) => {
             path: f.path,
         }));
 
-        let payload = { ...request.body, image, coverImage, moreImages };
+        console.log(request)
+        let payload = { ...request.body, image, coverImage, moreImages,isListed:true };
 
-        console.log(payload);
+        // console.log(payload);
 
         const gem = await Gem.create(payload, {
             include: [{ model: Img, as: "moreImages" }],

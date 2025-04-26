@@ -12,19 +12,23 @@ const Checkout = () => {
 
     const makePayment = async (amount, orderId) => {
         console.log(amount, orderId);
-
+        // 8b121a0de795e4a68fb182ebb761f7f9c2a83f08c3446dcbb61198fd53231346
+        // 55158de7c3ff916318ee271bcd1a919e2c0a8566dfadb1c4b872213346e0ffab
         try {
             const safepay = new Safepay({
                 environment: "sandbox",
-                apiKey: process.env.NEXT_PUBLIC_SAFEPAY_API_KEY,
+                apiKey: "sec_53835f34-4c24-43ba-8ac8-f0bd25437e2f",
                 v1Secret: "bar",
-                webhookSecret: process.env.NEXT_PUBLIC_SAFEPAY_WEBHOOK_SECRET,
+                webhookSecret: "9c6f91a0823036691448fd7a0f280136e8ad26009c72653753ea6e80366e0500",
             });
 
-            const { token } = await safepay.payments.create({
+
+            const dt  = await safepay.payments.create({
                 currency: "PKR",
                 amount: amount,
             });
+            console.log(dt)
+            const { token }  = dt
 
             const url = safepay.checkout.create({
                 token,
