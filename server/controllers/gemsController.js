@@ -11,7 +11,7 @@ exports.uploadGem = async (request, response) => {
         console.log(JSON.stringify(request.files));
         const image = request.files["image"]?.[0]?.path;
         const coverImage = request.files["coverImage"]?.[0]?.path;
-        const moreImages = request.files["moreImages"].map((f) => ({
+        const moreImages = request.files["moreImages"]?.map((f) => ({
             path: f.path,
         }));
 

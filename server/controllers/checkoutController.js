@@ -57,7 +57,7 @@ exports.getOrderByOrderId = async (req, res, next) => {
       }
   
       res.status(200).json({
-        message: "Order fetched successfully",
+        status: "success",
         data: order,
       });
     } catch (e) {

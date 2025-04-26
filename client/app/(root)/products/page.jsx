@@ -60,8 +60,8 @@ const Products = () => {
           ddText="Sort By"
           valuesText={["createdAt", "price"]}
           values={["Newest", "Price"]}
-          sortBy={sortBy}
-          setSortBy={setSortBy}
+          stateValue={sortBy}
+          setStateValue={setSortBy}
         />
       </div>
       <motion.div

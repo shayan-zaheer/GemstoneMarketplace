@@ -4,6 +4,8 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import socket from "@/services/socket";
 import { cartActions } from "@/Store/cartSlice";
+import Loader from "@/components/Loader";
+import Link from "next/link";
 
 function page() {
     const [orders, setOrders] = useState([]);
@@ -60,7 +62,9 @@ function page() {
             <h1 className="text-3xl font-semibold mb-6">My Orders</h1>
 
             {loading ? (
-                <p className="text-lg">Loading orders...</p>
+                <div className="flex items-center justify-center h-[calc(100vh-8rem)]">
+                <Loader loading={loading} />
+            </div>
             ) : error ? (
                 <p className="text-red-500">{error}</p>
             ) : orders?.length === 0 ? (
@@ -68,49 +72,50 @@ function page() {
             ) : (
                 <div className="w-full max-w-4xl grid gap-4">
                     {orders.map((order) => (
-                        <div
-                            key={order.orderId}
-                            className="bg-[#2a2c2f9f] p-4 rounded-lg shadow-md border border-gray-700"
-                        >
-                            <div className="flex justify-between mb-2">
-                                <span className="font-semibold">Order ID:</span>
-                                <span className="text-sm text-gray-400">
-                                    {order.orderId}
-                                </span>
-                            </div>
-                            <div className="flex justify-between mb-2">
-                                <span className="font-semibold">Gem:</span>
-                                <span>{order.Gem?.name || "N/A"}</span>
-                            </div>
-                            <div className="flex justify-between mb-2">
-                                <span className="font-semibold">Price:</span>
-                                <span>${order.Gem?.price || "N/A"}</span>
-                            </div>
-                            <div className="flex justify-between mb-2">
-                                <span className="font-semibold">
-                                    Payment Status:
-                                </span>
-                                <span>{order.paymentStatus}</span>
-                            </div>
-                            <div className="flex justify-between mb-2">
-                                <span className="font-semibold">
-                                    Transaction ID:
-                                </span>
-                                <span>{order.transactionId || "Pending"}</span>
-                            </div>
-                            <div className="flex justify-between mb-2">
-                                <span className="font-semibold">
-                                    Transaction Timestamp:
-                                </span>
-                                <span>{order.createdAt || ""}</span>
-                            </div>
-                            <div className="flex justify-between">
-                                <span className="font-semibold">
-                                    Last Updated At:
-                                </span>
-                                <span>{order.updatedAt || ""}</span>
-                            </div>
-                        </div>
+                       <Link key={order.orderId} href={`/myOrders/${order.orderId}`}>
+                         <div
+                             className="bg-[#2a2c2f9f] p-4 rounded-lg shadow-md border border-gray-700"
+                         >
+                             <div className="flex justify-between mb-2">
+                                 <span className="font-semibold">Order ID:</span>
+                                 <span className="text-sm text-gray-400">
+                                     {order.orderId}
+                                 </span>
+                             </div>
+                             <div className="flex justify-between mb-2">
+                                 <span className="font-semibold">Gem:</span>
+                                 <span>{order.Gem?.name || "N/A"}</span>
+                             </div>
+                             <div className="flex justify-between mb-2">
+                                 <span className="font-semibold">Price:</span>
+                                 <span>${order.Gem?.price || "N/A"}</span>
+                             </div>
+                             <div className="flex justify-between mb-2">
+                                 <span className="font-semibold">
+                                     Payment Status:
+                                 </span>
+                                 <span>{order.paymentStatus}</span>
+                             </div>
+                             <div className="flex justify-between mb-2">
+                                 <span className="font-semibold">
+                                     Transaction ID:
+                                 </span>
+                                 <span>{order.transactionId || "Pending"}</span>
+                             </div>
+                             <div className="flex justify-between mb-2">
+                                 <span className="font-semibold">
+                                     Transaction Timestamp:
+                                 </span>
+                                 <span>{order.createdAt || ""}</span>
+                             </div>
+                             <div className="flex justify-between">
+                                 <span className="font-semibold">
+                                     Last Updated At:
+                                 </span>
+                                 <span>{order.updatedAt || ""}</span>
+                             </div>
+                         </div>
+                       </Link>
                     ))}
                 </div>
             )}
