@@ -39,7 +39,7 @@ const verifySeller = async (txHash,category)=>{
 }
 
 
-const uploadGemOnChain = async(gemId,category)=>{
+const uploadGemOnChain = async(gemId,category,txHash)=>{
     const ethereum = getEthereum();
     if (!ethereum) return;
 
@@ -55,6 +55,9 @@ const uploadGemOnChain = async(gemId,category)=>{
             await tx.wait()
             
         }
+        
+
+
         
         const sellGems = async(gemId,buyerAddress)=>{
     const ethereum = getEthereum();

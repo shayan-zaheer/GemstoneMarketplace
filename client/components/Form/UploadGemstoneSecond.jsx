@@ -24,26 +24,26 @@ const UploadGemstoneSecond = ({ setNext, gemData }) => {
     const onSubmit = async (data) => {
       console.log("FIRST PAGE DATA:", gemData);
       console.log("SECOND PAGE DATA:", data);
-      if(gemData.get("name").toLowerCase() != data?.category?.toLowerCase()){
-        toast.error("Your selected category is not correct!\nReview the certificate and try again.");
-        return;
-      }
-      // try {
-      //       const result = await axios.post(
-      //           `${process.env.NEXT_PUBLIC_BACKEND_URL}/gems`,
-      //           gemData,
-      //           {
-      //               withCredentials: true,
-      //               headers: { "Content-Type": "multipart/form-data" },
-      //           }
-      //       );
-      //       if (result?.data?.status == "success") {
-      //           toast.success("Your gem has been uploaded successfully!");
-      //       }
-      //   } catch (err) {
-      //       console.error(err);
-      //       toast.error(err.message);
-      //   }
+    //   if(gemData.get("name").toLowerCase() != data?.category?.toLowerCase()){
+    //     toast.error("Your selected category is not correct!\nReview the certificate and try again.");
+    //     return;
+    //   }
+      try {
+            const result = await axios.post(
+                `${process.env.NEXT_PUBLIC_BACKEND_URL}/gems`,
+                gemData,
+                {
+                    withCredentials: true,
+                    headers: { "Content-Type": "multipart/form-data" },
+                }
+            );
+            if (result?.data?.status == "success") {
+                toast.success("Your gem has been uploaded successfully!");
+            }
+        } catch (err) {
+            console.error(err);
+            toast.error(err.message);
+        }
     };
 
     return (
