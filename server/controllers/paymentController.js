@@ -53,8 +53,14 @@ exports.approveURL = async (req, res, next) => {
             const blockData = await sellGem(gemId,newOwnerAddress)
             
 //from blockData extract blockchain transaction id and store in db
-
-            console.log(blockData)
+console.log(blockData)
+await Order.update(
+    { blockchainTxId },
+    {
+        where: { orderId: order_id },
+       
+    }
+)
             if (clients.has(buyerId)) {
             io.to(clients.get(buyerId)).emit("paymentSuccess", {
                 orderId: order_id,
