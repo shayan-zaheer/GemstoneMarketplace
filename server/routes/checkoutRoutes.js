@@ -11,5 +11,8 @@ router
 router
     .route("/checkout").post(checkoutController.checkout);
 
+router.route("/verify/:orderId").patch(checkoutController.verifyOrderReceived);
+
+router.route("/review/:orderId").post(checkoutController.reviewOrder);
 
 module.exports = router;
