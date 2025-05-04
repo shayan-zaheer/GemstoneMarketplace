@@ -1,6 +1,7 @@
 
 const Order = require("../models/Order");
 const Gem = require("../models/Gem");
+const Review = require("../models/Review");
 
 exports.checkout = async (req, res, next) => {
     try {
@@ -106,3 +107,77 @@ exports.getOrderByOrderId = async (req, res, next) => {
       });
     }
   };
+
+  exports.verifyOrderReceived = async (req, res, next) => {
+    try {
+        const { orderId } = req.params;
+    
+        if (!orderId) {
+            return res.status(400).json({
+                message: "Order ID is required",
+            });
+        }
+    
+        const order = await Order.findOne({
+            where: { orderId },
+        });
+    
+        if (!order) {
+            return res.status(404).json({
+                message: "Order not found",
+            });
+        }
+    
+        order.isReceived = true;
+        await order.save();
+    
+        res.status(200).json({
+            message: "Order marked as received successfully",
+            data: order,
+        });
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({
+            message: "Internal server error",
+        });
+    }
+}
+
+exports.reviewOrder = async (req, res, next) => {
+    try {
+        const { orderId } = req.params;
+        const { rating, comment } = req.body;
+
+        if (!orderId) {
+            return res.status(400).json({
+                message: "Order ID is required",
+            });
+        }
+
+        const order = await Order.findOne({
+            where: { orderId },
+        });
+
+        if (!order) {
+            return res.status(404).json({
+                message: "Order not found",
+            });
+        }
+
+        const review = await Review.create({
+            orderId,
+            rating,
+            comment,
+        });
+
+        res.status(201).json({
+            message: "Review created successfully",
+            data: review,
+        });
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({
+            message: "Internal server error",
+        });
+    }
+}

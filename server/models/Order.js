@@ -47,6 +47,10 @@ const Order = sequelize.define("Order", {
     blockchainTxId:{
         type: DataTypes.STRING,
         allowNull: true,
+    },
+    isReceived: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
     }
 });
 
