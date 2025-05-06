@@ -43,7 +43,8 @@ app.use("/admin", adRoutes);
 
 //just testing blockchain function
 app.get("/test",async (req,res)=>{
-   const data = await getHistory(10);
+    const {gemId} = req.body
+   const data = await getHistory(gemId);
 //    const data = await sellGem(1,"0xE4336Ca3Aefa5Ce6457A8c36bE8842Ba8B309547");
     res.status(200).json({
         status:"Success",

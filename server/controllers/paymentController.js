@@ -31,6 +31,11 @@ exports.approveURL = async (req, res, next) => {
         if (updatedRowsCount === 0 || !updatedOrders.length) {
             return res.status(404).json({ message: "Order not found" });
         }
+        //returning response early to avoid timeout
+        res.status(200).json({
+            data: order_id,
+            message: "PAYMENT SUCCESSFUL",
+        });
 
         const { buyerId, sellerId, gemId } = updatedOrders[0];
 
@@ -48,14 +53,16 @@ exports.approveURL = async (req, res, next) => {
             select:['walletAddress']
         })
 
-
+console.log(newOwnerAddress,
+    "Owner Address"
+)
         if(paymentStatus.toLowerCase() == "paid") {
-            const blockData = await sellGem(gemId,newOwnerAddress)
+            const blockData = await sellGem(gemId,newOwnerAddress.dataValues.walletAddress)
             
 //from blockData extract blockchain transaction id and store in db
-console.log(blockData)
+console.log(blockData,"LINE 56")
 await Order.update(
-    { blockchainTxId },
+    { blockchainTxId:blockData.hash },
     {
         where: { orderId: order_id },
        
@@ -69,15 +76,9 @@ await Order.update(
             });
         }
 
-        res.status(200).json({
-            data: order_id,
-            message: "PAYMENT SUCCESSFUL",
-        });
+       
     }
-    res.status(400).json({
-        data: order_id,
-        message: "PAYMENT FAILED",
-    });
+   
     } catch (e) {
         console.log(e);
         res.status(400).json({
