@@ -2,6 +2,7 @@ const { DataTypes } = require("sequelize");
 const { sequelize } = require("../config/db");
 const User = require("./User");
 const Gem = require("./Gem");
+const Review = require("./Review");
 
 
 
@@ -57,6 +58,7 @@ const Order = sequelize.define("Order", {
 Order.belongsTo(Gem, { foreignKey: 'gemId' });
 Order.belongsTo(User, { as: 'Buyer', foreignKey: 'buyerId' });
 Order.belongsTo(User, { as: 'Seller', foreignKey: 'sellerId' });
+Order.hasOne(Review, { foreignKey: 'orderId' });
 
 
 module.exports = Order;

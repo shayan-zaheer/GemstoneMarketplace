@@ -1,10 +1,12 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/db');
+const { sequelize } = require('../config/db');
+const Order = require('./Order');
 
 const Review = sequelize.define('Review', {
     orderId: {
         type: DataTypes.UUID,
         allowNull: false,
+        primaryKey: true,
         references: {
             model: 'Orders',
             key: 'orderId'
@@ -24,5 +26,7 @@ const Review = sequelize.define('Review', {
         trim: true
     }
 });
+
+Review.belongsTo(Order, { foreignKey: 'orderId' });
 
 module.exports = Review;
