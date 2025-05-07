@@ -4,8 +4,6 @@ const User = require("./User");
 const Gem = require("./Gem");
 const Review = require("./Review");
 
-
-
 const Order = sequelize.define("Order", {
     orderId: {
         type: DataTypes.UUID,
@@ -16,7 +14,7 @@ const Order = sequelize.define("Order", {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: "Gems", // the table name
+            model: "Gems",
             key: "id",
         },
     },
@@ -59,6 +57,6 @@ Order.belongsTo(Gem, { foreignKey: 'gemId' });
 Order.belongsTo(User, { as: 'Buyer', foreignKey: 'buyerId' });
 Order.belongsTo(User, { as: 'Seller', foreignKey: 'sellerId' });
 Order.hasOne(Review, { foreignKey: 'orderId' });
-
+Review.belongsTo(Order, { foreignKey: 'orderId' });
 
 module.exports = Order;

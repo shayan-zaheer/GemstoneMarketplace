@@ -18,7 +18,8 @@ const pgPool = new Pool({
 const sessionMiddleware = session({
     store: new pgSession({
         pool: pgPool,
-        tableName: "session"
+        tableName: "session",
+        createTableIfMissing: true
     }),
     secret: process.env.SESSION_SECRET,
     resave: false,

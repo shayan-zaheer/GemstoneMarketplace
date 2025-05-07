@@ -5,7 +5,6 @@ const Order = require('./Order');
 const Review = sequelize.define('Review', {
     orderId: {
         type: DataTypes.UUID,
-        allowNull: false,
         primaryKey: true,
         references: {
             model: 'Orders',
@@ -26,7 +25,5 @@ const Review = sequelize.define('Review', {
         trim: true
     }
 });
-
-Review.belongsTo(Order, { foreignKey: 'orderId' });
 
 module.exports = Review;

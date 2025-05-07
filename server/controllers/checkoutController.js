@@ -2,6 +2,7 @@
 const Order = require("../models/Order");
 const Gem = require("../models/Gem");
 const Review = require("../models/Review");
+const User = require("../models/User");
 
 exports.checkout = async (req, res, next) => {
     try {
@@ -114,70 +115,105 @@ exports.getOrderByOrderId = async (req, res, next) => {
     
         if (!orderId) {
             return res.status(400).json({
+                status: 'error',
                 message: "Order ID is required",
             });
         }
     
         const order = await Order.findOne({
             where: { orderId },
+            include: [
+                { model: User, as: 'Buyer' },
+                { model: User, as: 'Seller' },
+                { model: Gem },
+                { model: Review }
+            ]
         });
     
         if (!order) {
             return res.status(404).json({
+                status: 'error',
                 message: "Order not found",
             });
         }
     
-        order.isReceived = true;
-        await order.save();
+        const updatedOrder = await order.update({ isReceived: true }, {
+            returning: true,
+            include: [
+                { model: User, as: 'Buyer' },
+                { model: User, as: 'Seller' },
+                { model: Gem },
+                { model: Review }
+            ]
+        });
     
         res.status(200).json({
+            status: 'success',
             message: "Order marked as received successfully",
-            data: order,
+            data: updatedOrder,
         });
     } catch (e) {
         console.error(e);
         res.status(500).json({
+            status: 'error',
             message: "Internal server error",
         });
     }
 }
 
 exports.reviewOrder = async (req, res, next) => {
-    try {
-        const { orderId } = req.params;
-        const { rating, comment } = req.body;
+  try {
+      const { orderId } = req.params;
+      const { rating, comment } = req.body;
 
-        if (!orderId) {
-            return res.status(400).json({
-                message: "Order ID is required",
-            });
-        }
+      if (!orderId) {
+          return res.status(400).json({
+              message: "Order ID is required",
+          });
+      }
 
-        const order = await Order.findOne({
-            where: { orderId },
-        });
+      const order = await Order.findOne({
+          where: { orderId },
+          include: [{
+              model: Review,
+              as: 'Review'
+          }]
+      });
 
-        if (!order) {
-            return res.status(404).json({
-                message: "Order not found",
-            });
-        }
+      if (!order) {
+          return res.status(404).json({
+              message: "Order not found",
+          });
+      }
 
-        const review = await Review.create({
-            orderId,
-            rating,
-            comment,
-        });
+      if (order.Review) {
+          return res.status(400).json({
+              message: "This order already has a review",
+          });
+      }
 
-        res.status(201).json({
-            message: "Review created successfully",
-            data: review,
-        });
-    } catch (e) {
-        console.error(e);
-        res.status(500).json({
-            message: "Internal server error",
-        });
-    }
+      const review = await Review.create({
+          orderId,
+          rating,
+          comment,
+      });
+
+      await order.reload({
+          include: [Review]
+      });
+
+      res.status(201).json({
+          message: "Review created successfully",
+          data: {
+              ...order.toJSON(),
+              review: review.toJSON()
+          }
+      });
+  } catch (e) {
+      console.error(e);
+      res.status(500).json({
+          message: "Internal server error",
+          error: process.env.NODE_ENV === 'development' ? e.message : undefined
+      });
+  }
 }
