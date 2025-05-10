@@ -1,11 +1,20 @@
 const Gem = require("../models/Gem");
+const Order = require("../models/Order");
+const Review = require("../models/Review");
 const User = require("../models/User");
-const {cloudinary} = require("../utils/multer");
+const { cloudinary } = require("../utils/multer");
 
-exports.getUserById = async(request, response) => {
-    try{
-        const user = await User.findOne({where: {userId: request.params.id}, 
-            attributes: ["userId", "name", "residenceAddress", "profileImage", "walletAddress"],
+exports.getUserById = async (request, response) => {
+    try {
+        const user = await User.findOne({
+            where: { userId: request.params.id },
+            attributes: [
+                "userId",
+                "name",
+                "residenceAddress",
+                "profileImage",
+                "walletAddress",
+            ],
             include: [
                 {
                     model: Gem,
@@ -16,8 +25,8 @@ exports.getUserById = async(request, response) => {
                             model: User,
                             as: "owner",
                             attributes: ["userId", "name"],
-                        }
-                    ]
+                        },
+                    ],
                 },
                 {
                     model: Gem,
@@ -28,31 +37,31 @@ exports.getUserById = async(request, response) => {
                             model: User,
                             as: "owner",
                             attributes: ["userId", "name"],
-                        }
-                    ]
+                        },
+                    ],
                 },
             ],
         });
 
-        if(!user){
+        if (!user) {
             return response.status(404).json({
                 status: "failure",
-                message: "User not found!"
+                message: "User not found!",
             });
         }
 
         return response.status(200).json({
             status: "success",
-            user
+            user,
         });
-    } catch(err){
+    } catch (err) {
         console.error(err);
         return response.status(400).json({
             status: "failure",
-            message: err.message
+            message: err.message,
         });
     }
-}
+};
 
 exports.updateUser = async (request, response) => {
     const { name, email, password, residenceAddress, contact } = request.body;
@@ -61,7 +70,9 @@ exports.updateUser = async (request, response) => {
     try {
         const user = await User.findByPk(request.params.id);
         if (!user) {
-            return response.status(404).json({ status: "failure", message: "User not found" });
+            return response
+                .status(404)
+                .json({ status: "failure", message: "User not found" });
         }
 
         if (name) user.name = name;
@@ -85,14 +96,83 @@ exports.updateUser = async (request, response) => {
 
                 user.profileImage = request.file.path;
             } catch (error) {
-                return response.status(400).json({ status: "failure", message: err.message });
+                return response
+                    .status(400)
+                    .json({ status: "failure", message: err.message });
             }
         }
 
         await user.save();
 
-        return response.status(200).json({ status: "success", message: "User updated successfully" });
+        return response
+            .status(200)
+            .json({ status: "success", message: "User updated successfully" });
     } catch (err) {
-        return response.status(400).json({ success: "failure", message: err.message });
+        return response
+            .status(400)
+            .json({ success: "failure", message: err.message });
+    }
+};
+
+exports.getReviewsBySeller = async (request, response) => {
+    try {
+        const { id } = request.params;
+
+        const reviews = await Order.findAll({
+            include: [
+                {
+                    model: User,
+                    as: "Seller",
+                    where: {
+                        userId: id,
+                    },
+                    attributes: [
+                        "userId",
+                        "name",
+                        "residenceAddress",
+                        "profileImage",
+                        "walletAddress",
+                    ],
+                },
+                {
+                    model: User,
+                    as: "Buyer",
+                    attributes: [
+                        "userId",
+                        "name",
+                        "residenceAddress",
+                        "profileImage",
+                        "walletAddress",
+                    ],
+                },
+                {
+                    model: Gem,
+                    attributes: ["id", "name", "price", "description", "image"],
+                },
+                {
+                    model: Review,
+                    required: true,
+                    attributes: ["rating", "comment"],
+                },
+            ],
+        });
+
+        if (!reviews.length) {
+            return response.status(404).json({
+                status: "failure",
+                message: "No reviews found!",
+            });
+        }
+
+        return response.status(200).json({
+            status: "success",
+            reviews,
+        });
+    } catch (err) {
+        console.error(err);
+        return response.status(400).json({
+            status: "failure",
+            message: err.message,
+        });
     }
 };
