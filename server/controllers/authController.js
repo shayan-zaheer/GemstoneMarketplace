@@ -64,6 +64,7 @@ exports.login = (request, response, next) => {
                     profileImage: user.profileImage,
                     cnic: user.cnic,
                     walletAddress: user.walletAddress,
+                    role: user.role,
                 },
             });
         });

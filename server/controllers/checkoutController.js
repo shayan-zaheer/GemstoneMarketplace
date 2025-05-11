@@ -49,7 +49,7 @@ exports.getOrderByOrderId = async (req, res, next) => {
   
       const order = await Order.findOne({
         where: { orderId },
-        include: ["Gem", "Buyer", "Seller"], // assuming you’ve defined associations with these aliases
+        include: ["Gem", "Buyer", "Seller", "Review"],
       });
   
       if (!order) {
