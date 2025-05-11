@@ -16,53 +16,43 @@ const page = () => {
   const cardDetailsTemp = [
     {
       title: "Total Users",
-      value: 50,
-      icon: <HiUserGroup />,
+      value: 0,
     },
     {
       title: "Current Month Users",
-      value: 10,
-      icon: <GiCutDiamond />,
+      value: 0,
     },
     {
       title: "Total Gemstones",
-      value: 100,
-      icon: <FaEye />,
+      value: 0,
     },
     {
       title: "Gemstones Listed",
-      value: 20,
-      icon: <MdInventory />,
+      value: 0,
     },
     {
       title: "Total Orders",
-      value: 10,
-      icon: <GiCutDiamond />,
+      value: 0,
     },
     {
       title: "Sold Gemstones",
-      value: 5,
-      icon: <GiCutDiamond />,
+      value: 0,
     },
     {
       title: "Average Order Value",
-      value: 1000,
-      icon: <GiCutDiamond />,
+      value: 0,
     },
     {
       title: "Total Revenue",
-      value: 10000,
-      icon: <GiCutDiamond />,
+      value: 0,
     },
     {
       title: "Pending Orders",
-      value: 5,
-      icon: <GiCutDiamond />,
+      value: 0,
     },
     {
       title: "Current Month Revenue",
-      value: 5000,
-      icon: <GiCutDiamond />,
+      value: 0,
     },
   ];
   const [cardDetails, setCardDetails] = useState(cardDetailsTemp);

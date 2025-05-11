@@ -1,7 +1,8 @@
 "use client";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 import { DropdownMenuRadioGroupDemo } from "../Dropdown";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const COLORS = [
   "#00E8FC", // Cyan (matches from-[#00E8FC])
@@ -16,13 +17,10 @@ const COLORS = [
 ];
 
 const DonutChart = () => {
-  const data = [
-    { name: "Emerald", value: 2400 },
-    { name: "Diamond", value: 4000 },
-    { name: "Ruby", value: 1800 },
-    { name: "Sapphire", value: 2200 },
-    { name: "Opal", value: 3000 },
-  ];
+  
+  const [revenue,setRevenue] = useState([])
+  
+  const data = revenue;
   const renderCustomLabel = ({
     cx,
     cy,
@@ -31,6 +29,7 @@ const DonutChart = () => {
     outerRadius,
     percent,
   }) => {
+    if (percent < 0.05) return null;
     const RADIAN = Math.PI / 180;
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
     const x = cx + radius * Math.cos(-midAngle * RADIAN);
@@ -51,6 +50,21 @@ const DonutChart = () => {
     );
   };
   const [finalValue, setFinalValue] = useState("Total");
+
+  const fetchData = async ()=>{
+    try{
+      const res = await axios.get( `${process.env.NEXT_PUBLIC_BACKEND_URL}/admin/revByName`)
+      console.log(res.data)
+      setRevenue(res.data)
+    }
+    catch(e){
+    }
+  }
+  useEffect(()=>{
+    fetchData()
+  },[])
+
+
   return (
     <div>
       <h2 className="relative bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4]  animate-gradient text-transparent bg-clip-text lg:text-2xl text-xl font-semibold mb-4 text-center">
@@ -74,7 +88,7 @@ const DonutChart = () => {
             innerRadius={60}
             outerRadius={90}
             fill="#8884d8"
-            paddingAngle={3}
+            paddingAngle={0}
             label={renderCustomLabel}
             labelLine={false}
             dataKey="value"

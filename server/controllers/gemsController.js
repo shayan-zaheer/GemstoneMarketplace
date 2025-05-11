@@ -136,9 +136,10 @@ exports.deleteGem = async (request, res) => {
             message: "Gemstone Deleted successfully",
         });
     } catch (e) {
+        console.log(e)
         res.status(400).json({
             status: "failed",
-            message: "Gemstone not found",
+            message: e.message,
         });
     }
 };
