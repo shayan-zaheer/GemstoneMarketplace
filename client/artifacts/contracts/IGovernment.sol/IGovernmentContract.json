@@ -1,0 +1,35 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "IGovernmentContract",
+  "sourceName": "contracts/IGovernment.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "sellerWallet",
+          "type": "address"
+        },
+        {
+          "internalType": "string",
+          "name": "category",
+          "type": "string"
+        }
+      ],
+      "name": "verifySeller",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}
