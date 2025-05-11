@@ -21,7 +21,6 @@ const OrderDetailsPage = ({ params }) => {
     const [reviewText, setReviewText] = useState("");
     const [rating, setRating] = useState(null);
     const [isMarkingReceived, setIsMarkingReceived] = useState(false);
-    console.log(order)
 
     useEffect(() => {
         const fetchOrderDetails = async () => {
@@ -39,6 +38,7 @@ const OrderDetailsPage = ({ params }) => {
 
                 if (data.status === "success") {
                     setOrder(data.data);
+                    console.log(order)
                 } else {
                     throw new Error(
                         data.message || "Failed to fetch order details"
@@ -65,6 +65,7 @@ const OrderDetailsPage = ({ params }) => {
             );
 
             if (data.status === "success") {
+                console.log(data)
                 toast.success("Order marked as received!");
                 setOrder(data.data);
             } else {
@@ -125,7 +126,7 @@ const OrderDetailsPage = ({ params }) => {
 
     if (loading) {
         return (
-            <div className="flex items-center justify-center h-[calc(100vh-8rem)]">
+            <div className="flex items-center justify-center h-[calc(100vh-8rem)] bg-[#1a1c1ff8]">
                 <Loader loading={loading} />
             </div>
         );
@@ -288,7 +289,7 @@ const OrderDetailsPage = ({ params }) => {
                     </div>
 
                     {/* Order Action Section */}
-                    <div className="mt-5">
+                    {<div className="mt-5">
                         {!order.isReceived ? (
                             <button
                                 onClick={handleMarkAsReceived}
@@ -411,7 +412,7 @@ const OrderDetailsPage = ({ params }) => {
                                 )}
                             </>
                         )}
-                    </div>
+                    </div>}
 
                     {/* Order Dates */}
                     <div className="mt-6">
