@@ -24,7 +24,7 @@ const GemstoneCard = ({ info }) => {
             className="rounded-tl-xl rounded-tr-xl transition-transform duration-300 hover:scale-125 hover:cursor-pointer hover:brightness-50 z-[-1] h-56"
           />
         </CardTitle>
-        <CardTitle className="bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4] text-transparent bg-clip-text text-2xl font-bold mx-2">
+        <CardTitle className="bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4] text-transparent bg-clip-text text-2xl font-bold mx-2 animate-gradient">
           {" "}
           {info?.name}
         </CardTitle>

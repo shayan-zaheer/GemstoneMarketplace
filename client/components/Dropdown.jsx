@@ -17,8 +17,8 @@ export function DropdownMenuRadioGroupDemo({ ddText, valuesText, values, stateVa
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div className={`flex flex-col h-full justify-center items-center rounded-lg p-4 bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4]  animate-gradient p-[0.1rem] `}>
-        <Button variant="outline" className="sm:w-24 w-20 md:w-36 text-xs sm:text-sm md:text-md bg-[#1b1c20] border-none font-bold hover:shadow-[0_0_8px_0.01rem_#00E8FC] hover:bg-[#1b1c20] hover:text-white text-white">
+        <div className={`w-1/2 md:w-36 mx-auto md:mx-0 flex flex-col h-full justify-center items-center rounded-lg p-4 bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4]  animate-gradient p-[0.1rem] `}>
+        <Button variant="outline" className="w-full text-xs sm:text-sm md:text-md bg-[#1b1c20] border-none font-bold hover:shadow-[0_0_8px_0.01rem_#00E8FC] hover:bg-[#1b1c20] hover:text-white text-white">
         <MdSort className="text-white "/> {ddText}
         </Button>
         </div>

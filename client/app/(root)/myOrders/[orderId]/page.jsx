@@ -9,6 +9,7 @@ import { FaBoxOpen, FaStar } from "react-icons/fa";
 import { MdPayment } from "react-icons/md";
 import { FaUserCircle } from "react-icons/fa";
 import toast from "react-hot-toast";
+import { orderly } from "viem/chains";
 
 const OrderDetailsPage = ({ params }) => {
     const { orderId } = use(params);
@@ -37,6 +38,7 @@ const OrderDetailsPage = ({ params }) => {
 
                 if (data.status === "success") {
                     setOrder(data.data);
+                    console.log(order)
                 } else {
                     throw new Error(
                         data.message || "Failed to fetch order details"
@@ -63,6 +65,7 @@ const OrderDetailsPage = ({ params }) => {
             );
 
             if (data.status === "success") {
+                console.log(data)
                 toast.success("Order marked as received!");
                 setOrder(data.data);
             } else {
@@ -90,17 +93,19 @@ const OrderDetailsPage = ({ params }) => {
                 { rating, comment: reviewText },
                 { withCredentials: true }
             );
-
+            console.log(data)
             if (data.status === "success") {
                 toast.success("Review submitted successfully!");
                 setOrder((prev) => ({
                     ...prev,
                     Review: data.data.review || data.data,
                 }));
+                console.log(order)
                 setShowReviewForm(false);
                 setReviewText("");
                 setRating(null);
             }
+
         } catch (err) {
             console.error(err);
             toast.error(
@@ -121,7 +126,7 @@ const OrderDetailsPage = ({ params }) => {
 
     if (loading) {
         return (
-            <div className="flex items-center justify-center h-[calc(100vh-8rem)]">
+            <div className="flex items-center justify-center h-[calc(100vh-8rem)] bg-[#1a1c1ff8]">
                 <Loader loading={loading} />
             </div>
         );
@@ -284,7 +289,7 @@ const OrderDetailsPage = ({ params }) => {
                     </div>
 
                     {/* Order Action Section */}
-                    <div className="mt-5">
+                    {<div className="mt-5">
                         {!order.isReceived ? (
                             <button
                                 onClick={handleMarkAsReceived}
@@ -407,7 +412,7 @@ const OrderDetailsPage = ({ params }) => {
                                 )}
                             </>
                         )}
-                    </div>
+                    </div>}
 
                     {/* Order Dates */}
                     <div className="mt-6">
