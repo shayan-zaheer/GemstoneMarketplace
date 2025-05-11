@@ -45,7 +45,7 @@ const Gem = sequelize.define(
         weight: {
             type: DataTypes.TEXT,
             allowNull: true,
-        },
+        },  
         txHash: {
             type: DataTypes.TEXT,
             allowNull: true,

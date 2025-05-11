@@ -10,51 +10,45 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { DropdownMenuRadioGroupDemo } from "../Dropdown";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-const data = [
-  { day: "1", revenue: 120 },
-  { day: "2", revenue: 200 },
-  { day: "3", revenue: 150 },
-  { day: "4", revenue: 180 },
-  { day: "5", revenue: 300 },
-  { day: "6", revenue: 250 },
-  { day: "7", revenue: 400 },
-  { day: "8", revenue: 350 },
-  { day: "9", revenue: 300 },
-  { day: "10", revenue: 200 },
-  { day: "11", revenue: 150 },
-  { day: "12", revenue: 100 },
-  { day: "13", revenue: 50 },
-  { day: "14", revenue: 80 },
-  { day: "15", revenue: 120 },
-  { day: "16", revenue: 200 },
-  { day: "17", revenue: 150 },
-  { day: "18", revenue: 180 },
-  { day: "19", revenue: 300 },
-  { day: "20", revenue: 250 },
-  { day: "21", revenue: 400 },
-  { day: "22", revenue: 350 },
-  { day: "23", revenue: 300 },
-  { day: "24", revenue: 200 },
-  { day: "25", revenue: 150 },
-  { day: "26", revenue: 100 },
-  { day: "27", revenue: 50 },
-  { day: "28", revenue: 80 },
-  { day: "29", revenue: 120 },
-  { day: "30", revenue: 240 },
-];
 
 const RevenueTrendChart = () => {
   const [finalValue, setFinalValue] = useState("Sales");
-  const [month, setMonth] = useState("January");
+  const [ revByDay,setRevByDay] = useState([])
+  const data = revByDay;
+  const [month, setMonth] = useState("4");
+
+
+
+ const fetchData = async ()=>{
+   try{
+      console.log(month)
+      const res = await axios.get( `${process.env.NEXT_PUBLIC_BACKEND_URL}/admin/revByDay?month=${month}&year=2025`)
+      console.log(res.data)
+      
+      setRevByDay(res.data)
+    }
+    catch(e){
+
+    }
+  }
+  
+
+  useEffect(()=>{
+    fetchData()
+  },[month])
+
+const allMonths = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
   return (
     <div className="bg-transparent pb-12 pt-4 px-4 rounded-xl w-full  md:h-[29rem] relative">
       <div className="absolute top-0 left-8 flex md:justify-end  justify-center mt-4">
         <DropdownMenuRadioGroupDemo
-          ddText={month}
-          valuesText={["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]}
-          values={["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]}
+          ddText={allMonths[+month-1]}
+          valuesText={["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]}
+          values={allMonths}
           stateValue={month}
           setStateValue={setMonth}
         />
