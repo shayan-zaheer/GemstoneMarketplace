@@ -53,7 +53,7 @@ const DonutChart = () => {
   const [finalValue, setFinalValue] = useState("Total");
   return (
     <div>
-      <h2 className="relative bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4]  animate-gradient text-transparent bg-clip-text lg:text-3xl text-xl font-semibold mb-4 text-center">
+      <h2 className="relative bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4]  animate-gradient text-transparent bg-clip-text lg:text-2xl text-xl font-semibold mb-4 text-center">
         Revenue Per Category
       </h2>
       <div className="top-0 left-8 flex md:justify-center  justify-center mt-4">
@@ -65,14 +65,14 @@ const DonutChart = () => {
                 setStateValue={setFinalValue}
               />
             </div>
-      <div className="w-full flex justify-center">
-        <PieChart width={400} height={320}>
+      <div className="w-full flex justify-start items-center mt-4">
+        <PieChart width={470} height={180}>
           <Pie
             data={data}
             cx="50%"
             cy="50%"
-            innerRadius={90}
-            outerRadius={130}
+            innerRadius={60}
+            outerRadius={90}
             fill="#8884d8"
             paddingAngle={3}
             label={renderCustomLabel}
@@ -98,19 +98,13 @@ const DonutChart = () => {
             itemStyle={{ color: "#fff" }}
           />
           <Legend
-            layout="horizontal"
+            layout="vertical"
             verticalAlign="bottom"
             align="left"
             wrapperStyle={{
-              paddingLeft: 20,
               lineHeight: "24px",
               fontSize: "16px", // 👈 Controls text size
               display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              flexDirection: "row",
-              flexWrap: "wrap",
-              width: "100%",
             }}
           />
         </PieChart>

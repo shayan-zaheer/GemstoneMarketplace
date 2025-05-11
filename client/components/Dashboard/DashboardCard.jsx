@@ -10,7 +10,7 @@ const DashboardCard = ({ card }) => {
         <div className="text-3xl lg:text-4xl mb-2">
           {card.icon}
         </div>
-        <h2 className="lg:text-3xl text-xl text-center font-medium bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4]  animate-gradient text-white bg-clip-text">
+        <h2 className="lg:text-2xl text-xl text-center font-medium bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4]  animate-gradient text-white bg-clip-text">
           {card.title}
         </h2>
         <p className="text-3xl bg-gradient-to-r font-bold from-[#00E8FC] via-[#D400A5] to-[#6A00F4]  animate-gradient text-transparent bg-clip-text">

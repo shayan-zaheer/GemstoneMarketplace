@@ -49,7 +49,7 @@ const RevenueTrendChart = () => {
   const [finalValue, setFinalValue] = useState("Sales");
   const [month, setMonth] = useState("January");
   return (
-    <div className="bg-transparent pb-12 pt-4 px-4 rounded-xl w-full  md:h-[29rem] relative">
+    <div className="bg-transparent pb-12 pt-4 px-4 rounded-xl w-full  md:h-[37rem] relative">
       <div className="absolute top-0 left-8 flex md:justify-end  justify-center mt-4">
         <DropdownMenuRadioGroupDemo
           ddText={month}
