@@ -69,6 +69,7 @@ const HomePage = () => {
                 collectionName={"Highest Volume"}
                 gemstones={gemstones}
             />
+            <Collections collectionName={"Reviews"} gemstones={gemstones}/>
         </div>
     );
 };
