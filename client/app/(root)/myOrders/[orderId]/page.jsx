@@ -9,6 +9,7 @@ import { FaBoxOpen, FaStar } from "react-icons/fa";
 import { MdPayment } from "react-icons/md";
 import { FaUserCircle } from "react-icons/fa";
 import toast from "react-hot-toast";
+import { orderly } from "viem/chains";
 
 const OrderDetailsPage = ({ params }) => {
     const { orderId } = use(params);
@@ -20,6 +21,7 @@ const OrderDetailsPage = ({ params }) => {
     const [reviewText, setReviewText] = useState("");
     const [rating, setRating] = useState(null);
     const [isMarkingReceived, setIsMarkingReceived] = useState(false);
+    console.log(order)
 
     useEffect(() => {
         const fetchOrderDetails = async () => {
@@ -90,17 +92,19 @@ const OrderDetailsPage = ({ params }) => {
                 { rating, comment: reviewText },
                 { withCredentials: true }
             );
-
+            console.log(data)
             if (data.status === "success") {
                 toast.success("Review submitted successfully!");
                 setOrder((prev) => ({
                     ...prev,
                     Review: data.data.review || data.data,
                 }));
+                console.log(order)
                 setShowReviewForm(false);
                 setReviewText("");
                 setRating(null);
             }
+
         } catch (err) {
             console.error(err);
             toast.error(
