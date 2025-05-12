@@ -33,8 +33,8 @@ const Checkout = () => {
             const url = safepay.checkout.create({
                 token,
                 orderId: orderId,
-                cancelUrl: "http://localhost:3000/checkout",
-                redirectUrl: "http://localhost:3000/myOrders",
+                cancelUrl: `${process.env.FRONTEND_URL || "http://localhost:3000" }/checkout`,
+                redirectUrl:  `${process.env.FRONTEND_URL || "http://localhost:3000" }/myOrders`,
                 source: "custom",
                 webhooks: true,
             });

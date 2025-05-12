@@ -51,7 +51,7 @@ const CheckoutForm = ({ makePayment }) => {
   const handleCheckout = async () => {
 
     try {
-      const url = 'http://localhost:8000/buy/checkout'
+      const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/buy/checkout`
 
       const gemId = checkoutItem.id;
       const sellerId = checkoutItem.owner.userId;
@@ -162,12 +162,8 @@ const CheckoutForm = ({ makePayment }) => {
             className="font-medium my-2 "
           >
             <label className="flex items-center space-x-3">
-              <RadioGroupItem value="cod" className="  h-5 w-5 bg-blue-400" />
-              <span>Cash on Delivery</span>
-            </label>
-            <label className="flex items-center space-x-3">
               <RadioGroupItem value="paypro" className="h-5 w-5  bg-blue-400" />
-              <span>PayPro</span>
+              <span>SafePay</span>
             </label>
           </RadioGroup>
           <button
