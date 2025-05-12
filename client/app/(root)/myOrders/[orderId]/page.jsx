@@ -140,8 +140,8 @@ const OrderDetailsPage = ({ params }) => {
     }
 
     return (
-        <div className="pt-20 min-h-screen pb-20 bg-[#1a1c1ff8]">
-            <div className="grid md:grid-cols-[1fr_2fr] gap-0 min-h-[calc(100vh-8rem)]">
+        <div className="pt-20 min-h-screen bg-[#1a1c1ff8]">
+            <div className="grid md:grid-cols-[2fr_3fr] gap-0 min-h-[calc(100vh-8rem)]">
                 {/* Left Panel - Order Details */}
                 <motion.div
                     initial={{ x: -600 }}
