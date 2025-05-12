@@ -90,20 +90,40 @@ const CartCard = ({ item }) => {
                 <td className="detail-value">{item.price} Rs</td>
               </tr>
               <tr>
-                <th className="detail-label">Purity: </th>
-                <td className="detail-value">{item.purity}</td>
+                <th className="detail-label">Weight: </th>
+                <td
+                  className={`detail-value ${item.weight ? "" : "opacity-75"}`}
+                >
+                  {item.weight
+                    ? `${item.weight} Carat`
+                    : "Seller does not provide weight info"}
+                </td>
               </tr>
               <tr>
-                <th className="detail-label">Color: </th>
-                <td className="detail-value">{item.color}</td>
+                <th className="detail-label">Purity: </th>
+                <td
+                  className={`detail-value ${item.purity ? "" : "opacity-75"}`}
+                >
+                  {item.purity || "Seller does not provide purity info"}
+                </td>
               </tr>
               <tr>
                 <th className="detail-label">Shape: </th>
-                <td className="detail-value">{item.shape}</td>
+                <td
+                  className={`detail-value ${item.shape ? "" : "opacity-75"}`}
+                >
+                  {item.shape || "Seller does not provide shape info"}
+                </td>
               </tr>
               <tr>
                 <th className="detail-label">Dimensions: </th>
-                <td className="detail-value">{item.dimensions}</td>
+                <td
+                  className={`detail-value ${
+                    item.dimensions ? "" : "opacity-75"
+                  }`}
+                >
+                  {item.dimensions || "Seller does not provide dimensions info"}
+                </td>
               </tr>
             </tbody>
           </table>
