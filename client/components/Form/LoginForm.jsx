@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Form } from "../ui/form";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 import { userActions } from "@/Store/userSlice";
 
 const LoginForm = () => {
+    const [isLoading , setIsLoading]= useState(false)
     const dispatch = useDispatch();
     const form = useForm({
         resolver: zodResolver(loginFormSchema),
@@ -23,7 +24,9 @@ const LoginForm = () => {
     });
 
     const onSubmit = async (data) => {
+        setIsLoading(true)
         try {
+
             const result = await axios.post(
                 `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login`,
                 data,
@@ -32,6 +35,7 @@ const LoginForm = () => {
             if (result.data.status === "success") {
                 dispatch(userActions.setUser(result?.data?.user));
                 dispatch(cartActions.setUser(result?.data?.user?.userId));
+                setIsLoading(false)
                 return toast.success("You're logged in!");
             } else {
                 return toast.error("Unexpected response from server.");
@@ -65,7 +69,7 @@ const LoginForm = () => {
                     placeholder="Enter Your Password"
                     type="password"
                 />
-                <FormButton text="Login" type="submit" />
+                {isLoading ?<FormButton className="opacity-45 cursor-none "  text='Processing...'></FormButton> :<FormButton text="Login" type="submit" />}
             </form>
         </Form>
     );

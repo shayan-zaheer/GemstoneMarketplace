@@ -43,7 +43,7 @@ exports.getAllGems = async (request, response) => {
 
         console.log(" !!!!!!!!!! PAGE SORTBY !!!!!!", page, sortBy);
 
-        const limit = 16; // set by muneer noob
+        const limit = 16; 
         page = parseInt(page) || 1;
         sortBy = sortBy || "createdAt";
 
@@ -145,9 +145,10 @@ exports.deleteGem = async (request, res) => {
             message: "Gemstone marked as deleted successfully",
         });
     } catch (e) {
+        console.log(e)
         res.status(400).json({
             status: "failed",
-            message: "Something went wrong",
+            message: e.message,
         });
     }
 };

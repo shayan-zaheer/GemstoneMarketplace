@@ -3,34 +3,44 @@ import GemstoneCard from "./GemstoneCard";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { MdDelete } from "react-icons/md";
+import { DialogTrigger } from "@/components/ui/dialog"
+import DeleteIcon from "./DeleteIcon";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const UserGemstones = ({ user, gemstones, title }) => {
   const loggedinUser = useSelector((store) => store.user.user);
+  const [localGemstones, setLocalGemstones] = useState(gemstones);
 
+  useEffect(() => {
+    setLocalGemstones(gemstones);
+  }, [gemstones]);
   const handleDelete=async (gemId)=>{
     try {
       const result = await axios.delete(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/gems/delete/${gemId}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/gems/delete/${gemId}`, {withCredentials : true}
       );
-      console.log(result.data);
+      if (result.status === 204) {
+        toast.success("Gemstone deleted successfully");
+        setLocalGemstones((prev) => prev.filter((item) => item.id !== gemId));
+      }
     } catch (err) {
       console.log(err);
+      toast.error("Error deleting gemstone");
     }
   }
 
   return (
     <>
       <h1 className="text-gray-200 font-semibold text-4xl mt-5">{title}</h1>
-      {gemstones && gemstones.length != 0 ? (
+      {localGemstones && localGemstones.length != 0 ? (
         <div className="bg-[#1a1c1ff9] min-h-[300px] rounded-lg px-2 gap-4 py-[0.01rem] my-3 flex flex-nowrap overflow-x-scroll">
-          {gemstones &&
-            gemstones.map((item) => (
+          {localGemstones &&
+            localGemstones.map((item) => (
               <div className="relative" key={item.id}>
                 {loggedinUser?.userId === user?.userId &&
                   title == "Owned Gemstones" && (
-                    <div className="absolute w-10 h-10 text-white top-2 right-[-5] bg-red-500 rounded-full flex justify-center items-center text-3xl hover:scale-105 ease-in-out duration-200 hover:cursor-pointer z-10" >
-                      <MdDelete />
-                    </div>
+                    <DeleteIcon gemID={item.id} onDelete={handleDelete} />
                   )}
                 <GemstoneCard info={item} />
               </div>
