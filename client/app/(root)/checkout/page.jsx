@@ -17,9 +17,9 @@ const Checkout = () => {
         try {
             const safepay = new Safepay({
                 environment: "sandbox",
-                apiKey: "sec_53835f34-4c24-43ba-8ac8-f0bd25437e2f",
+                apiKey: process.env.NEXT_PUBLIC_SAFEPAY_API_KEY,
                 v1Secret: "bar",
-                webhookSecret: "9c6f91a0823036691448fd7a0f280136e8ad26009c72653753ea6e80366e0500",
+                webhookSecret: process.env.NEXT_PUBLIC_SAFEPAY_WEBHOOK_SECRET,
             });
 
 

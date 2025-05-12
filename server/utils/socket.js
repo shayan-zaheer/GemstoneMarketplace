@@ -24,6 +24,9 @@ function initializeSocket(server) {
     io.on("connection", (socket) => {
         const userId = socket.handshake.session?.passport?.user;
 
+        console.log("Session:", socket.handshake.session);
+        console.log("Connected userId:", userId);
+
         if (userId) {
             clients.set(userId.toString(), socket.id);
         }

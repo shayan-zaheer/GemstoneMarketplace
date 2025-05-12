@@ -20,7 +20,7 @@ const UserGemstones = ({ user, gemstones, title }) => {
       const result = await axios.delete(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/gems/delete/${gemId}`, {withCredentials : true}
       );
-      if (result.status === 204) {
+      if (result.status === 200) {
         toast.success("Gemstone deleted successfully");
         setLocalGemstones((prev) => prev.filter((item) => item.id !== gemId));
       }

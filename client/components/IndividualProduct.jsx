@@ -136,7 +136,7 @@ const IndividualProduct = ({ productID }) => {
                 </span>
               </Link>
             </div>
-            {loggedinUser?.userId !== gem?.owner?.userId && loggedinUser.role !== 'admin' && (
+            {loggedinUser?.userId !== gem?.owner?.userId && loggedinUser?.role !== 'admin' && (
                <div className="relative md:text-xl text-md my-4 mb-20 text-white font-bold">
                  {!alreadyInCart ? (
                    <button

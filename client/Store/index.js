@@ -5,6 +5,7 @@ import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import cartSlice from "./cartSlice";
 import userSlice from "./userSlice";
 import checkoutSlice from "./checkoutSlice";
+import socketSlice from "./socketSlice.js";
 
 const createNoopStorage = () => {
     return {
@@ -29,13 +30,14 @@ const rootReducer = combineReducers({
     cart: cartSlice.reducer,
     user: userSlice.reducer,
     checkout: checkoutSlice.reducer,
+    socket: socketSlice.reducer,
 });
 
 const persistConfig = {
     key: "root",
     storage,
     version: 1,
-    whitelist: ['user', 'cart'],
+    whitelist: ['user', 'cart', 'socket'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
