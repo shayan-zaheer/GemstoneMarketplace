@@ -27,14 +27,14 @@ const UploadGemstoneSecond = ({ setNext, gemData }) => {
     console.log("SECOND PAGE DATA:", data);
     console.log(data["transactionHash"]);
     console.log(gemData,data)
-    const isVerified = await verifySeller(data["transactionHash"],data.category);
+    try {
+      const isVerified = await verifySeller(data["transactionHash"],data.category);
     if (!isVerified) {
       toast.error(
         "Your selected category is not correct!\nReview the certificate and try again."
       );
       return;
     } else {
-      try {
         console.log("UPLOAD API PAYLOAD:",gemData)
         const result = await axios.post(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/gems`,
@@ -58,12 +58,12 @@ const UploadGemstoneSecond = ({ setNext, gemData }) => {
         }
 
         }
+      };
       } catch (err) {
           console.error(err);
-          toast.error(err.message);
+          toast.error(err.message+ "Invalid Data");
       }
     }
-  };
 
   return (
     <Form {...form}>
