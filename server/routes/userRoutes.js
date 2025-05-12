@@ -8,4 +8,6 @@ router
     .get(userController.getUserById)
     .patch(upload.single("profileImage"), userController.updateUser);
 
+router.route("/:id/reviews").get(userController.getReviewsBySeller);
+
 module.exports = router;

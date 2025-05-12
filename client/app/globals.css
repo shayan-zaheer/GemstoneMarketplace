@@ -112,10 +112,10 @@
     @apply w-full min-h-20 fixed top-20 left-0 bg-[#1A1C1F] bg-opacity-90 flex flex-col items-center justify-center gap-y-4 z-10
   }
   .navbar-input{
-    @apply bg-[#222528] rounded-3xl text-white w-[25vw] h-12 px-5 placeholder:italic border border-transparent focus:outline-none focus:ring-2 focus:ring-[#10ECF6] focus:border-[#10ECF6]
+    @apply bg-[#1b1c20] rounded-3xl text-white h-12 px-5 placeholder:italic border border-transparent focus:outline-none focus:ring-2 focus:ring-[#10ECF6] focus:border-[#10ECF6]
   }
   .responsive-navbar-input{
-    @apply bg-[#1A1C1F] text-white border-b-2 border-white focus:outline-none focus:border-[#0DE8F1] w-11/12 h-10 placeholder:italic
+    @apply bg-[#1b1c20] text-white border-b-2 border-white focus:outline-none focus:border-[#0DE8F1] w-11/12 h-10 placeholder:italic
   }
   .navbar-button{
     @apply  bg-white text-black text-[16px] font-semibold hover:text-white hover:bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4]

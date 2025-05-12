@@ -10,7 +10,6 @@ import axios from "axios";
 import { userActions } from "@/Store/userSlice";
 import { store } from "@/Store";
 import { cartActions } from "@/Store/cartSlice";
-import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
 const Navbar = () => {
@@ -19,90 +18,6 @@ const Navbar = () => {
     const user = useSelector((store) => store.user.user);
     const cartItems = useSelector((store) => store.cart.cartItems);
     const [cartItemsLength, setCartItemsLength] = useState(0);
-
-    const handleSessionExpiration = () => {
-        const currentUser = store.getState().cart.userId;
-        if (currentUser) {
-            const cart = store.getState().cart.cartItems;
-            localStorage.setItem(
-                `cart_${currentUser}`,
-                JSON.stringify(cart)
-            );
-        }
-        dispatch(cartActions.clearCart());
-        dispatch(userActions.removeSession());
-        
-        toast.error("Your session has expired. Please log in again.", {
-            duration: 4000,
-            position: "top-center",
-        });
-    };
-
-    useEffect(() => {
-        if (user) {
-            const validateSession = async () => {
-                try {
-                    const response = await axios.get(
-                        `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/check-session`,
-                        { withCredentials: true }
-                    );
-                    
-                } catch (error) {
-                    if (error.response?.status === 401) {
-                        console.log("Session expired, logging out");
-                        handleSessionExpiration();
-                    }
-                }
-            };
-            
-            validateSession();
-            
-            const sessionCheckInterval = setInterval(validateSession, 15 * 60 * 1000);
-            
-            return () => {
-                clearInterval(sessionCheckInterval);
-            };
-        }
-    }, [user, dispatch]);
-
-    useEffect(() => {
-        if (user) {
-            const validateSession = async () => {
-                try {
-                    const response = await axios.get(
-                        `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/check-session`,
-                        { withCredentials: true }
-                    );
-
-                } catch (error) {
-                    if (error.response?.status === 401) {
-                        console.log("Session expired, logging out");
-                        const currentUser = store.getState().cart.userId;
-                        if (currentUser) {
-                            const cart = store.getState().cart.cartItems;
-                            localStorage.setItem(
-                                `cart_${currentUser}`,
-                                JSON.stringify(cart)
-                            );
-                        }
-                        dispatch(cartActions.clearCart());
-                        dispatch(userActions.removeSession());
-                    }
-                }
-            };
-
-            validateSession();
-
-            const sessionCheckInterval = setInterval(
-                validateSession,
-                15 * 60 * 1000
-            );
-
-            return () => {
-                clearInterval(sessionCheckInterval);
-            };
-        }
-    }, [user, dispatch]);
 
     useEffect(() => {
         if (user?.id) {
@@ -150,33 +65,6 @@ const Navbar = () => {
         }
     };
 
-    useEffect(() => {
-        const handleVisibilityChange = () => {
-            if (document.visibilityState === 'visible' && user) {
-                const validateSession = async () => {
-                    try {
-                        await axios.get(
-                            `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/check-session`,
-                            { withCredentials: true }
-                        );
-                    } catch (error) {
-                        if (error.response?.status === 401) {
-                            handleSessionExpiration();
-                        }
-                    }
-                };
-                
-                validateSession();
-            }
-        };
-        
-        document.addEventListener('visibilitychange', handleVisibilityChange);
-        
-        return () => {
-            document.removeEventListener('visibilitychange', handleVisibilityChange);
-        };
-    }, [user, dispatch]);
-
     const [openSearch, setOpenSearch] = useState(false);
     const [openMenu, setOpenMenu] = useState(false);
 
@@ -189,13 +77,7 @@ const Navbar = () => {
                 </h1>
             </div>
 
-            <div className="hidden lg:block">
-                <input
-                    type="text"
-                    placeholder="Search Gemstones"
-                    className="navbar-input"
-                />
-            </div>
+            
 
             <div className="hidden lg:flex">
                 <ul className="flex items-center text-white font-semibold text-lg gap-x-2">

@@ -2,8 +2,7 @@ const { DataTypes } = require("sequelize");
 const { sequelize } = require("../config/db");
 const User = require("./User");
 const Gem = require("./Gem");
-
-
+const Review = require("./Review");
 
 const Order = sequelize.define("Order", {
     orderId: {
@@ -15,7 +14,7 @@ const Order = sequelize.define("Order", {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: "Gems", // the table name
+            model: "Gems",
             key: "id",
         },
     },
@@ -47,12 +46,17 @@ const Order = sequelize.define("Order", {
     blockchainTxId:{
         type: DataTypes.STRING,
         allowNull: true,
+    },
+    isReceived: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
     }
 });
 
 Order.belongsTo(Gem, { foreignKey: 'gemId' });
 Order.belongsTo(User, { as: 'Buyer', foreignKey: 'buyerId' });
 Order.belongsTo(User, { as: 'Seller', foreignKey: 'sellerId' });
-
+Order.hasOne(Review, { foreignKey: 'orderId' });
+Review.belongsTo(Order, { foreignKey: 'orderId' });
 
 module.exports = Order;

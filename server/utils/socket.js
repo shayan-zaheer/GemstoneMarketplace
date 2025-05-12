@@ -1,6 +1,6 @@
 const { Server } = require("socket.io");
 const sharedSession = require("express-socket.io-session");
-const { sessionMiddleware } = require("../utils/passport");
+const sessionMiddleware = require("../middlewares/session");
 
 let clients = new Map();
 let io = null;

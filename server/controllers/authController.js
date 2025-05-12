@@ -4,30 +4,33 @@ const { upload } = require("../utils/multer");
 
 exports.signUp = async (request, response) => {
     try {
-        // const existingUser = await User.findOne({where: { email: request.body?.email }});
-        // if (existingUser) return response.status(400).json({ message: "Email already in use" });
-        console.log(request.body);
-
         await new Promise((resolve, reject) => {
             upload.single("profileImage")(request, response, (err) => {
-                if (err) return reject(err);
-                resolve();
+                if (err) reject(err);
+                else resolve();
             });
         });
 
+        const { email, ...rest } = request.body;
+
+        const existingUser = await User.findOne({ where: { email } });
+        if (existingUser) {
+            return response.status(400).json({ message: "Email already in use" });
+        }
+
         const profileImage = request.file ? request.file.path : null;
-        const payload = { ...request.body, profileImage };
-        const user = await User.create(payload);
+        const user = await User.create({ ...rest, email, profileImage });
 
         return response.status(201).json({
             status: "success",
-            user,
+            user
         });
+
     } catch (err) {
-        console.error(err);
-        return response.status(400).json({
+        console.error("Signup Error:", err);
+        return response.status(500).json({
             status: "failure",
-            message: err.message,
+            message: err.message || "Internal Server Error"
         });
     }
 };
@@ -61,6 +64,7 @@ exports.login = (request, response, next) => {
                     profileImage: user.profileImage,
                     cnic: user.cnic,
                     walletAddress: user.walletAddress,
+                    role: user.role,
                 },
             });
         });
@@ -73,18 +77,4 @@ exports.logout = (request, response) => {
             .status(200)
             .json({ status: "success", message: "Logged out!" });
     });
-};
-
-exports.checkSession = async (request, response) => {
-    if (request.isAuthenticated()) {
-        return response.status(200).json({
-            status: "success",
-            message: "Session is valid",
-        });
-    } else {
-        return response.status(401).json({
-            status: "error",
-            message: "Session expired",
-        });
-    }
 };
