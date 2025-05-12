@@ -22,7 +22,7 @@ configurePassport(app);
 
 app.use(
     cors({
-        origin: "*",
+        origin: ["https://gemstone-marketplace-three.vercel.app/","http://localhost:3000"],
         credentials: true,
     })
 );
