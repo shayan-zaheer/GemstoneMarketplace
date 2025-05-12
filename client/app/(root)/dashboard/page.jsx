@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import { FaEye } from "react-icons/fa";
 import { GiCutDiamond } from "react-icons/gi";
@@ -7,8 +8,17 @@ import DashboardCard from "@/components/Dashboard/DashboardCard";
 import DashboardLine from "@/components/Dashboard/DashboardLine";
 import PieChart from "@/components/Dashboard/PieChart";
 import { MdSpaceDashboard } from "react-icons/md";
+import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 
 const page = () => {
+  const loggedinUser = useSelector(store => store.user.user);
+    console.log(loggedinUser);
+  const router = useRouter()
+
+  if(loggedinUser.role != 'admin'){
+    router.push('/')
+  }
   const cardDetails = [
     {
       title: "Visits",
