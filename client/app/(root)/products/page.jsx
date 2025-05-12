@@ -18,6 +18,7 @@ const Products = () => {
   const [sortBy, setSortBy] = useState("createdAt");
   const [loading, setLoading] = useState(true);
   const [totalPages, setTotalPages] = useState(null);
+  const [filteredGems, setFilteredGems] = useState([])
 
   useEffect(() => {
     const getAllGems = async () => {
@@ -29,11 +30,13 @@ const Products = () => {
 
         console.log(result?.data?.data?.gems);
         setGemstones(result?.data?.data?.gems);
+        setFilteredGems(result?.data?.data?.gems)
         setLoading(false);
         setTotalPages(result?.data?.data?.totalPages);
       } catch (err) {
         console.error("Error fetching gemstones:", err);
         setGemstones([]);
+        setFilteredGems([])
         setTotalPages(0);
         setLoading(false);
       }
@@ -43,6 +46,13 @@ const Products = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [currentPage, sortBy]);
 
+  const handleChange = (e)=>{
+    const value = e.target.value.toLowerCase()
+    const filtered = gemstones.filter(gem=>(
+      gem.name.toLowerCase().includes(value) || gem.owner.name.toLowerCase().includes(value)
+    ))
+    setFilteredGems(filtered)
+  }
   return (
     <div className="relative min-h-content bg-[#1a1c1ff8] py-4 mb-20 px-12 top-20">
       <div className="flex justify-center items-center h-24 w-full flex-col ">
@@ -61,6 +71,7 @@ const Products = () => {
                     type="text"
                     placeholder="Search Gemstones"
                     className="navbar-input w-full "
+                    onChange={handleChange}
                 />
             </div>
         <DropdownMenuRadioGroupDemo
@@ -78,7 +89,7 @@ const Products = () => {
         className="flex flex-wrap justify-evenly"
       >
         {!loading ? (
-          gemstones.map((gem) => <GemstoneCard key={gem.id} info={gem} />)
+          filteredGems.length!==0 ?filteredGems.map((gem) => <GemstoneCard key={gem.id} info={gem} />):<div className="w-4/5 h-48 text-white text-3xl font-semibold flex justify-center items-center italic opacity-75">No Cards Found</div>
         ) : (
           <Loader loading={loading} />
         )}

@@ -6,6 +6,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Safepay } from "@sfpy/node-sdk";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const Checkout = () => {
     const router = useRouter();
@@ -33,8 +34,8 @@ const Checkout = () => {
             const url = safepay.checkout.create({
                 token,
                 orderId: orderId,
-                cancelUrl: "https://gemstone-marketplace-three.vercel.app/checkout",
-                redirectUrl: "https://gemstone-marketplace-three.vercel.app/myOrders",
+                cancelUrl: `${process.env.FRONTEND_URL || "http://localhost:3000" }/checkout`,
+                redirectUrl:  `${process.env.FRONTEND_URL || "http://localhost:3000" }/myOrders`,
                 source: "custom",
                 webhooks: true,
             });
@@ -42,6 +43,7 @@ const Checkout = () => {
             console.log(url, "PAY HERE");
             router.push(url);
         } catch (e) {
+            toast.error(e.message)
             console.log(e);
         }
     };

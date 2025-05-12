@@ -10,6 +10,7 @@ import { Arrow } from "@radix-ui/react-tooltip";
 
 const Cart = () => {
   const cartItems = useSelector((store) => store.cart.cartItems);
+  console.log(cartItems)
 
   return (
     <div className="mt-20 min-h-96 bg-[#1a1c1ff8] p-4">
