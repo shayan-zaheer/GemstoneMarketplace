@@ -38,7 +38,6 @@ const OrderDetailsPage = ({ params }) => {
 
                 if (data.status === "success") {
                     setOrder(data.data);
-                    console.log(order)
                 } else {
                     throw new Error(
                         data.message || "Failed to fetch order details"
