@@ -14,9 +14,7 @@ import {cartActions} from "../../Store/cartSlice"
 
 const CheckoutForm = ({ makePayment }) => {
   const checkoutItem = useSelector((store) => store.checkout.checkoutItem);
-  const dispatch = useDispatch()
-  const [isLoading, setIsLoading] = useState(false)
-
+  const loggedinUser = useSelector((store) => store.user.user);
   console.log(checkoutItem);
   const subtotal = +checkoutItem.price;
   const GST = subtotal * 0.15;
@@ -60,9 +58,10 @@ const CheckoutForm = ({ makePayment }) => {
 
       const gemId = checkoutItem.id;
       const sellerId = checkoutItem.owner.userId;
-
+      console.log(loggedinUser) 
+      const buyerId = loggedinUser.userId || loggedinUser.id
       const res = await axios.post(url, {
-        gemId, sellerId
+        gemId, sellerId,buyerId
       }, {
         withCredentials: true
       })

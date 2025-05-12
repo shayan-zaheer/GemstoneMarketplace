@@ -18,6 +18,7 @@ const {sellGem,getHistory} = require("./blockchainInterface/sellGem");
 const app = express();
 const PORT = process.env.PORT || 8000;
 
+app.use(cookieParser());
 configurePassport(app);
 
 app.use(
@@ -32,7 +33,6 @@ app.use(
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
 
 app.use(morgan("dev"));
 

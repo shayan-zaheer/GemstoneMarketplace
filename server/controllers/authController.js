@@ -11,7 +11,7 @@ exports.signUp = async (request, response) => {
             });
         });
 
-        const { email, ...rest } = req.body;
+        const { email, ...rest } = request.body;
 
         const existingUser = await User.findOne({ where: { email } });
         if (existingUser) {
