@@ -94,8 +94,8 @@ const UserProfile = async ({ userid }) => {
                 Reviews
               </h3>
               {reviews ? <div className="flex items-center mb-2 w-full ">
-                {reviews?.map((review) => (
-                  <div className="mt-4 bg-[#414848] p-4 rounded-lg border border-gray-700 w-72 min-h-24 mx-2 ">
+                {reviews?.map((review, i) => (
+                  <div className="mt-4 bg-[#414848] p-4 rounded-lg border border-gray-700 w-72 min-h-24 mx-2 " key={i}>
                     <div className="w-full h-48 ">
                       <img src={review.Gem.image} className="w-full h-full" alt="Gem Image" />
                     </div>
