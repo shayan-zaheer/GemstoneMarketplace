@@ -56,10 +56,10 @@ const CheckoutForm = ({ makePayment }) => {
 
       const gemId = checkoutItem.id;
       const sellerId = checkoutItem.owner.userId;
-      const userId = loggedinUser.userId
-
+      const buyerId = loggedinUser.userId
+console.log(buyerId)
       const res = await axios.post(url, {
-        gemId, sellerId,userId
+        gemId, sellerId,buyerId
       }, {
         withCredentials: true
       })
