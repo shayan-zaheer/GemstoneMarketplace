@@ -9,7 +9,7 @@ exports.checkout = async (req, res, next) => {
 
         // Assuming buyerId comes from the authenticated user (e.g., from JWT middleware)
         // const buyerId = req.user?.userId;
-
+        console.log(gemId, sellerId,buyerId)
         if (!buyerId || !gemId || !sellerId) {
             return res
                 .status(400)
