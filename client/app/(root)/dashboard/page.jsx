@@ -1,5 +1,5 @@
-"use client"
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { GiCutDiamond } from "react-icons/gi";
 import { MdInventory } from "react-icons/md";
@@ -8,47 +8,89 @@ import DashboardCard from "@/components/Dashboard/DashboardCard";
 import DashboardLine from "@/components/Dashboard/DashboardLine";
 import PieChart from "@/components/Dashboard/PieChart";
 import { MdSpaceDashboard } from "react-icons/md";
-import { useSelector } from "react-redux";
-import { useRouter } from "next/navigation";
+import axios from "axios";
+import { icons } from "lucide-react";
+import BarGraph from "@/components/Dashboard/BarGraph"
 
 const page = () => {
-  const loggedinUser = useSelector(store => store.user.user);
-    console.log(loggedinUser);
-  const router = useRouter()
-
-  if(loggedinUser.role != 'admin'){
-    router.push('/')
-  }
-  const cardDetails = [
-    {
-      title: "Visits",
-      value: 100,
-      icon: <FaEye />,
-      bgColor: "bg-[#09f3ff]",
-    },
+  const cardDetailsTemp = [
     {
       title: "Total Users",
-      value: 50,
-      icon: <HiUserGroup />,
-      bgColor: "bg-[#e4048c]",
+      value: 0,
     },
     {
-      title: "Sold Gemstones",
-      value: 10,
-      icon: <GiCutDiamond />,
-      bgColor: "bg-[#9169db]",
+      title: "Current Month Users",
+      value: 0,
+    },
+    {
+      title: "Total Gemstones",
+      value: 0,
     },
     {
       title: "Gemstones Listed",
-      value: 20,
-      icon: <MdInventory />,
-      bgColor: "bg-[#34195a]",
+      value: 0,
+    },
+    {
+      title: "Total Orders",
+      value: 0,
+    },
+    {
+      title: "Sold Gemstones",
+      value: 0,
+    },
+    {
+      title: "Average Order Value",
+      value: 0,
+    },
+    {
+      title: "Total Revenue",
+      value: 0,
+    },
+    {
+      title: "Pending Orders",
+      value: 0,
+    },
+    {
+      title: "Current Month Revenue",
+      value: 0,
     },
   ];
+  const [cardDetails, setCardDetails] = useState(cardDetailsTemp);
+  const [barGraphData, setBarGraphData] = useState([{name: '1', salesCount: 10}]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/admin/stats`
+      );
+      setBarGraphData(prev=>{
+        const newBarGraphData = []
+        res.data?.data?.topSellingGems.map((item)=>{
+          newBarGraphData.push({name: String(item.gemId), salesCount: +item.salesCount})
+        })
+        return newBarGraphData
+      });
+      setCardDetails((prev)=>{
+        const newCardDetails = [...prev]
+        newCardDetails[0].value = res.data?.data?.totalUsers;
+        newCardDetails[1].value = res.data?.data?.newUsersThisMonth
+        newCardDetails[2].value = res.data?.data?.totalGems;
+        newCardDetails[3].value = res.data?.data?.gemsListed;
+        newCardDetails[4].value = res.data?.data?.totalOrders;
+        newCardDetails[5].value = res.data?.data?.completedOrders;
+        newCardDetails[6].value = Number(res.data?.data?.averageOrderValue).toFixed(2);
+        newCardDetails[7].value = res.data?.data?.totalRevenue;
+        newCardDetails[8].value = res.data?.data?.pendingOrders;
+        newCardDetails[9].value = res.data?.data?.revenueThisMonth;
+        return newCardDetails;
+      })
+    };
+    fetchData();
+  }, []);
+
   return (
     <div className="relative top-20 mb-20 bg-[#1a1c1ff8] text-white min-h-screen p-8">
       <div className="flex justify-center items-center h-20 w-full flex-col mb-4 ">
-        <MdSpaceDashboard  className="text-white w-10 h-10 lg:w-20 lg:h-20" />
+        <MdSpaceDashboard className="text-white w-10 h-10 lg:w-20 lg:h-20" />
         <div className=" flex items-center justify-center max-sm:w-11/12 sm:w-9/12 md:w-10/12  gap-x-2 mt-2">
           <div className="flex-grow border-t-4 border-gray-300"></div>
           <span className="font-bold max-sm:text-3xl sm:text-3xl text-white">
@@ -57,16 +99,19 @@ const page = () => {
           <div className="flex-grow border-t-4 border-gray-300"></div>
         </div>
       </div>
-      <div className="grid md:grid-cols-4 grid-cols-1 auto-rows-auto gap-2 ">
+      <div className="grid md:grid-cols-5 sm:grid-cols-2 grid-cols-1 auto-rows-auto gap-4 ">
         {cardDetails.map((card, index) => (
           <div key={index} className="md:h-40 h-32">
             <DashboardCard card={card} />
           </div>
         ))}
-        <div className="md:row-span-2 md:col-span-3 bg-[#1b1c20] rounded-lg">
+        <div className="md:row-span-2 col-span-2 md:col-span-3 bg-[#1b1c20] rounded-lg">
           <DashboardLine />
         </div>
-        <div className="bg-[#1b1c20] md:row-span-2 rounded-lg p-4">
+        <div className="bg-[#1b1c20] col-span-2 md:col-span-2 row-span-1 rounded-lg p-4">
+          <BarGraph data={barGraphData} />
+        </div>
+        <div className="bg-[#1b1c20] col-span-2 md:col-span-2 row-span-1 rounded-lg p-4">
           <PieChart />
         </div>
       </div>

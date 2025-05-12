@@ -77,13 +77,7 @@ const Navbar = () => {
                 </h1>
             </div>
 
-            <div className="hidden lg:block">
-                <input
-                    type="text"
-                    placeholder="Search Gemstones"
-                    className="navbar-input"
-                />
-            </div>
+            
 
             <div className="hidden lg:flex">
                 <ul className="flex items-center text-white font-semibold text-lg gap-x-2">

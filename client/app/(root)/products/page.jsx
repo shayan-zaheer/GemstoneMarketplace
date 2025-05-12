@@ -55,7 +55,14 @@ const Products = () => {
           <div className="flex-grow border-t-4 border-gray-300"></div>
         </div>
       </div>
-      <div className="flex md:justify-end md:mr-20 justify-center mt-4">
+      <div className="flex md:flex-row flex-col gap-4 md:justify-between md:mx-20 justify-center mt-4">
+        <div className="md:w-1/2 w-full">
+                <input
+                    type="text"
+                    placeholder="Search Gemstones"
+                    className="navbar-input w-full "
+                />
+            </div>
         <DropdownMenuRadioGroupDemo
           ddText="Sort By"
           valuesText={["createdAt", "price"]}
