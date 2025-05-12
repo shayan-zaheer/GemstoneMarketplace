@@ -288,7 +288,7 @@ const OrderDetailsPage = ({ params }) => {
                     </div>
 
                     {/* Order Action Section */}
-                    {<div className="mt-5">
+                    {order.paymentStatus=="PAID"&&<div className="mt-5">
                         {!order.isReceived ? (
                             <button
                                 onClick={handleMarkAsReceived}

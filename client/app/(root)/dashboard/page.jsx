@@ -1,18 +1,23 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import { FaEye } from "react-icons/fa";
-import { GiCutDiamond } from "react-icons/gi";
-import { MdInventory } from "react-icons/md";
-import { HiUserGroup } from "react-icons/hi";
+"use client"
+import React, {useState, useEffect} from "react";
 import DashboardCard from "@/components/Dashboard/DashboardCard";
 import DashboardLine from "@/components/Dashboard/DashboardLine";
 import PieChart from "@/components/Dashboard/PieChart";
 import { MdSpaceDashboard } from "react-icons/md";
-import axios from "axios";
-import { icons } from "lucide-react";
-import BarGraph from "@/components/Dashboard/BarGraph"
+import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
+import axios from 'axios'
+import BarGraph from "@/components/Dashboard/BarGraph";
+
 
 const page = () => {
+  const loggedinUser = useSelector(store => store.user.user);
+    console.log(loggedinUser);
+  const router = useRouter()
+
+  if(loggedinUser.role != 'admin'){
+    return router.push('/')
+  }
   const cardDetailsTemp = [
     {
       title: "Total Users",
