@@ -53,7 +53,17 @@ const Gem = sequelize.define(
         isListed: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
-            defaultValue:true
+            defaultValue: true,
+        },
+        isDeleted: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false,
+        },
+        category: {
+            type: DataTypes.ENUM("trending", "highvolume"),
+            allowNull: true,
+            defaultValue: null,
         },
     },
     {

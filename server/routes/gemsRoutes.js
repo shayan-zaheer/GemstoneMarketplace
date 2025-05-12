@@ -23,5 +23,6 @@ router.route("/:productID").get(gemsController.getGemByID);
 router.route("/delete/:id").delete(ensureAuthenticated, gemsController.deleteGem);
 router.route("/update/:id").patch(ensureAuthenticated, gemsController.updateGem)
 router.route("/userId/:id").get(gemsController.getGemByUser)
+router.route("/category/:category").get(gemsController.getGemsByCategory);
 
 module.exports = router;
