@@ -5,10 +5,10 @@ const User = require("../models/User");
 
 exports.checkout = async (req, res, next) => {
     try {
-        const { gemId, sellerId } = req.body;
+        const { gemId, sellerId,buyerId } = req.body;
 
         // Assuming buyerId comes from the authenticated user (e.g., from JWT middleware)
-        const buyerId = req.user?.userId;
+        // const buyerId = req.user?.userId;
 
         if (!buyerId || !gemId || !sellerId) {
             return res

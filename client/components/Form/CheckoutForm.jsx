@@ -13,6 +13,7 @@ import axios from "axios";
 
 const CheckoutForm = ({ makePayment }) => {
   const checkoutItem = useSelector((store) => store.checkout.checkoutItem);
+  const loggedinUser = useSelector((store) => store.user.user);
   console.log(checkoutItem);
   const subtotal = +checkoutItem.price;
   const GST = subtotal * 0.15;
@@ -55,9 +56,10 @@ const CheckoutForm = ({ makePayment }) => {
 
       const gemId = checkoutItem.id;
       const sellerId = checkoutItem.owner.userId;
+      const userId = loggedinUser.userId
 
       const res = await axios.post(url, {
-        gemId, sellerId
+        gemId, sellerId,userId
       }, {
         withCredentials: true
       })
