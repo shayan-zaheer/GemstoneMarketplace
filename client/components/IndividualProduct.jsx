@@ -85,7 +85,7 @@ const IndividualProduct = ({ productID }) => {
             initial={{ x: 600 }}
             animate={{ x: 0 }}
             transition={{ type: "tween", duration: 0.3 }}
-            className="md:w-[68%] md:min-h-[950px] lg:min-h-[800px] min-h-content relative flex flex-col align-end"
+            className="md:w-[64%] md:min-h-[950px] lg:min-h-[800px] min-h-content relative flex flex-col align-end"
           >
             <img
               src={gem.coverImage}
@@ -136,7 +136,7 @@ const IndividualProduct = ({ productID }) => {
                 </span>
               </Link>
             </div>
-            {loggedinUser?.userId !== gem?.owner?.userId && (
+            {loggedinUser?.userId !== gem?.owner?.userId && loggedinUser?.role !== 'admin' && (
                <div className="relative md:text-xl text-md my-4 mb-20 text-white font-bold">
                  {!alreadyInCart ? (
                    <button

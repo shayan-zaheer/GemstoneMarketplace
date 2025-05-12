@@ -9,7 +9,7 @@ function initializeSocket(server) {
     console.log("Initializing Socket.io...");
     io = new Server(server, {
         cors: {
-            origin: "http://localhost:3000",
+            origin: "https://gemstone-marketplace-three.vercel.app",
             methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
             credentials: true,
         },
@@ -23,6 +23,9 @@ function initializeSocket(server) {
 
     io.on("connection", (socket) => {
         const userId = socket.handshake.session?.passport?.user;
+
+        console.log("Session:", socket.handshake.session);
+        console.log("Connected userId:", userId);
 
         if (userId) {
             clients.set(userId.toString(), socket.id);

@@ -148,7 +148,7 @@ exports.deleteGem = async (request, res) => {
         console.log(e)
         res.status(400).json({
             status: "failed",
-            message: e.message,
+            message: "Something went wrong",
         });
     }
 };
