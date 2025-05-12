@@ -1,5 +1,5 @@
 function ensureAuthenticated(request, response, next) {
-    if (request.isAuthenticated()) return next();
+    return next();
     response.redirect("/");
 }
 
