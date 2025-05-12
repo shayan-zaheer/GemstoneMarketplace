@@ -33,8 +33,8 @@ const Checkout = () => {
             const url = safepay.checkout.create({
                 token,
                 orderId: orderId,
-                cancelUrl: "http://localhost:3000/checkout",
-                redirectUrl: "http://localhost:3000/myOrders",
+                cancelUrl: "https://gemstone-marketplace-three.vercel.app/checkout",
+                redirectUrl: "https://gemstone-marketplace-three.vercel.app/myOrders",
                 source: "custom",
                 webhooks: true,
             });

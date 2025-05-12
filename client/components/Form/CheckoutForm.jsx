@@ -51,7 +51,7 @@ const CheckoutForm = ({ makePayment }) => {
   const handleCheckout = async () => {
 
     try {
-      const url = 'http://localhost:8000/buy/checkout'
+      const url = 'https://gemstonemarketplace.onrender.com/buy/checkout'
 
       const gemId = checkoutItem.id;
       const sellerId = checkoutItem.owner.userId;
