@@ -9,7 +9,7 @@ function initializeSocket(server) {
     console.log("Initializing Socket.io...");
     io = new Server(server, {
         cors: {
-            origin: "https://gemstone-marketplace-three.vercel.app",
+            origin: process.env.FRONTEND_URL,
             methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
             credentials: true,
         },

@@ -31,7 +31,7 @@ const rootReducer = combineReducers({
     user: userSlice.reducer,
     checkout: checkoutSlice.reducer,
     socket: socketSlice.reducer,
-});
+}, );
 
 const persistConfig = {
     key: "root",
@@ -47,6 +47,7 @@ const store = configureStore({
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
             serializableCheck: {
+                ignoredPaths: ['socket.socket', 'meta.arg', 'payload.socket'],
                 ignoredActions: ["persist/PERSIST"],
             },
         }),

@@ -12,7 +12,7 @@ const socketSlice = createSlice({
     reducers: {
         initSocket: (state, action) => {
             if (!socketInstance) {
-                socketInstance = io("https://gemstonemarketplace.onrender.com", {
+                socketInstance = io(process.env.NEXT_PUBLIC_BACKEND_URL, {
                     transports: ["websocket"],
                     withCredentials: true,
                 });
