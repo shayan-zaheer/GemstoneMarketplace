@@ -136,45 +136,26 @@ const IndividualProduct = ({ productID }) => {
                 </span>
               </Link>
             </div>
-            <div className="md:w-[80%] mt-5">
-              <table className="border border-gray-300 w-full text-white sm:text-lg">
-                <tbody>
-                  <tr>
-                    <th className="detail-label">Dimensions </th>
-                    <td className="detail-value">{gem?.dimensions}</td>
-                  </tr>
-                  <tr>
-                    <th className="detail-label">Purity </th>
-                    <td className="detail-value">{gem?.purity}</td>
-                  </tr>
-                  <tr>
-                    <th className="detail-label">Weight </th>
-                    <td className="detail-value">{gem?.weight} C.T.</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            {loggedinUser?.userId !== gem?.owner?.userId &&
-              loggedinUser?.role !== "admin" && (
-                <div className="relative md:text-xl text-md my-4 mb-20 text-white font-bold">
-                  {!alreadyInCart ? (
-                    <button
-                      className="flex gap-3 md:w-44 w-40 px-3  bg-blue-600 hover:bg-blue-700 md:py-3 py-2 shadow-lg rounded-lg hover:cursor-pointer h-full"
-                      onClick={handleAddToCart}
-                    >
-                      <FaCartShopping className="translate-y-1" /> Add to Cart
-                    </button>
-                  ) : (
-                    <button
-                      className="flex gap-3 px-3 md:px-6 md:py-3 py-2 hover:bg-red-700 bg-red-600 rounded-lg shadow-lg hover:cursor-pointer md:w-72 w-64 h-full"
-                      onClick={handleRemoveFromCart}
-                    >
-                      <TbShoppingCartCancel className="translate-y-1 md:text-2xl" />{" "}
-                      Remove From Cart
-                    </button>
-                  )}
-                </div>
-              )}
+            {loggedinUser?.userId !== gem?.owner?.userId && loggedinUser.role !== 'admin' && (
+               <div className="relative md:text-xl text-md my-4 mb-20 text-white font-bold">
+                 {!alreadyInCart ? (
+                   <button
+                     className="flex gap-3 md:w-44 w-36 px-3  bg-blue-600 hover:bg-blue-700 md:py-3 py-2 shadow-lg rounded-lg hover:cursor-pointer h-full"
+                     onClick={handleAddToCart}
+                   >
+                     <FaCartShopping className="translate-y-1" /> Add to Cart
+                   </button>
+                 ) : (
+                   <button
+                     className="flex gap-3 px-3 md:px-6 md:py-3 py-2 hover:bg-red-700 bg-red-600 rounded-lg shadow-lg hover:cursor-pointer md:w-72 w-64 h-full"
+                     onClick={handleRemoveFromCart}
+                   >
+                     <TbShoppingCartCancel className="translate-y-1 md:text-2xl" />{" "}
+                     Remove From Cart
+                   </button>
+                 )}
+               </div>
+             )}
           </motion.div>
           {open && (
             <ImageModal

@@ -1,11 +1,21 @@
 "use client";
+"use client";
 import React, { useState } from "react";
 import UploadGemstoneFirst from "@/components/Form/UploadGemstoneFirst";
 import UploadGemstoneSecond from "@/components/Form/UploadGemstoneSecond";
 import { useSelector } from "react-redux";
 import Unauthorized from "@/components/Unauthorized";
+import { useSelector } from "react-redux";
+import Unauthorized from "@/components/Unauthorized";
 
 const UploadGem = () => {
+  const [next, setNext] = useState(false);
+  const [gemData, setGemData] = useState("");
+  const loggedInUser = useSelector((store) => store?.user?.user);
+  const receiveData = async (data) => {
+    console.log("Receive Data", data);
+    setGemData((p) => data);
+  };
   const [next, setNext] = useState(false);
   const [gemData, setGemData] = useState("");
   const loggedInUser = useSelector((store) => store?.user?.user);

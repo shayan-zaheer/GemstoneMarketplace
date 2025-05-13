@@ -12,7 +12,7 @@ import toast from "react-hot-toast";
 import Loader from "@/components/Loader";
 
 const page = () => {
-  const loggedinUser = useSelector((store) => store.user.user);
+  const loggedinUser = useSelector((store) => store?.user?.user);
   const [loading, setLoading] = useState(true);
   console.log(loggedinUser);
   const cardDetailsTemp = [

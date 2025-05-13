@@ -39,18 +39,22 @@ const UploadGemstoneFirst = ({ setNext, receiveData }) => {
         form.setValue(name, files);
     };
 
-    const onSubmit = async (data) => {
-        const formData = new FormData();
-        formData.append("name", data.name);
-        formData.append("description", data.description);
-        formData.append("shape", data.shape);
-        formData.append("purity", data.purity);
-        formData.append("dimensions", data.dimensions);
-        formData.append("weight", data.weight);
-        formData.append("price", data.price);
-        formData.append("userId", data.userId);
-        formData.append("image", data.image[0]);
-        formData.append("coverImage", data.coverImage[0]);
+  const onSubmit = async (data) => {
+    if (user.walletAddress === "") {
+      toast.error("Please Connect Wallet Address");
+      return;
+    }
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("description", data.description);
+    formData.append("shape", data.shape);
+    formData.append("purity", data.purity);
+    formData.append("dimensions", data.dimensions);
+    formData.append("weight", data.weight);
+    formData.append("price", data.price);
+    formData.append("userId", data.userId);
+    formData.append("image", data.image[0]);
+    formData.append("coverImage", data.coverImage[0]);
 
         data.moreImages.forEach((file) => {
             formData.append("moreImages", file);
