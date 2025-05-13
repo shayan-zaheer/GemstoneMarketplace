@@ -15,6 +15,7 @@ const CheckoutForm = ({ makePayment }) => {
   const checkoutItem = useSelector((store) => store.checkout.checkoutItem);
   const loggedinUser = useSelector((store) => store.user.user);
   const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
   console.log(checkoutItem);
   const subtotal = +checkoutItem.price;
   const GST = subtotal * 0.15;
@@ -74,10 +75,9 @@ const CheckoutForm = ({ makePayment }) => {
       console.log(checkoutItem.price);
 
       let amt = +checkoutItem.price;
-
+      dispatch(cartActions.removeFromCart(checkoutItem));
       makePayment(amt, res.data.order.orderId);
 
-      dispatch(cartActions.clearCart());
       setIsLoading(false);
     } catch (e) {
       setIsLoading(false);
