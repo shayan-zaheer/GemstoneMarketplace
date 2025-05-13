@@ -3,10 +3,11 @@ import GemstoneCard from "./GemstoneCard";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { MdDelete } from "react-icons/md";
-import { DialogTrigger } from "@/components/ui/dialog"
+import { DialogTrigger } from "@/components/ui/dialog";
 import DeleteIcon from "./DeleteIcon";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import Link from "next/link";
 
 const UserGemstones = ({ user, gemstones, title }) => {
   const loggedinUser = useSelector((store) => store.user.user);
@@ -15,10 +16,11 @@ const UserGemstones = ({ user, gemstones, title }) => {
   useEffect(() => {
     setLocalGemstones(gemstones);
   }, [gemstones]);
-  const handleDelete=async (gemId)=>{
+  const handleDelete = async (gemId) => {
     try {
       const result = await axios.delete(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/gems/delete/${gemId}`, {withCredentials : true}
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/gems/delete/${gemId}`,
+        { withCredentials: true }
       );
       if (result.status === 200) {
         toast.success("Gemstone deleted successfully");
@@ -28,11 +30,21 @@ const UserGemstones = ({ user, gemstones, title }) => {
       console.log(err);
       toast.error("Error deleting gemstone");
     }
-  }
+  };
 
   return (
     <>
-      <h1 className="text-gray-200 font-semibold text-4xl mt-5">{title}</h1>
+      <div className="flex items-end justify-between ">
+        <h1 className="text-gray-200 font-semibold text-4xl mt-5">{title}</h1>
+        {loggedinUser?.userId === user?.userId &&
+          title === "Owned Gemstones" && (
+            <Link href="/upload">
+              <button className="navbar-button  px-3 py-3 rounded-sm  !bg-[#1a1c1ff9] border border-slate-700 ring-1 !text-white !transition-all !ease-linear !duration-150">
+                Upload Gemstone
+              </button>
+            </Link>
+          )}
+      </div>
       {localGemstones && localGemstones.length != 0 ? (
         <div className="bg-[#1a1c1ff9] min-h-[300px] rounded-lg px-2 gap-4 py-[0.01rem] my-3 flex flex-nowrap overflow-x-scroll">
           {localGemstones &&
