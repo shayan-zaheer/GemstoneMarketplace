@@ -5,11 +5,14 @@ import FormInput from "./FormInput";
 import FormButton from "../FormButton";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
-import toast from "react-hot-toast";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { uploadGemSchema } from "../Schemas/uploadGemSchema";
+import { toast } from "react-hot-toast";
 
 const UploadGemstoneFirst = ({ setNext, receiveData }) => {
   const user = useSelector((store) => store.user.user);
   const form = useForm({
+    resolver: zodResolver(uploadGemSchema),
     defaultValues: {
       name: "",
       description: "",
@@ -27,10 +30,9 @@ const UploadGemstoneFirst = ({ setNext, receiveData }) => {
 
   const handleFileChange = (e, name) => {
     const files = Array.from(e.target.files);
-    console.log(name);
     if (name == "moreImages") {
       if (files.length < 2 || files.length > 6) {
-        alert("Please upload between 2 and 6 images.");
+        toast.error("Please upload between 2 and 6 images.");
         return;
       }
     }
@@ -57,9 +59,7 @@ const UploadGemstoneFirst = ({ setNext, receiveData }) => {
     data.moreImages.forEach((file) => {
       formData.append("moreImages", file);
     });
-
     await receiveData(formData);
-
     setNext(true);
   };
 

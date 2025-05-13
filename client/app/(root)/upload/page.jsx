@@ -8,7 +8,7 @@ import Unauthorized from "@/components/Unauthorized";
 const UploadGem = () => {
   const [next, setNext] = useState(false);
   const [gemData, setGemData] = useState("");
-  const loggedinUser = useSelector((store) => store.user.user);
+  const loggedInUser = useSelector((store) => store?.user?.user);
   const receiveData = async (data) => {
     console.log("Receive Data", data);
     setGemData((p) => data);
@@ -16,7 +16,9 @@ const UploadGem = () => {
 
   return (
     <>
-      {loggedinUser && loggedinUser?.role !== "admin" ? (
+      {loggedInUser?.role != "user" ? (
+        <Unauthorized />
+      ) : (
         <div className="relative top-20 min-h-[94vh] bg-[#1a1c1ff8] mb-20 p-12 flex justify-center items-center">
           {!next ? (
             <UploadGemstoneFirst setNext={setNext} receiveData={receiveData} />
@@ -24,8 +26,6 @@ const UploadGem = () => {
             <UploadGemstoneSecond setNext={setNext} gemData={gemData} />
           )}
         </div>
-      ) : (
-        <Unauthorized />
       )}
     </>
   );
