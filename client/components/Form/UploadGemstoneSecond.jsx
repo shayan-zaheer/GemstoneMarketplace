@@ -9,8 +9,10 @@ import axios from "axios";
 import { verifySeller, uploadGemOnChain } from "@/services/gemBlockchain";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { uploadGemSchema2 } from "../Schemas/uploadGemSchema2";
+import { useRouter } from "next/navigation";
 
 const UploadGemstoneSecond = ({ setNext, gemData }) => {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const form = useForm({
     resolver: zodResolver(uploadGemSchema2),

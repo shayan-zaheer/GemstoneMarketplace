@@ -16,7 +16,7 @@ const UploadGem = () => {
 
   return (
     <>
-      {loggedInUser?.role !== "user" ? (
+      {loggedInUser?.role != "user" ? (
         <Unauthorized />
       ) : (
         <div className="relative top-20 min-h-[94vh] bg-[#1a1c1ff8] mb-20 p-12 flex justify-center items-center">
