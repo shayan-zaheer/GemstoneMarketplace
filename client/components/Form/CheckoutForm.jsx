@@ -15,6 +15,7 @@ import {cartActions} from "../../Store/cartSlice"
 const CheckoutForm = ({ makePayment }) => {
   const checkoutItem = useSelector((store) => store.checkout.checkoutItem);
   const loggedinUser = useSelector((store) => store.user.user);
+  const [isLoading, setIsLoading] = useState(false);
   console.log(checkoutItem);
   const subtotal = +checkoutItem.price;
   const GST = subtotal * 0.15;
