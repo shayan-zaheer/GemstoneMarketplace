@@ -7,5 +7,5 @@ export const signupFormSchema = z.object({
   residenceAddress: z.string().min(5, "Invalid residence address"),
   contact: z.string().min(10, "Invalid contact number"),
   cnic: z.string().length(13, "CNIC must be exactly 13 digits"),
-  walletAddress: z.string().optional(),
+  walletAddress: z.string(),
 });
