@@ -136,24 +136,7 @@ const IndividualProduct = ({ productID }) => {
                 </span>
               </Link>
             </div>
-            <div className="md:w-[80%] mt-5">
-              <table className="border border-gray-300 w-full text-white sm:text-lg">
-                <tbody>
-                  <tr>
-                    <th className="detail-label">Dimensions </th>
-                    <td className="detail-value">{gem?.dimensions}</td>
-                  </tr>
-                  <tr>
-                    <th className="detail-label">Purity </th>
-                    <td className="detail-value">{gem?.purity}</td>
-                  </tr>
-                  <tr>
-                    <th className="detail-label">Weight </th>
-                    <td className="detail-value">{gem?.weight} C.T.</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            
             {loggedinUser?.userId !== gem?.owner?.userId &&
               loggedinUser?.role !== "admin" && (
                 <div className="relative md:text-xl text-md my-4 mb-20 text-white font-bold">
