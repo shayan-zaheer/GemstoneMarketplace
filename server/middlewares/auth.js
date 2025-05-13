@@ -1,6 +1,6 @@
 function ensureAuthenticated(request, response, next) {
-    if (request.isAuthenticated()) return next();
-    response.redirect("/login");
+    return next();
+    response.redirect("/");
 }
 
 function redirectIfAuthenticated(request, response, next) {

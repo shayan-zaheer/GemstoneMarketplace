@@ -14,6 +14,7 @@ exports.getUserById = async (request, response) => {
                 "residenceAddress",
                 "profileImage",
                 "walletAddress",
+                "role"
             ],
             include: [
                 {

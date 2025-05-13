@@ -85,49 +85,69 @@ const UserProfile = async ({ userid }) => {
             gemstones={user?.soldGemstones}
             title={"Sold Gemstones"}
           />
-
         </div>
       </div>
-          <div className="w-[98vw] h-fit bg-[#1D1B24] mt-4 mx-2  overflow-y-hidden rounded-md mb-3">
-            <div className={`bg-[#1e20249f] p-4 rounded-md border border-gray-700 ${reviews? "w-fit": 'w-full'} h-full`}>
-              <h3 className="text-3xl font-bold text-white mb-2">
-                Reviews
-              </h3>
-              {reviews ? <div className="flex items-center mb-2 w-full ">
-                {reviews?.map((review, i) => (
-                  <div className="mt-4 bg-[#414848] p-4 rounded-lg border border-gray-700 w-72 min-h-24 mx-2 " key={i}>
-                    <div className="w-full h-48 ">
-                      <img src={review.Gem.image} className="w-full h-full" alt="Gem Image" />
-                    </div>
-                    <div className="text-white font-bold mt-2 border-b">
-                      <p className="bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4] text-transparent bg-clip-text text-2xl font-bold animate-gradient">{review.Gem.name}</p>
-                      <p className="text-lg">{review.Gem.price} PKR</p>
-                    </div>
-                    <h3 className="text-white font-semibold mt-2 text-lg">Reviewed By:</h3>
-                    <h3 className="text-lg font-semibold text-purple-400 mb-2">
-                      {review.Buyer.name}
-                    </h3>
-                    <div className="flex items-center mb-2 w-full">
-                      {[1, 2, 3, 4, 5]?.map((star) => (
-                        <FaStar
-                          key={star}
-                          size={25}
-                          className={
-                            star <= review.Review.rating
-                              ? "text-yellow-400"
-                              : "text-gray-400"
-                          }
-                        />
-                      ))}
-                    </div>
-                    <p className="text-gray-300 mb-2">{review.Review.comment}</p>
+      <div className="w-[98vw] h-fit bg-[#1D1B24] mt-4 mx-2  overflow-y-hidden rounded-md mb-3">
+        <div
+          className={`bg-[#1e20249f] p-4 rounded-md border border-gray-700 ${
+            reviews ? "w-fit" : "w-full"
+          } h-full`}
+        >
+          <h3 className="text-3xl font-bold text-white mb-2">Reviews</h3>
+          {reviews ? (
+            <div className="flex items-center mb-2 w-full ">
+              {reviews?.map((review, i) => (
+                <div
+                  className="mt-4 bg-[#414848] p-3 rounded-lg border border-gray-700 w-72 h-[460px] mx-2 "
+                  key={i}
+                >
+                  <div className="w-full h-48 ">
+                    <img
+                      src={review.Gem.image}
+                      className="w-full h-full"
+                      alt="Gem Image"
+                    />
                   </div>
-                ))}
-              </div> : <div className="w-full h-48 flex justify-center items-center ">
-                <p className="font-bold text-4xl text-white opacity-80">No Reviews</p>
-                </div>}
+                  <div className="text-white font-bold mt-2 border-b">
+                    <p className="bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4] text-transparent bg-clip-text text-2xl font-bold animate-gradient">
+                      {review.Gem.name}
+                    </p>
+                    <p className="text-lg">{review.Gem.price} PKR</p>
+                  </div>
+                  <h3 className="text-white font-semibold mt-2 text-lg">
+                    Reviewed By:
+                  </h3>
+                  <h3 className="text-lg font-semibold text-purple-400 mb-2">
+                    {review.Buyer.name}
+                  </h3>
+                  <div className="flex items-center mb-2 w-full">
+                    {[1, 2, 3, 4, 5]?.map((star) => (
+                      <FaStar
+                        key={star}
+                        size={25}
+                        className={
+                          star <= review.Review.rating
+                            ? "text-yellow-400"
+                            : "text-gray-400"
+                        }
+                      />
+                    ))}
+                  </div>
+                  <p className="text-gray-300 mb-2 line-clamp-3">
+                    {review.Review.comment}
+                  </p>
+                </div>
+              ))}
             </div>
-          </div>
+          ) : (
+            <div className="w-full h-48 flex justify-center items-center ">
+              <p className="font-bold text-4xl text-white opacity-80">
+                No Reviews
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

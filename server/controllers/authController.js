@@ -11,7 +11,7 @@ exports.signUp = async (request, response) => {
             });
         });
 
-        const { email, ...rest } = req.body;
+        const { email, ...rest } = request.body;
 
         const existingUser = await User.findOne({ where: { email } });
         if (existingUser) {
@@ -56,16 +56,7 @@ exports.login = (request, response, next) => {
             response.status(200).json({
                 status: "success",
                 message: "Login successful",
-                user: {
-                    userId: user.userId,
-                    email: user.email,
-                    residenceAddress: user.residenceAddress,
-                    contact: user.contact,
-                    profileImage: user.profileImage,
-                    cnic: user.cnic,
-                    walletAddress: user.walletAddress,
-                    role: user.role,
-                },
+                user
             });
         });
     })(request, response, next);

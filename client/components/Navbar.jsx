@@ -12,6 +12,7 @@ import { store } from "@/Store";
 import { cartActions } from "@/Store/cartSlice";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { disconnectSocket } from "@/Store/socketSlice";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -36,6 +37,7 @@ const Navbar = () => {
         socket.off("connect", handleConnect);
       };
     }
+    console.log(user);
   }, [user?.id]);
 
   useEffect(() => {
@@ -54,6 +56,7 @@ const Navbar = () => {
           const cart = store.getState().cart.cartItems;
           localStorage.setItem(`cart_${currentUser}`, JSON.stringify(cart));
         }
+        dispatch(disconnectSocket());
         dispatch(cartActions.clearCart());
         dispatch(userActions.removeSession());
         toast.success("Logged out successfully");
@@ -89,7 +92,7 @@ const Navbar = () => {
                   Profile
                 </Link>
               </li>
-              {user.role == "admin" ? (
+              {user?.role == "admin" ? (
                 <li className="h-16  px-4  flex items-center">
                   <Link
                     href={"/dashboard"}

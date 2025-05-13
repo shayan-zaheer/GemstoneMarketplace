@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 import { cartActions } from "@/Store/cartSlice";
 import { useDispatch } from "react-redux";
 import { userActions } from "@/Store/userSlice";
+import { initSocket } from "@/Store/socketSlice";
 
 const LoginForm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -32,6 +33,7 @@ const LoginForm = () => {
         { withCredentials: true }
       );
       if (result.data.status === "success") {
+        dispatch(initSocket());
         dispatch(userActions.setUser(result?.data?.user));
         dispatch(cartActions.setUser(result?.data?.user?.userId));
         setIsLoading(false);

@@ -6,6 +6,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Safepay } from "@sfpy/node-sdk";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const Checkout = () => {
     const router = useRouter();
@@ -17,9 +18,9 @@ const Checkout = () => {
         try {
             const safepay = new Safepay({
                 environment: "sandbox",
-                apiKey: "sec_53835f34-4c24-43ba-8ac8-f0bd25437e2f",
+                apiKey: process.env.NEXT_PUBLIC_SAFEPAY_API_KEY,
                 v1Secret: "bar",
-                webhookSecret: "9c6f91a0823036691448fd7a0f280136e8ad26009c72653753ea6e80366e0500",
+                webhookSecret: process.env.NEXT_PUBLIC_SAFEPAY_WEBHOOK_SECRET,
             });
 
 
@@ -33,8 +34,8 @@ const Checkout = () => {
             const url = safepay.checkout.create({
                 token,
                 orderId: orderId,
-                cancelUrl: "http://localhost:3000/checkout",
-                redirectUrl: "http://localhost:3000/myOrders",
+                cancelUrl: `${process.env.NEXT_PUBLIC_FRONTEND_URL || "http://localhost:3000" }/checkout`,
+                redirectUrl:  `${process.env.NEXT_PUBLIC_FRONTEND_URL || "http://localhost:3000" }/myOrders`,
                 source: "custom",
                 webhooks: true,
             });
@@ -42,6 +43,7 @@ const Checkout = () => {
             console.log(url, "PAY HERE");
             router.push(url);
         } catch (e) {
+            toast.error(e.message)
             console.log(e);
         }
     };

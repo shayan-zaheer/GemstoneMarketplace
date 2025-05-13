@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { checkoutFormSchema } from "../Schemas/checkoutFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -7,12 +7,15 @@ import { Form } from "../ui/form";
 import FormInput from "./FormInput";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import CartTotal from "../CartTotal";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-
+import { cartActions } from "../../Store/cartSlice";
 
 const CheckoutForm = ({ makePayment }) => {
   const checkoutItem = useSelector((store) => store.checkout.checkoutItem);
+  const loggedinUser = useSelector((store) => store.user.user);
+  const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
   console.log(checkoutItem);
   const subtotal = +checkoutItem.price;
   const GST = subtotal * 0.15;
@@ -43,45 +46,50 @@ const CheckoutForm = ({ makePayment }) => {
     },
   });
   const onSubmit = async (data) => {
-    console.log("PLACING")
-    await makePayment()
+    console.log("PLACING");
+    await makePayment();
   };
 
-
   const handleCheckout = async () => {
+    setIsLoading(true);
 
     try {
-      const url = 'http://localhost:8000/buy/checkout'
+      const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/buy/checkout`;
 
       const gemId = checkoutItem.id;
       const sellerId = checkoutItem.owner.userId;
+      console.log(loggedinUser);
+      const buyerId = loggedinUser.userId || loggedinUser.id;
+      const res = await axios.post(
+        url,
+        {
+          gemId,
+          sellerId,
+          buyerId,
+        },
+        {
+          withCredentials: true,
+        }
+      );
 
-      const res = await axios.post(url, {
-        gemId, sellerId
-      }, {
-        withCredentials: true
-      })
+      console.log(checkoutItem.price);
 
-      console.log(checkoutItem.price)
+      let amt = +checkoutItem.price;
+      dispatch(cartActions.removeFromCart(checkoutItem));
+      makePayment(amt, res.data.order.orderId);
 
-      let amt = +checkoutItem.price
-
-      makePayment(amt,res.data.order.orderId)
-
+      setIsLoading(false);
+    } catch (e) {
+      setIsLoading(false);
+      console.log(e);
     }
-    catch (e) {
-      console.log(e)
-    }
-
-
-  }
-
+  };
 
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-4 mx-auto p-4 border rounded-lg text-white max-sm:w-11/12 sm:w-11/12 flex flex-col gap-y-4 md:flex-row gap-x-4 lg:w-9/12"
+        className="space-y-4 mx-auto  border rounded-lg text-white max-sm:w-11/12 sm:w-11/12  lg:w-2/5"
       >
         {/* <div className="w-full h-auto p-2 flex flex-col gap-y-2">
           <FormInput
@@ -127,7 +135,7 @@ const CheckoutForm = ({ makePayment }) => {
             placeholder="Enter Your Postal Code"
           />
         </div> */}
-        <div className="w-full h-fit bg-[#2a2c2f9f] p-4 rounded-lg  md:w-8/12">
+        <div className="w-full h-fit bg-[#2a2c2f9f] p-4 rounded-lg">
           <h1 className="text-2xl font-semibold mb-4">Order Summary</h1>
           <div className="w-full min-h-20  flex flex-col gap-y-3  mb-3 ">
             <div className="w-full flex justify-between px-2 text-xl font-medium border-b">
@@ -138,47 +146,48 @@ const CheckoutForm = ({ makePayment }) => {
               <span className="font-semibold text-lg">
                 {checkoutItem.name} {"  "}
               </span>
-              <span>{checkoutItem.price}</span>
+              <span>{checkoutItem.price} PKR</span>
             </div>
             {/* {products.map((product, index) => (
             ))} */}
             <div className="w-full flex justify-between px-2 font-medium border-b">
               <span>Subtotal</span>
-              <span>{subtotal}</span>
+              <span>{subtotal} PKR</span>
             </div>
             <div className="w-full flex justify-between px-2 font-medium border-b">
               <span>GST(15%)</span>
-              <span>{GST}</span>
+              <span>{GST} PKR</span>
             </div>
             <div className="w-full flex justify-between px-2 font-medium border-b">
               <span>Total</span>
-              <span>{total}</span>
+              <span>{total} PKR</span>
             </div>
           </div>
 
-          <RadioGroup
+          {/* <RadioGroup
             defaultValue={form.watch("paymentMethod")}
             onValueChange={(value) => form.setValue("paymentMethod", value)}
             className="font-medium my-2 "
           >
             <label className="flex items-center space-x-3">
-              <RadioGroupItem value="cod" className="  h-5 w-5 bg-blue-400" />
-              <span>Cash on Delivery</span>
-            </label>
-            <label className="flex items-center space-x-3">
               <RadioGroupItem value="paypro" className="h-5 w-5  bg-blue-400" />
-              <span>PayPro</span>
+              <span>SafePay</span>
             </label>
-          </RadioGroup>
-          <button
-            onClick={() => handleCheckout()}
-            className="relative px-6 py-2 font-semibold text-white bg-transparent border border-white hover:border-transparent overflow-hidden group rounded-sm mt-2 mx-auto w-full"
-          >
-            <span className="absolute inset-0 bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4] transition-all duration-300 ease-out transform scale-x-0 origin-left group-hover:scale-x-100"></span>
-            <div className="flex items-center justify-center gap-x-2">
-              <span className="relative z-10 text-white">Place Order</span>
-            </div>
-          </button>
+          </RadioGroup> */}
+          {
+            <button
+              disabled={isLoading}
+              onClick={() => handleCheckout()}
+              className="relative px-6 py-2 font-semibold text-white bg-transparent border border-white hover:border-transparent overflow-hidden group rounded-sm mt-2 mx-auto w-full"
+            >
+              <span className="absolute inset-0 bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4] transition-all duration-300 ease-out transform scale-x-0 origin-left group-hover:scale-x-100"></span>
+              <div className="flex items-center justify-center gap-x-2">
+                <span className="relative z-10 text-white text-lg">
+                  {isLoading ? "Processing...." : "Place Order"}
+                </span>
+              </div>
+            </button>
+          }
         </div>
       </form>
     </Form>
