@@ -20,8 +20,9 @@ const uploadMiddleware = (req, res, next) => {
 
 router.route("/").get(gemsController.getAllGems).post(uploadMiddleware, gemsController.uploadGem);
 router.route("/:productID").get(gemsController.getGemByID);
-router.route("/delete/:id").delete(ensureAuthenticated, gemsController.deleteGem);
-router.route("/update/:id").patch(ensureAuthenticated, gemsController.updateGem)
+router.route("/delete/:id").delete( gemsController.deleteGem);
+router.route("/update/:id").patch( gemsController.updateGem)
 router.route("/userId/:id").get(gemsController.getGemByUser)
+router.route("/category/:category").get(gemsController.getGemsByCategory);
 
 module.exports = router;

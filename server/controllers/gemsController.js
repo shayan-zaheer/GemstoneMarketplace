@@ -49,10 +49,14 @@ exports.getAllGems = async (request, response) => {
 
         const skip = (page - 1) * limit;
 
-        const totalGems = await Gem.count();
+        const totalGems = await Gem.count({
+            where: { isDeleted: false },
+        });
+
         const totalPages = Math.ceil(totalGems / limit);
 
         const gems = await Gem.findAll({
+            where: { isDeleted: false },
             offset: skip,
             limit: limit,
             order: [[sortBy, "ASC"]],
@@ -123,23 +127,28 @@ exports.deleteGem = async (request, res) => {
     try {
         let { id } = request.params;
         id = +id;
-        const result = await Gem.destroy({
-            where: {
-                id,
-            },
-        });
 
-        console.log(result);
+        const result = await Gem.update(
+            { isDeleted: true },
+            { where: { id } }
+        );
 
-        res.status(204).json({
+        if (result[0] === 0) {
+            return res.status(404).json({
+                status: "fail",
+                message: "Gemstone not found",
+            });
+        }
+
+        res.status(200).json({
             status: "success",
-            message: "Gemstone Deleted successfully",
+            message: "Gemstone marked as deleted successfully",
         });
     } catch (e) {
         console.log(e)
         res.status(400).json({
             status: "failed",
-            message: e.message,
+            message: "Something went wrong",
         });
     }
 };
@@ -177,28 +186,70 @@ exports.updateGem = async (req,res) =>{
 }
 
 
-exports.getGemByUser = async(req,res) =>{
-    try{
+exports.getGemByUser = async (req, res) => {
+    try {
+        const id = +req.params.id;
 
-        const id = +req.params.id
+        const result = await Gem.findAll({
+            where: {
+                userId: id,
+                isDeleted: false,
+            },
+        });
 
-        const result = await Gem.findAll(
-            {
-                where:{
-                userId:id
-            }
-}        )
-
-res.status(200).json({
-    status:"Success",
-    data:result
-})
-
-    }
-    catch(e){
+        res.status(200).json({
+            status: "success",
+            data: result,
+        });
+    } catch (e) {
         res.status(404).json({
-            status:"Failed",
-            message:e.message
-        })
+            status: "failed",
+            message: e.message,
+        });
     }
-}
+};
+
+exports.getGemsByCategory = async (req, res) => {
+    try {
+        const { category } = req.params;
+
+        if (!["trending", "highvolume"].includes(category)) {
+            return res.status(400).json({
+                status: "fail",
+                message: "Invalid category. Must be 'trending' or 'highvolume'.",
+            });
+        }
+
+        const gems = await Gem.findAll({
+            where: {
+                category,
+                isDeleted: false,
+            },
+            attributes: ["id", "name", "price", "description", "image", "category"],
+            include: [
+                {
+                    model: User,
+                    as: "owner",
+                    attributes: ["name"],
+                },
+            ],
+        });
+
+        if (gems.length === 0) {
+            return res.status(404).json({
+                status: "fail",
+                message: `No gems found in '${category}' category.`,
+            });
+        }
+
+        res.status(200).json({
+            status: "success",
+            data: gems,
+        });
+    } catch (e) {
+        res.status(400).json({
+            status: "fail",
+            message: e.message,
+        });
+    }
+};
