@@ -146,21 +146,21 @@ const CheckoutForm = ({ makePayment }) => {
               <span className="font-semibold text-lg">
                 {checkoutItem.name} {"  "}
               </span>
-              <span>{checkoutItem.price}</span>
+              <span>{checkoutItem.price} PKR</span>
             </div>
             {/* {products.map((product, index) => (
             ))} */}
             <div className="w-full flex justify-between px-2 font-medium border-b">
               <span>Subtotal</span>
-              <span>{subtotal}</span>
+              <span>{subtotal} PKR</span>
             </div>
             <div className="w-full flex justify-between px-2 font-medium border-b">
               <span>GST(15%)</span>
-              <span>{GST}</span>
+              <span>{GST} PKR</span>
             </div>
             <div className="w-full flex justify-between px-2 font-medium border-b">
               <span>Total</span>
-              <span>{total}</span>
+              <span>{total} PKR</span>
             </div>
           </div>
 
