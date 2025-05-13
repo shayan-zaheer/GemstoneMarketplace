@@ -10,11 +10,8 @@ import Unauthorized from "@/components/Unauthorized";
 
 const Cart = () => {
   const cartItems = useSelector((store) => store.cart.cartItems);
-<<<<<<< HEAD
   console.log(cartItems)
-=======
   const loggedinUser = useSelector((store) => store.user.user);
->>>>>>> 83c27b6ebb1012883b2eabc26af46d26f2ae87ee
 
   return (
     <>

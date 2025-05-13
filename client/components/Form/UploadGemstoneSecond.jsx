@@ -66,6 +66,7 @@ const UploadGemstoneSecond = ({ setNext, gemData }) => {
           // console.log(tx)
           if (tx.status == "Success") {
             toast.success(tx.message);
+            router.push("/user/products");
           } else {
             toast.error(tx.message);
           }

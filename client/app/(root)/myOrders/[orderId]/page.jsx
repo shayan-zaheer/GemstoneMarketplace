@@ -10,6 +10,7 @@ import { MdPayment } from "react-icons/md";
 import { FaUserCircle } from "react-icons/fa";
 import toast from "react-hot-toast";
 import { orderly } from "viem/chains";
+import Unauthorized from "@/components/Unauthorized";
 
 const OrderDetailsPage = ({ params }) => {
   const { orderId } = use(params);
@@ -38,6 +39,7 @@ const OrderDetailsPage = ({ params }) => {
 
         if (data.status === "success") {
           setOrder(data.data);
+          console.log(data.data)
         } else {
           throw new Error(data.message || "Failed to fetch order details");
         }
@@ -133,6 +135,9 @@ const OrderDetailsPage = ({ params }) => {
   }
 
   return (
+    <>
+    {
+      loggedinUser?.userId == order?.buyerId ? 
     <div className="pt-20 min-h-screen bg-[#1a1c1ff8]">
       <div className="grid md:grid-cols-[2fr_3fr] gap-0 min-h-[calc(100vh-8rem)]">
         {/* Left Panel - Order Details */}
@@ -412,7 +417,10 @@ const OrderDetailsPage = ({ params }) => {
           </div>
         </motion.div>
       </div>
-    </div>
+    </div>: 
+    <Unauthorized/>
+    }
+    </>
   );
 };
 
