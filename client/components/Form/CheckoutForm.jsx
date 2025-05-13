@@ -9,13 +9,13 @@ import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import CartTotal from "../CartTotal";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import {cartActions} from "../../Store/cartSlice"
-
+import { cartActions } from "../../Store/cartSlice";
 
 const CheckoutForm = ({ makePayment }) => {
   const checkoutItem = useSelector((store) => store.checkout.checkoutItem);
   const loggedinUser = useSelector((store) => store.user.user);
   const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
   console.log(checkoutItem);
   const subtotal = +checkoutItem.price;
   const GST = subtotal * 0.15;
@@ -46,45 +46,44 @@ const CheckoutForm = ({ makePayment }) => {
     },
   });
   const onSubmit = async (data) => {
-    console.log("PLACING")
-    await makePayment()
+    console.log("PLACING");
+    await makePayment();
   };
 
-
   const handleCheckout = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
 
     try {
-      const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/buy/checkout`
+      const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/buy/checkout`;
 
       const gemId = checkoutItem.id;
       const sellerId = checkoutItem.owner.userId;
-      console.log(loggedinUser) 
-      const buyerId = loggedinUser.userId || loggedinUser.id
-      const res = await axios.post(url, {
-        gemId, sellerId,buyerId
-      }, {
-        withCredentials: true
-      })
+      console.log(loggedinUser);
+      const buyerId = loggedinUser.userId || loggedinUser.id;
+      const res = await axios.post(
+        url,
+        {
+          gemId,
+          sellerId,
+          buyerId,
+        },
+        {
+          withCredentials: true,
+        }
+      );
 
-      console.log(checkoutItem.price)
+      console.log(checkoutItem.price);
 
-      let amt = +checkoutItem.price
+      let amt = +checkoutItem.price;
+      dispatch(cartActions.removeFromCart(checkoutItem));
+      makePayment(amt, res.data.order.orderId);
 
-      makePayment(amt,res.data.order.orderId)
-      
-      dispatch(cartActions.clearCart())
-      setIsLoading(false)
-
+      setIsLoading(false);
+    } catch (e) {
+      setIsLoading(false);
+      console.log(e);
     }
-    catch (e) {
-      setIsLoading(false)
-      console.log(e)
-    }
-
-
-  }
-
+  };
 
   return (
     <Form {...form}>
@@ -175,16 +174,20 @@ const CheckoutForm = ({ makePayment }) => {
               <span>SafePay</span>
             </label>
           </RadioGroup> */}
-          {<button
-            disabled={isLoading}
-            onClick={() => handleCheckout()}
-            className="relative px-6 py-2 font-semibold text-white bg-transparent border border-white hover:border-transparent overflow-hidden group rounded-sm mt-2 mx-auto w-full"
-          >
-            <span className="absolute inset-0 bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4] transition-all duration-300 ease-out transform scale-x-0 origin-left group-hover:scale-x-100"></span>
-            <div className="flex items-center justify-center gap-x-2">
-              <span className="relative z-10 text-white text-lg">{isLoading?"Processing....":"Place Order"}</span>
-            </div>
-          </button>}
+          {
+            <button
+              disabled={isLoading}
+              onClick={() => handleCheckout()}
+              className="relative px-6 py-2 font-semibold text-white bg-transparent border border-white hover:border-transparent overflow-hidden group rounded-sm mt-2 mx-auto w-full"
+            >
+              <span className="absolute inset-0 bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4] transition-all duration-300 ease-out transform scale-x-0 origin-left group-hover:scale-x-100"></span>
+              <div className="flex items-center justify-center gap-x-2">
+                <span className="relative z-10 text-white text-lg">
+                  {isLoading ? "Processing...." : "Place Order"}
+                </span>
+              </div>
+            </button>
+          }
         </div>
       </form>
     </Form>
