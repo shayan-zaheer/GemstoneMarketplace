@@ -1,6 +1,7 @@
 const passport = require("passport");
 const User = require("../models/User");
 const { upload } = require("../utils/multer");
+const { Sequelize } = require("sequelize");
 
 exports.signUp = async (request, response) => {
     try {
@@ -18,14 +19,20 @@ exports.signUp = async (request, response) => {
 
         return response.status(201).json({
             status: "success",
-            user
+            user,
         });
-
-    } catch (err) {
-        console.error("Signup Error:", err);
+    } catch (error) {
+        if (error instanceof Sequelize.UniqueConstraintError) {
+            const messages = error.errors.map((err) => {
+                const field = err.path;
+                return `A user with this ${field} already exists.`;
+            });
+            return response.status(400).json({ message: messages.join(" ") });
+        }
+        console.error("Signup Error:", error);
         return response.status(500).json({
             status: "failure",
-            message: err.message || "Internal Server Error"
+            message: error.message || "Internal Server Error",
         });
     }
 };
@@ -51,7 +58,7 @@ exports.login = (request, response, next) => {
             response.status(200).json({
                 status: "success",
                 message: "Login successful",
-                user
+                user,
             });
         });
     })(request, response, next);
