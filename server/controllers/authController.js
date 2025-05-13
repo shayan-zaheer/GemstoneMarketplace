@@ -13,11 +13,6 @@ exports.signUp = async (request, response) => {
 
         const { email, ...rest } = request.body;
 
-        const existingUser = await User.findOne({ where: { email } });
-        if (existingUser) {
-            return response.status(400).json({ message: "Email already in use" });
-        }
-
         const profileImage = request.file ? request.file.path : null;
         const user = await User.create({ ...rest, email, profileImage });
 
