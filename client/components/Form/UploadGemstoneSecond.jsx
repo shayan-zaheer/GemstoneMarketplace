@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Form } from "../ui/form";
 import FormInput from "./FormInput";
 import FormButton from "../FormButton";
@@ -7,9 +7,13 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { verifySeller, uploadGemOnChain } from "@/services/gemBlockchain";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { uploadGemSchema2 } from "../Schemas/uploadGemSchema2";
 
 const UploadGemstoneSecond = ({ setNext, gemData }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const form = useForm({
+    resolver: zodResolver(uploadGemSchema2),
     defaultValues: {
       certificate: "",
       transactionHash: "",
@@ -26,16 +30,20 @@ const UploadGemstoneSecond = ({ setNext, gemData }) => {
     console.log("FIRST PAGE DATA:", gemData);
     console.log("SECOND PAGE DATA:", data);
     console.log(data["transactionHash"]);
-    console.log(gemData,data)
-    const isVerified = await verifySeller(data["transactionHash"],data.category);
+    setIsLoading(true);
+    const isVerified = await verifySeller(
+      data["transactionHash"],
+      data.category
+    );
     if (!isVerified) {
       toast.error(
         "Your selected category is not correct!\nReview the certificate and try again."
       );
+      setIsLoading(false);
       return;
     } else {
       try {
-        console.log("UPLOAD API PAYLOAD:",gemData)
+        console.log("UPLOAD API PAYLOAD:", gemData);
         const result = await axios.post(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/gems`,
           gemData,
@@ -44,24 +52,25 @@ const UploadGemstoneSecond = ({ setNext, gemData }) => {
             headers: { "Content-Type": "multipart/form-data" },
           }
         );
-        console.log("Result: ",result)
+        console.log("Result: ", result);
         if (result?.data?.status == "success") {
-        const tx = await uploadGemOnChain(result?.data?.data?.id, data.category,data["transactionHash"])
-        // console.log(tx)
-        if(tx.status=="Success"){
+          const tx = await uploadGemOnChain(
+            result?.data?.data?.id,
+            data.category,
+            data["transactionHash"]
+          );
+          // console.log(tx)
+          if (tx.status == "Success") {
             toast.success(tx.message);
-
-        }
-        else{
+          } else {
             toast.error(tx.message);
-
-        }
-
+          }
         }
       } catch (err) {
-          console.error(err);
-          toast.error(err.message);
+        console.error(err);
+        toast.error(err.message);
       }
+      setIsLoading(false);
     }
   };
 
@@ -104,8 +113,9 @@ const UploadGemstoneSecond = ({ setNext, gemData }) => {
                 text="Back"
               ></FormButton>
               <FormButton
-                // onClick={() => setNext(false)}
+                disabled={isLoading}
                 text="Submit"
+                type={"submit"}
               ></FormButton>
             </div>
           </div>
