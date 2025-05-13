@@ -35,7 +35,7 @@ const Checkout = () => {
                 token,
                 orderId: orderId,
                 cancelUrl: `${process.env.NEXT_PUBLIC_FRONTEND_URL || "http://localhost:3000" }/checkout`,
-                redirectUrl:  `${process.env.NEXT_PUBLIC_FRONTEND_URL || "http://localhost:3000" }/myOrders`,
+                redirectUrl:  `${process.env.NEXT_PUBLIC_FRONTEND_URL ||  "http://localhost:3000" }/myOrders`,
                 source: "custom",
                 webhooks: true,
             });
