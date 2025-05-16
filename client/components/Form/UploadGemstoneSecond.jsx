@@ -39,7 +39,6 @@ const UploadGemstoneSecond = ({ setNext, gemData }) => {
         data["transactionHash"],
         data.category
       );
-
       if (!isVerified) {
         toast.error(
           "Your selected category is not correct!\nReview the certificate and try again."
@@ -47,7 +46,10 @@ const UploadGemstoneSecond = ({ setNext, gemData }) => {
         setIsLoading(false);
         return;
       } else {
-        console.log("UPLOAD API PAYLOAD:", gemData);
+        let hash=`${data["transactionHash"]}`
+        gemData.append("txHash", String(hash));
+        // let obj= {...gemData,txHash:data["transactionHash"]}
+        console.log("UPLOAD API PAYLOAD:",typeof hash);
         const result = await axios.post(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/gems`,
           gemData,
@@ -66,7 +68,7 @@ const UploadGemstoneSecond = ({ setNext, gemData }) => {
           // console.log(tx)
           if (tx.status == "Success") {
             toast.success(tx.message);
-            router.push("/user/products");
+            router.push(`/products`);
           } else {
             toast.error(tx.message);
           }
