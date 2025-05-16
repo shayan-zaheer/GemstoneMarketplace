@@ -16,6 +16,7 @@ const User = sequelize.define(
         },
         email: {
             type: DataTypes.STRING,
+            unique: true,
             allowNull: false,
         },
         password: {
@@ -37,7 +38,7 @@ const User = sequelize.define(
         },
         walletAddress: {
             type: DataTypes.STRING,
-            unique: true,
+            // unique: true,
         },
         role: {
             type: DataTypes.ENUM,

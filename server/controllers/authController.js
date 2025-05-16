@@ -1,6 +1,7 @@
 const passport = require("passport");
 const User = require("../models/User");
 const { upload } = require("../utils/multer");
+const { Sequelize } = require("sequelize");
 
 exports.signUp = async (request, response) => {
     try {
@@ -11,26 +12,27 @@ exports.signUp = async (request, response) => {
             });
         });
 
-        const { email, ...rest } = req.body;
-
-        const existingUser = await User.findOne({ where: { email } });
-        if (existingUser) {
-            return response.status(400).json({ message: "Email already in use" });
-        }
+        const { email, ...rest } = request.body;
 
         const profileImage = request.file ? request.file.path : null;
         const user = await User.create({ ...rest, email, profileImage });
 
         return response.status(201).json({
             status: "success",
-            user
+            user,
         });
-
-    } catch (err) {
-        console.error("Signup Error:", err);
+    } catch (error) {
+        if (error instanceof Sequelize.UniqueConstraintError) {
+            const messages = error.errors.map((err) => {
+                const field = err.path;
+                return `A user with this ${field} already exists.`;
+            });
+            return response.status(400).json({ message: messages.join(" ") });
+        }
+        console.error("Signup Error:", error);
         return response.status(500).json({
             status: "failure",
-            message: err.message || "Internal Server Error"
+            message: error.message || "Internal Server Error",
         });
     }
 };
@@ -56,16 +58,7 @@ exports.login = (request, response, next) => {
             response.status(200).json({
                 status: "success",
                 message: "Login successful",
-                user: {
-                    userId: user.userId,
-                    email: user.email,
-                    residenceAddress: user.residenceAddress,
-                    contact: user.contact,
-                    profileImage: user.profileImage,
-                    cnic: user.cnic,
-                    walletAddress: user.walletAddress,
-                    role: user.role,
-                },
+                user,
             });
         });
     })(request, response, next);

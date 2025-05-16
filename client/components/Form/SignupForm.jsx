@@ -15,7 +15,7 @@ import { useRouter } from "next/navigation";
 const SignupForm = () => {
   const { address } = useAccount();
   const [selectedFile, setSelectedFile] = useState(null);
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const form = useForm({
@@ -43,7 +43,7 @@ const SignupForm = () => {
   };
 
   const onSubmit = async (data) => {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
       const formData = new FormData();
       for (const key in data) {
@@ -63,10 +63,12 @@ const SignupForm = () => {
       );
       if (result.data.status == "success") {
         toast.success("Your account has been created!");
-        setIsLoading(false)
+        setIsLoading(false);
         router.push("/login");
       }
     } catch (error) {
+      setIsLoading(false)
+      toast.error(error.response.data.message);
       console.error("Signup Error:", error);
     }
   };
@@ -159,7 +161,11 @@ const SignupForm = () => {
           />
         </CustomTooltip>
 
-        {isLoading ?<FormButton className="opacity-45 cursor-none "  text='Processing...'></FormButton> :<FormButton text="Sign Up" type="submit" />}
+        {isLoading ? (
+          <button className="border border-slate-900 h-10 rounded-sm bg-slate-900" disabled>Processing...</button>
+        ) : (
+          <FormButton text="Sign Up" type="submit" />
+        )}
       </form>
     </Form>
   );

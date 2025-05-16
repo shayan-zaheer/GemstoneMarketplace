@@ -82,34 +82,42 @@ function page() {
         <div className="w-full max-w-4xl grid gap-4">
           {orders.map((order) => (
             <Link key={order.orderId} href={`/myOrders/${order.orderId}`}>
-              <div className="bg-[#2a2c2f9f] p-4 rounded-lg shadow-md border border-gray-700">
-                <div className="flex justify-between mb-2">
-                  <span className="font-semibold">Order ID:</span>
-                  <span className="text-sm text-gray-400">{order.orderId}</span>
-                </div>
-                <div className="flex justify-between mb-2">
-                  <span className="font-semibold">Gem:</span>
-                  <span>{order.Gem?.name || "N/A"}</span>
-                </div>
-                <div className="flex justify-between mb-2">
-                  <span className="font-semibold">Price:</span>
-                  <span>${order.Gem?.price || "N/A"}</span>
-                </div>
-                <div className="flex justify-between mb-2">
-                  <span className="font-semibold">Payment Status:</span>
-                  <span>{order.paymentStatus}</span>
-                </div>
-                <div className="flex justify-between mb-2">
-                  <span className="font-semibold">Transaction ID:</span>
-                  <span>{order.transactionId || "Pending"}</span>
-                </div>
-                <div className="flex justify-between mb-2">
-                  <span className="font-semibold">Transaction Timestamp:</span>
-                  <span>{order.createdAt || ""}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="font-semibold">Last Updated At:</span>
-                  <span>{order.updatedAt || ""}</span>
+              <div
+                className={`flex flex-col h-full justify-center items-center rounded-lg p-4 bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4]  animate-gradient p-[0.05rem]`}
+              >
+                <div className="bg-[#2a2c2f] p-4 rounded-lg shadow-md border border-gray-700 w-full">
+                  <div className="flex justify-between mb-2">
+                    <span className="font-semibold">Order ID:</span>
+                    <span className="text-sm text-gray-400">
+                      {order.orderId}
+                    </span>
+                  </div>
+                  <div className="flex justify-between mb-2">
+                    <span className="font-semibold">Gem:</span>
+                    <span>{order.Gem?.name || "N/A"}</span>
+                  </div>
+                  <div className="flex justify-between mb-2">
+                    <span className="font-semibold">Price:</span>
+                    <span>${order.Gem?.price || "N/A"}</span>
+                  </div>
+                  <div className="flex justify-between mb-2">
+                    <span className="font-semibold">Payment Status:</span>
+                    <span>{order.paymentStatus}</span>
+                  </div>
+                  <div className="flex justify-between mb-2">
+                    <span className="font-semibold">Transaction ID:</span>
+                    <span>{order.transactionId || "Pending"}</span>
+                  </div>
+                  <div className="flex justify-between mb-2">
+                    <span className="font-semibold">
+                      Transaction Timestamp:
+                    </span>
+                    <span>{order.createdAt || ""}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-semibold">Last Updated At:</span>
+                    <span>{order.updatedAt || ""}</span>
+                  </div>
                 </div>
               </div>
             </Link>
