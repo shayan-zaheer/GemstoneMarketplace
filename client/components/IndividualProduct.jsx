@@ -76,7 +76,7 @@ const IndividualProduct = ({ productID }) => {
   };
 
   return (
-    <div className="relative top-20 pb-20 md:pb-0  md:min-h-[950px] lg:min-h-[900px] min-h-content bottom-8 mb-20 bg-[#1a1c1ff8] md:pl-12 md:flex md:flex-row-reverse">
+    <div className="relative top-20 pb-20 md:pb-0  md:min-h-[950px] lg:min-h-[900px] min-h-content bottom-8 mb-20 bg-main md:pl-12 md:flex md:flex-row-reverse">
       {loading ? (
         <Loader loading={loading} />
       ) : (
@@ -99,19 +99,19 @@ const IndividualProduct = ({ productID }) => {
             transition={{ type: "tween", duration: 0.3 }}
             className="md:w-[45%] md:pt-10 px-5 min-h-[350px] h-[550px] md:h-[1000px] md:absolute md:z-10 md:left-10 md:top-12"
           >
-            <h1 className="bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4] text-transparent bg-clip-text text-4xl md:text-6xl font-bold">
+            <h1 className="text-primary text-4xl md:text-6xl font-bold">
               {gem.name}
             </h1>
-            <span className="mt-1 text-white text-3xl font-semibold">
+            <span className="mt-1 text-black text-3xl font-semibold">
               {gem.price}PKR
             </span>
             <div className="md:mt-8 mt-4">
-              <p className="text-slate-300 md:text-sm text-[0.65rem] italic text-justify">
+              <p className="text-slate-800 font-semibold md:text-sm text-[0.65rem] italic text-justify">
                 {gem.description}
               </p>
             </div>
             <div className="mt-5 mb-8">
-              <span className="text-blue-400 font-semibold text-2xl">
+              <span className="text-primary/80 font-semibold text-2xl">
                 More Images
               </span>
               <ProductImages
@@ -120,9 +120,9 @@ const IndividualProduct = ({ productID }) => {
                 setOpen={setOpen}
               />
             </div>
-            <div className="md:mt-5 mt-1 text-white text-xl font-medium">
+            <div className="md:mt-5 mt-1 text-slate-800 text-xl font-medium">
               Uploaded on{" "}
-              <span className="text-blue-400 italic">
+              <span className="text-primary italic">
                 {new Date(gem.createdAt).toLocaleString("en-GB", {
                   day: "numeric",
                   month: "short",
@@ -131,13 +131,13 @@ const IndividualProduct = ({ productID }) => {
               </span>{" "}
               by{" "}
               <Link href={`/user/${gem?.owner?.userId}`}>
-                <span className="bg-gradient-to-r italic to-[#00E8FC] via-[#D400A5] from-[#6A00F4] text-transparent bg-clip-text">
+                <span className="text-primary font-semibold">
                   {gem?.owner?.name}
                 </span>
               </Link>
             </div>
             <div className="md:w-[80%] mt-5">
-              <table className="border border-gray-300 w-full text-white sm:text-lg">
+              <table className="border-1 border-gray-900 w-full text-slate-600 sm:text-lg">
                 <tbody>
                   <tr>
                     <th className="detail-label">Dimensions </th>
@@ -159,7 +159,7 @@ const IndividualProduct = ({ productID }) => {
                 <div className="relative md:text-xl text-md my-4 mb-20 text-white font-bold">
                   {!alreadyInCart ? (
                     <button
-                      className="flex gap-3 md:w-44 w-40 px-3  bg-blue-600 hover:bg-blue-700 md:py-3 py-2 shadow-lg rounded-lg hover:cursor-pointer h-full"
+                      className="flex gap-3 md:w-44 w-40 px-3  btn-primary md:py-3 py-2 shadow-lg rounded-lg hover:cursor-pointer h-full"
                       onClick={handleAddToCart}
                     >
                       <FaCartShopping className="translate-y-1" /> Add to Cart

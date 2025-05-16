@@ -14,7 +14,7 @@ const GemstoneCard = ({ info }) => {
   const router = useRouter();
   return (
     <Card
-      className="min-w-[18rem] bg-[#414848] border-slate-700 shadow-lg ring-slate-500 md:h-[350px]  h-[330px] my-4"
+      className="min-w-[18rem] bg-card border-slate-700 shadow-md ring-slate-500 md:h-[350px]  h-[330px] my-4"
       onClick={() => router.push(`/products/${info?.id}`)}
     >
       <CardHeader>
@@ -27,17 +27,17 @@ const GemstoneCard = ({ info }) => {
             className="rounded-tl-xl rounded-tr-xl transition-transform duration-300 hover:scale-125 hover:cursor-pointer hover:brightness-50 z-[-1] h-56"
           />
         </CardTitle>
-        <CardTitle className="bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4] text-transparent bg-clip-text text-2xl font-bold mx-2 animate-gradient">
+        <CardTitle className="text-primary text-2xl font-semibold mx-2">
           {" "}
           {info?.name}
         </CardTitle>
-        <CardDescription className="text-white text-lg ">
+        <CardDescription className="text-black font-semibold text-lg ">
           {info?.price} PKR
         </CardDescription>
       </CardHeader>
-      <CardFooter className="text-white">
+      <CardFooter className="text-gray-500">
         Owned by{" "}
-        <span className="text-gray-200 ml-2 italic">{info?.owner.name} </span>
+        <span className="text-primary font-semibold ml-2 italic">{info?.owner.name} </span>
       </CardFooter>
     </Card>
   );

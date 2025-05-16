@@ -36,12 +36,12 @@ const Collections = ({ collectionName, gemstones }) => {
   return (
     <section
       ref={containerRef}
-      className="w-full min-h-[500px] bg-[#1a1c1ff8] relative top-20 p-10"
+      className="w-full min-h-[500px] bg-main relative top-20 p-10"
     >
-      <h1 className="text-white text-4xl font-bold border-b-4 inline-block border-blue-500 mb-5 max-sm:text-2xl">
+      <h1 className="text-primary text-4xl font-bold border-b-4 inline-block border-gray-300 mb-5 max-sm:text-2xl">
         {collectionName} Collection
       </h1>
-      <div className="w-full h-[425px] rounded-2xl p-5 flex items-center overflow-y-hidden bg-[#222528]">
+      <div className="w-full h-[425px] rounded-2xl p-5 flex items-center overflow-y-hidden bg-surface">
         <div ref={cardsRef} className="flex gap-x-5 overflow-y-hidden">
           {gemstones.map((gem) => (
             <GemstoneCard key={gem.id} info={gem} />

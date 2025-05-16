@@ -8,30 +8,28 @@ const HeroDetails = () => {
     <motion.div
       initial={{ x: -100, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
-      className="flex flex-col  max-sm:w-full sm:w-full md:w-full lg:w-2/3 pr-5"
+      className="flex flex-col max-sm:w-full sm:w-full md:w-full lg:w-2/3 pr-5"
     >
-      <h1 className="text-white text-5xl sm:text-6xl md:text-7xl font-semibold lg:w-11/12 max-sm:w-full max-sm:text-4xl">
-        {" "}
+      <h1 className="text-black text-5xl sm:text-6xl md:text-7xl font-semibold lg:w-11/12 max-sm:text-4xl max-sm:text-center">
         Trade{" "}
-        <span className="bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4]  animate-gradient text-transparent bg-clip-text ">
+        <span className="text-[#7c3aed]">
           Gemstones
         </span>{" "}
         at the Best Prices
       </h1>
-      <div className=" my-4">
-        <h1 className="text-slate-300 w-11/12 sm:text-lg md:text-xl font-semibold lg:w-10/12">
-          Find rare and certified gemstones in seconds. Buy or sell gemstones
-          with ease.
-        </h1>
-      </div>
-      <div className="flex gap-x-10 max-sm:gap-x-5">
+
+      <p className="text-gray-800 mt-4 w-11/12 sm:text-lg md:text-xl font-medium lg:w-10/12 max-sm:text-center">
+        Find rare and certified gemstones in seconds. Buy or sell gemstones with ease.
+      </p>
+
+      <div className="flex gap-6 mt-8 max-sm:justify-center max-sm:flex-col sm:flex-row">
         <Button
-          className="px-5 py-6 hover:scale-105 transition-all duration-300 ease-linear md:px-6 md:py-7  md:text-lg max-sm:px-4 max-sm:py-5 max-sm:text-sm"
+          className="px-6 py-6 text-white bg-[#7c3aed] border hover:bg-[#7c3aed]/80 hover:scale-102 hover:text-white transition-all duration-200 ease-in-out font-semibold text-base md:text-lg"
           variant="outline"
         >
           Explore Gemstones
         </Button>
-        <Button className="px-5 py-6 md:px-6 md:py-7  md:text-lg bg-transparent border border-white hover:scale-105 transition-all duration-300 ease-linear hover:bg-white hover:text-black max-sm:px-4 max-sm:py-5 max-sm:text-sm ">
+        <Button className="px-6 py-6 bg-white text-[#7c3aed] border border-[#7c3aed] hover:scale-102 transition-all duration-200 hover:bg-[#7c3aed] hover:text-white ease-in-out font-semibold text-base md:text-lg">
           Sell my Gemstone
         </Button>
       </div>

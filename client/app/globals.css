@@ -91,10 +91,34 @@
 }
 
 @layer utilities{
+  .bg-main{
+    @apply bg-[#f3f4f6]
+  }
+  .border-primary{
+    @apply border-[#7c3aed]
+  }
+  .bg-primary{
+    @apply bg-[#7c3aed]
+  }
+  .bg-card{
+    @apply bg-[#eef2ff] border border-[#7c3aed]/20 rounded-2xl shadow-lg
+  }
+  .bg-surface {
+    @apply bg-gradient-to-br from-[#f1e7ff] via-[#d6d4f7] to-[#c9d4f7]
+  }
+ .text-primary{
+    @apply text-[#7c3aed]
+  }
+  .btn-primary{
+    @apply text-white bg-[#7c3aed] border hover:bg-[#7c3aed]/80 hover:text-white transition-all duration-200 ease-in-out font-semibold text-base md:text-lg
+  }
+  .btn-secondary{
+    @apply bg-white text-[#7c3aed] border border-[#7c3aed] transition-all duration-200 hover:bg-[#7c3aed] hover:text-white ease-in-out font-semibold text-base md:text-lg
+  }
 
   .mask-gradient {
-    -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(26,28,31,1) 30%),linear-gradient(to top, rgba(26,28,31, 0.2) 0%, rgba(26,28,31,1) 10%);
-    mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(26,28,31,1) 30%),linear-gradient(to top, rgba(26,28,31, 0.2) 0%, rgba(26,28,31,1) 10%);
+    -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(243,244,246,1) 100%),linear-gradient(to top, rgba(26,28,31, 0.2) 0%, rgba(243,244,246,1) 100%);
+    mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(243,244,246,1) 90%),linear-gradient(to top, rgba(243,244,246,1) 0%, rgba(243,244,246,1) 50%);
     -webkit-mask-composite: destination-in;
     mask-composite: intersect;
   }
@@ -112,7 +136,7 @@
     @apply w-full min-h-20 fixed top-20 left-0 bg-[#1A1C1F] bg-opacity-90 flex flex-col items-center justify-center gap-y-4 z-10
   }
   .navbar-input{
-    @apply bg-[#1b1c20] rounded-3xl text-white h-12 px-5 placeholder:italic border border-transparent focus:outline-none focus:ring-2 focus:ring-[#10ECF6] focus:border-[#10ECF6]
+    @apply bg-surface rounded-3xl text-black h-12 px-5 placeholder:italic border border-transparent focus:outline-none focus:ring-1 focus:ring-[#7c3aed] focus:border-primary placeholder:text-gray-600
   }
   .responsive-navbar-input{
     @apply bg-[#1b1c20] text-white border-b-2 border-white focus:outline-none focus:border-[#0DE8F1] w-11/12 h-10 placeholder:italic

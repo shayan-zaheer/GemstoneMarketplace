@@ -70,16 +70,16 @@ const Navbar = () => {
   const [openMenu, setOpenMenu] = useState(false);
 
   return (
-    <nav className="w-full h-20 bg-[#1A1C1F] flex justify-between items-center px-4 fixed top-0 z-50 shadow-lg">
+    <nav className="w-full h-20 bg-surface flex justify-between items-center px-4 fixed top-0 z-50 ring-b ring-slate-200 shadow-lg backdrop-blur-md">
       <div className="flex items-center space-x-2">
         <Image src={"/Diamond.png"} alt="Logo" width={50} height={50} />
-        <h1 className="text-white text-xl font-bold pt-2">
+        <h1 className="text-[#1f2937] text-3xl font-bold pt-2">
           <Link href="/">GEMVAULT</Link>
         </h1>
       </div>
 
       <div className="hidden lg:flex">
-        <ul className="flex items-center text-white font-semibold text-lg gap-x-2">
+        <ul className="flex items-center text-black font-semibold text-lg gap-x-2">
           <li className="h-16 px-4 flex items-center">
             <Link href="/products" className="hover:scale-105">
               Products
@@ -107,11 +107,11 @@ const Navbar = () => {
                   <li className="h-16  px-4  flex items-center">
                     <Link
                       href={"/cart"}
-                      className="relative transition duration-300 ease hover:scale-105"
+                      className="relative transition duration-300 ease hover:scale-105 "
                     >
                       {" "}
                       Cart
-                      <span className="absolute -top-2 -right-4 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                      <span className="absolute -top-2 -right-4 bg-[#7c3aed] text-white text-xs font-bold px-2 py-0.5 rounded-full">
                         {cartItemsLength}
                       </span>
                     </Link>
@@ -150,7 +150,7 @@ const Navbar = () => {
             </>
           )}
           <li className="h-16 px-4 flex items-center">
-            <ConnectWalletBtn className="navbar-button">
+            <ConnectWalletBtn className="navbar-button btn-primary">
               Connect Wallet
             </ConnectWalletBtn>
           </li>
@@ -160,12 +160,12 @@ const Navbar = () => {
       <div className="flex items-center space-x-4 lg:hidden">
         {!openMenu ? (
           <Menu
-            className="text-white w-7 h-7 cursor-pointer"
+            className="text-black w-7 h-7 cursor-pointer"
             onClick={() => setOpenMenu(true)}
           />
         ) : (
           <X
-            className="text-white w-7 h-7 cursor-pointer"
+            className="text-black w-7 h-7 cursor-pointer"
             onClick={() => setOpenMenu(false)}
           />
         )}
@@ -174,13 +174,13 @@ const Navbar = () => {
       <AnimatePresence>
         {openMenu && (
           <motion.div
-            className="responsive-menu"
+            className="responsive-menu bg-[#eef2ff] text-[#1f2937] shadow-lg"
             initial={{ x: "200%" }}
             animate={{ x: 0 }}
             exit={{ x: "200%" }}
             transition={{ type: "tween", duration: 0.3 }}
           >
-            <ul className="w-full h-full flex flex-col justify-center text-white font-semibold">
+            <ul className="w-full h-full flex flex-col justify-center font-semibold">
               <li
                 className="h-16 border-b px-4 flex items-center"
                 onClick={() => setOpenMenu(false)}
@@ -212,7 +212,7 @@ const Navbar = () => {
                     >
                       {" "}
                       Cart
-                      <span className="absolute -top-2 -right-4 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                      <span className="absolute -top-2 -right-4 bg-red-500 text-black text-xs font-bold px-2 py-0.5 rounded-full">
                         {cartItemsLength}
                       </span>
                     </Link>

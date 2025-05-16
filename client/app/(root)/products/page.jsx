@@ -54,15 +54,15 @@ const Products = () => {
     setFilteredGems(filtered)
   }
   return (
-    <div className="relative min-h-content bg-[#1a1c1ff8] py-4 mb-20 px-12 top-20">
+    <div className="relative min-h-content bg-main py-4 mb-20 px-12 top-20">
       <div className="flex justify-center items-center h-24 w-full flex-col ">
-        <IoDiamond className="text-white w-10 h-10 lg:w-20 lg:h-20" />
+        <IoDiamond className="text-primary w-10 h-10 lg:w-20 lg:h-20" />
         <div className=" flex items-center justify-center max-sm:w-11/12 sm:w-9/12 md:w-10/12  gap-x-2 mt-2">
-          <div className="flex-grow border-t-4 border-gray-300"></div>
-          <span className="font-bold max-sm:text-3xl sm:text-3xl text-white">
+          <div className="flex-grow border-t-4 border-primary"></div>
+          <span className="font-bold max-sm:text-3xl sm:text-3xl text-primary">
             Products
           </span>
-          <div className="flex-grow border-t-4 border-gray-300"></div>
+          <div className="flex-grow border-t-4 border-primary"></div>
         </div>
       </div>
       <div className="flex md:flex-row flex-col gap-4 md:justify-between md:mx-20 justify-center mt-4">
@@ -94,7 +94,7 @@ const Products = () => {
           <Loader loading={loading} />
         )}
       </motion.div>
-      <hr className="my-10 md:mx-32 sm:mx-10 border-none h-[1px] md:h-[2px] bg-[radial-gradient(circle,_#00E8FC_10%,_#D400A5_40%,_#6A00F4_60%,_rgba(255,255,255,0)_100%)]" />
+      <hr className="my-10 md:mx-32 sm:mx-10 border border-primary"/>
 
       <PageNumbering
         currentPage={currentPage}
