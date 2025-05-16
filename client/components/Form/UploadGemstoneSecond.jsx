@@ -68,12 +68,12 @@ const UploadGemstoneSecond = ({ setNext, gemData }) => {
             toast.error(tx.message);
           }
         }
-      };
       } catch (err) {
         console.error(err);
         toast.error(err.message);
       }
       setIsLoading(false);
+      };
     }
 
   return (
