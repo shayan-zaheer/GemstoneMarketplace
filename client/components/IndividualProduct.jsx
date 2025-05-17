@@ -13,7 +13,7 @@ import Link from "next/link";
 import { cartActions } from "@/Store/cartSlice";
 
 const IndividualProduct = ({ productID }) => {
-  const loggedinUser = useSelector(store => store.user.user);
+  const loggedinUser = useSelector((store) => store.user.user);
   const [loading, setLoading] = useState(true);
   const cartItems = useSelector((store) => store.cart.cartItems);
   const [alreadyInCart, setAlreadyInCart] = useState(false);
@@ -54,7 +54,7 @@ const IndividualProduct = ({ productID }) => {
 
   const handleAddToCart = () => {
     console.log(loggedinUser);
-    if(!loggedinUser){
+    if (!loggedinUser) {
       toast.error("You need to log in first!");
       return;
     }
@@ -65,7 +65,7 @@ const IndividualProduct = ({ productID }) => {
   };
 
   const handleRemoveFromCart = () => {
-    if(!loggedinUser){
+    if (!loggedinUser) {
       toast.error("You need to log in first!");
       return;
     }
@@ -76,7 +76,7 @@ const IndividualProduct = ({ productID }) => {
   };
 
   return (
-    <div className="relative top-20 md:min-h-[950px] lg:min-h-[800px] min-h-content bottom-8 mb-20 bg-[#1a1c1ff8] md:pl-12 md:flex md:flex-row-reverse">
+    <div className="relative top-20 pb-20 md:pb-0  md:min-h-[950px] lg:min-h-[900px] min-h-content bottom-8 mb-20 bg-[#1a1c1ff8] md:pl-12 md:flex md:flex-row-reverse">
       {loading ? (
         <Loader loading={loading} />
       ) : (
@@ -90,7 +90,7 @@ const IndividualProduct = ({ productID }) => {
             <img
               src={gem.coverImage}
               alt="Fading Image"
-              className="w-full h-[300px] md:min-h-[950px] lg:min-h-[800px] min-h-content object-cover mask-gradient2 md:mask-gradient"
+              className="w-full h-[300px] md:min-h-[950px] lg:min-h-[900px] min-h-content object-cover mask-gradient2 md:mask-gradient"
             />
           </motion.div>
           <motion.div

@@ -68,6 +68,7 @@ const SignupForm = () => {
       }
     } catch (error) {
       setIsLoading(false)
+      toast.error(error.response.data.message);
       console.error("Signup Error:", error);
     }
   };

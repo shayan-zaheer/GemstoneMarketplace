@@ -2,11 +2,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import socket from "@/services/socket";
 import { cartActions } from "@/Store/cartSlice";
 import Loader from "@/components/Loader";
 import Link from "next/link";
+import toast from "react-hot-toast";
 import { IoBag } from "react-icons/io5";
+import Unauthorized from "@/components/Unauthorized";
 
 function page() {
   const [orders, setOrders] = useState([]);
@@ -14,6 +15,8 @@ function page() {
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   const loggedinUser = useSelector((store) => store.user.user);
+  const socket = useSelector((state) => state.socket.socket);
+  const isConnected = useSelector((state) => state.socket.isConnected);
 
   const fetchOrders = async () => {
     try {
@@ -43,9 +46,11 @@ function page() {
   }, [loggedinUser]);
 
   useEffect(() => {
-    if (!loggedinUser || !loggedinUser.userId) return;
+    if (!isConnected || !socket || !loggedinUser?.userId) return;
 
     const handlePaymentSuccess = () => {
+      console.log("Payment successful!");
+      toast.success("Payment successful! 🤑");
       fetchOrders();
       dispatch(cartActions.clearCart());
     };
@@ -55,76 +60,82 @@ function page() {
     return () => {
       socket.off("paymentSuccess", handlePaymentSuccess);
     };
-  }, [loggedinUser]);
+  }, [isConnected, socket, loggedinUser?.userId, dispatch]);
 
   return (
-    <div className="relative top-20 min-h-screen px-4 py-6 text-white flex flex-col items-center bg-[#1a1a1a]">
-      <div className="flex justify-center items-center h-20 w-full flex-col mb-4 ">
-        <IoBag className="text-white w-10 h-10 lg:w-20 lg:h-20" />
-        <div className=" flex items-center justify-center max-sm:w-11/12 sm:w-9/12 md:w-10/12  gap-x-2 mt-2">
-          <div className="flex-grow border-t-4 border-gray-300"></div>
-          <span className="font-bold max-sm:text-3xl sm:text-3xl text-white">
-            My Orders
-          </span>
-          <div className="flex-grow border-t-4 border-gray-300"></div>
-        </div>
-      </div>
-
-      {loading ? (
-        <div className="flex items-center justify-center h-[calc(100vh-8rem)]">
-          <Loader loading={loading} />
-        </div>
-      ) : error ? (
-        <p className="text-red-500">{error}</p>
-      ) : orders?.length === 0 ? (
-        <p className="text-gray-400">No orders found.</p>
+    <>
+      {loggedinUser?.role === "admin" ? (
+        <Unauthorized />
       ) : (
-        <div className="w-full max-w-4xl grid gap-4">
-          {orders.map((order) => (
-            <Link key={order.orderId} href={`/myOrders/${order.orderId}`}>
-              <div
-                className={`flex flex-col h-full justify-center items-center rounded-lg p-4 bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4]  animate-gradient p-[0.05rem]`}
-              >
-                <div className="bg-[#2a2c2f] p-4 rounded-lg shadow-md border border-gray-700 w-full">
-                  <div className="flex justify-between mb-2">
-                    <span className="font-semibold">Order ID:</span>
-                    <span className="text-sm text-gray-400">
-                      {order.orderId}
-                    </span>
+        <div className="relative top-20 min-h-screen px-4 py-6 text-white flex flex-col items-center bg-[#1a1a1a]">
+          <div className="flex justify-center items-center h-20 w-full flex-col mb-4 ">
+            <IoBag className="text-white w-10 h-10 lg:w-20 lg:h-20" />
+            <div className=" flex items-center justify-center max-sm:w-11/12 sm:w-9/12 md:w-10/12  gap-x-2 mt-2">
+              <div className="flex-grow border-t-4 border-gray-300"></div>
+              <span className="font-bold max-sm:text-3xl sm:text-3xl text-white">
+                My Orders
+              </span>
+              <div className="flex-grow border-t-4 border-gray-300"></div>
+            </div>
+          </div>
+
+          {loading ? (
+            <div className="flex items-center justify-center h-[calc(100vh-8rem)]">
+              <Loader loading={loading} />
+            </div>
+          ) : error ? (
+            <p className="text-red-500">{error}</p>
+          ) : orders?.length === 0 ? (
+            <p className="text-gray-400">No orders found.</p>
+          ) : (
+            <div className="w-full max-w-4xl grid gap-4">
+              {orders.map((order) => (
+                <Link key={order.orderId} href={`/myOrders/${order.orderId}`}>
+                  <div
+                    className={`flex flex-col h-full justify-center items-center rounded-lg p-4 bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4]  animate-gradient p-[0.05rem]`}
+                  >
+                    <div className="bg-[#2a2c2f] p-4 rounded-lg shadow-md border border-gray-700 w-full">
+                      <div className="flex justify-between mb-2">
+                        <span className="font-semibold">Order ID:</span>
+                        <span className="text-sm text-gray-400">
+                          {order.orderId}
+                        </span>
+                      </div>
+                      <div className="flex justify-between mb-2">
+                        <span className="font-semibold">Gem:</span>
+                        <span>{order.Gem?.name || "N/A"}</span>
+                      </div>
+                      <div className="flex justify-between mb-2">
+                        <span className="font-semibold">Price:</span>
+                        <span>${order.Gem?.price || "N/A"}</span>
+                      </div>
+                      <div className="flex justify-between mb-2">
+                        <span className="font-semibold">Payment Status:</span>
+                        <span>{order.paymentStatus}</span>
+                      </div>
+                      <div className="flex justify-between mb-2">
+                        <span className="font-semibold">Transaction ID:</span>
+                        <span>{order.transactionId || "Pending"}</span>
+                      </div>
+                      <div className="flex justify-between mb-2">
+                        <span className="font-semibold">
+                          Transaction Timestamp:
+                        </span>
+                        <span>{order.createdAt || ""}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="font-semibold">Last Updated At:</span>
+                        <span>{order.updatedAt || ""}</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex justify-between mb-2">
-                    <span className="font-semibold">Gem:</span>
-                    <span>{order.Gem?.name || "N/A"}</span>
-                  </div>
-                  <div className="flex justify-between mb-2">
-                    <span className="font-semibold">Price:</span>
-                    <span>${order.Gem?.price || "N/A"}</span>
-                  </div>
-                  <div className="flex justify-between mb-2">
-                    <span className="font-semibold">Payment Status:</span>
-                    <span>{order.paymentStatus}</span>
-                  </div>
-                  <div className="flex justify-between mb-2">
-                    <span className="font-semibold">Transaction ID:</span>
-                    <span>{order.transactionId || "Pending"}</span>
-                  </div>
-                  <div className="flex justify-between mb-2">
-                    <span className="font-semibold">
-                      Transaction Timestamp:
-                    </span>
-                    <span>{order.createdAt || ""}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-semibold">Last Updated At:</span>
-                    <span>{order.updatedAt || ""}</span>
-                  </div>
-                </div>
-              </div>
-            </Link>
-          ))}
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
       )}
-    </div>
+    </>
   );
 }
 
