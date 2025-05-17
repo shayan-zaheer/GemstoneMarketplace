@@ -22,7 +22,14 @@ node_modules
 
 # misc
 .DS_Store
+<<<<<<< HEAD
+<<<<<<< HEAD
 # *.pem
+=======
+>>>>>>> 83c27b6ebb1012883b2eabc26af46d26f2ae87ee
+=======
+# *.pem
+>>>>>>> 2254c0bdc69b762a2d4f626b72f9b2ceed061532
 
 # debug
 npm-debug.log*

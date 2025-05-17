@@ -91,7 +91,7 @@ const HomePage = () => {
   //   ];
 
   return (
-    <div className="w-full min-h-[1000px] relative top-20 bg-[#1a1c1ff8] pb-20 mb-20 ">
+    <div className="w-full min-h-[1000px] relative top-20 bg-[#f3f4f6] pb-20 mb-20">
       <Hero />
       <Collections collectionName={"Trending"} gemstones={trendingGems} />
       <Collections
