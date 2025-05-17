@@ -31,7 +31,7 @@ const FormInput = ({
               <Input
               // {...field}
               type="file"
-              className="file:bg-gradient-to-r file:from-[#00E8FC] file:via-[#D400A5] file:to-[#6A00F4] 
+              className="file:bg-primary 
                          file:text-white file:font-semibold file:h-full file:px-4 file:rounded-md 
                          file:border-none file:cursor-pointer file:mr-4 
                          px-1 border rounded-lg bg-transparent text-sm"
