@@ -18,14 +18,14 @@ function SellerCategories({categories, showModal, setShowModal }) {
 
   return (
     <Dialog open={showModal} onOpenChange={setShowModal}>
-      <DialogContent className="sm:max-w-[450px] max-sm:w-11/12 sm:h-[500px] max-sm:h-[500px] overflow-x-auto bg-[#1a1c1ff8] text-white border-gray-700 shadow-xl">
+      <DialogContent className="sm:max-w-[450px] max-sm:w-11/12 sm:h-[500px] max-sm:h-[500px] overflow-x-auto bg-secondary border-gray-700 shadow-xl">
         <DialogHeader>
           <DialogTitle className="text-xl text-center">Seller Categories</DialogTitle>
-          <DialogDescription className="text-center text-white">
+          <DialogDescription className="text-center text-black">
             {`The entered wallet address holds permission to sell the following gem categories as per approval by the Government.`}
           </DialogDescription>
         </DialogHeader>
-        <ul>
+        <ul className="list-disc list-inside space-y-2">
             {categories.map((gem, index) => <li key={index}>{gem}</li>)}
         </ul>
       </DialogContent>
