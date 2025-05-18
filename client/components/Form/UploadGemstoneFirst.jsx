@@ -11,6 +11,7 @@ import { toast } from "react-hot-toast";
 
 const UploadGemstoneFirst = ({ setNext, receiveData }) => {
   const user = useSelector((store) => store.user.user);
+  console.log(user.userId)
   const form = useForm({
     resolver: zodResolver(uploadGemSchema),
     defaultValues: {
@@ -27,7 +28,6 @@ const UploadGemstoneFirst = ({ setNext, receiveData }) => {
       moreImages: [],
     },
   });
-
   const handleFileChange = (e, name) => {
     const files = Array.from(e.target.files);
     if (name == "moreImages") {
@@ -52,7 +52,7 @@ const UploadGemstoneFirst = ({ setNext, receiveData }) => {
     formData.append("dimensions", data.dimensions);
     formData.append("weight", data.weight);
     formData.append("price", data.price);
-    formData.append("userId", data.userId);
+    formData.append("userId", user?.userId);
     formData.append("image", data.image[0]);
     formData.append("coverImage", data.coverImage[0]);
 

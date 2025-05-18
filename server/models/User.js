@@ -38,7 +38,7 @@ const User = sequelize.define(
         },
         walletAddress: {
             type: DataTypes.STRING,
-            unique: true,
+            // unique: true,
         },
         role: {
             type: DataTypes.ENUM,

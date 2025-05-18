@@ -135,14 +135,14 @@ const CheckoutForm = ({ makePayment }) => {
             placeholder="Enter Your Postal Code"
           />
         </div> */}
-        <div className="w-full h-fit bg-[#2a2c2f9f] p-4 rounded-lg">
+        <div className="w-full h-fit bg-card p-4 rounded-lg shadow-2xl ring-1 ring-slate-300 text-black">
           <h1 className="text-2xl font-semibold mb-4">Order Summary</h1>
           <div className="w-full min-h-20  flex flex-col gap-y-3  mb-3 ">
-            <div className="w-full flex justify-between px-2 text-xl font-medium border-b">
+            <div className="w-full flex justify-between px-2 text-xl font-medium border-b border-primary">
               <span>Product</span>
               <span>Price</span>
             </div>
-            <div className="w-full flex justify-between px-2 border-b ">
+            <div className="w-full flex justify-between px-2 border-b border-primary ">
               <span className="font-semibold text-lg">
                 {checkoutItem.name} {"  "}
               </span>
@@ -150,15 +150,15 @@ const CheckoutForm = ({ makePayment }) => {
             </div>
             {/* {products.map((product, index) => (
             ))} */}
-            <div className="w-full flex justify-between px-2 font-medium border-b">
+            <div className="w-full flex justify-between px-2 font-medium border-b border-primary">
               <span>Subtotal</span>
               <span>{subtotal} PKR</span>
             </div>
-            <div className="w-full flex justify-between px-2 font-medium border-b">
+            <div className="w-full flex justify-between px-2 font-medium border-b border-primary">
               <span>GST(15%)</span>
               <span>{GST} PKR</span>
             </div>
-            <div className="w-full flex justify-between px-2 font-medium border-b">
+            <div className="w-full flex justify-between px-2 font-medium border-b border-primary">
               <span>Total</span>
               <span>{total} PKR</span>
             </div>
@@ -178,11 +178,11 @@ const CheckoutForm = ({ makePayment }) => {
             <button
               disabled={isLoading}
               onClick={() => handleCheckout()}
-              className="relative px-6 py-2 font-semibold text-white bg-transparent border border-white hover:border-transparent overflow-hidden group rounded-sm mt-2 mx-auto w-full"
+              className="relative px-6 py-2 font-semibold text-white border border-primary hover:border-transparent  overflow-hidden group rounded-sm mt-2 mx-auto w-full group"
             >
-              <span className="absolute inset-0 bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4] transition-all duration-300 ease-out transform scale-x-0 origin-left group-hover:scale-x-100"></span>
+              <span className="absolute inset-0 btn-primary transition-all duration-300 ease-out transform scale-x-0 origin-left group-hover:scale-x-100"></span>
               <div className="flex items-center justify-center gap-x-2">
-                <span className="relative z-10 text-white text-lg">
+                <span className="relative z-10 text-black group-hover:text-white text-lg">
                   {isLoading ? "Processing...." : "Place Order"}
                 </span>
               </div>

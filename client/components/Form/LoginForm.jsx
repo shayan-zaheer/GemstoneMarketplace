@@ -40,7 +40,7 @@ const LoginForm = () => {
         return toast.success("You're logged in!");
       } else {
         return toast.error("Unexpected response from server.");
-        setIsLoading(false)
+        setIsLoading(false);
       }
     } catch (error) {
       const message =
@@ -48,7 +48,7 @@ const LoginForm = () => {
         error.message ||
         "Something went wrong. Please try again.";
 
-        setIsLoading(false)
+      setIsLoading(false);
       return toast.error(message);
     }
   };
@@ -57,7 +57,7 @@ const LoginForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="relative z-10 text-white flex flex-col gap-y-4 "
+        className="relative z-10 text-black flex flex-col gap-y-4"
       >
         <FormInput
           control={form.control}
@@ -74,7 +74,12 @@ const LoginForm = () => {
           type="password"
         />
         {isLoading ? (
-          <button className="border border-slate-900 h-10 rounded-sm bg-slate-900" disabled>Processing...</button>
+          <button
+            className="border border-primary text-white h-10 rounded-sm bg-primary"
+            disabled
+          >
+            Processing...
+          </button>
         ) : (
           <FormButton text="Login" type="submit" />
         )}

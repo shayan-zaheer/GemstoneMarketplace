@@ -59,9 +59,9 @@ const CartCard = ({ item }) => {
   return (
     <div
       ref={cardRef}
-      className="w-[95%] min-h-96 bg-[#2A2D33]  mt-4 flex flex-col items-center gap-y-4 py-4 rounded-md shadow-2xl shadow-black mx-auto"
+      className="w-[95%] min-h-96 bg-surface  mt-4 flex flex-col items-center gap-y-4 py-4 rounded-md shadow-xl shadow-black mx-auto"
     >
-      <div className="w-11/12 mx-auto pt-4 flex items-center px-4 text-white gap-x-1 border-b-2 max-sm:text-3xl sm:text-3xl font-semibold lg:justify-center pb-2 lg:text-4xl">
+      <div className="w-11/12 mx-auto pt-4 flex items-center px-4 text-black gap-x-1 border-b-2 border-primary max-sm:text-3xl sm:text-3xl font-semibold lg:justify-center pb-2 lg:text-4xl">
         <span>{item.name} | </span>
         <span>{item.weight} CT.</span>
       </div>
@@ -78,47 +78,57 @@ const CartCard = ({ item }) => {
             className="mx-auto"
           />
         </div>
-        <div className="w-[95%] min-h-60 px-2">
-          <table className="border border-gray-300 w-full text-white sm:text-lg">
+        <div className="w-[95%] min-h-60 px-2 border-2 border-black ">
+          <table className="w-full text-black sm:text-lg ">
             <tbody>
-              <tr>
-                <th className="detail-label">Owner: </th>
-                <td className="detail-value">{item.owner?.name}</td>
+              <tr className="border-b-2 border-black ">
+                <th className="detail-label border  px-2 py-1">Owner:</th>
+                <td className="detail-value border  px-2 py-1">
+                  {item.owner?.name}
+                </td>
               </tr>
-              <tr>
-                <th className="detail-label">Price: </th>
-                <td className="detail-value">{item.price} Rs</td>
+              <tr className="border-b-2 border-black">
+                <th className="detail-label border  px-2 py-1">Price:</th>
+                <td className="detail-value border  px-2 py-1">
+                  {item.price} Rs
+                </td>
               </tr>
-              <tr>
-                <th className="detail-label">Weight: </th>
+              <tr className="border-b-2 border-black ">
+                <th className="detail-label border  px-2 py-1">Weight:</th>
                 <td
-                  className={`detail-value ${item.weight ? "" : "opacity-75"}`}
+                  className={`detail-value border  px-2 py-1 ${
+                    item.weight ? "" : "opacity-75"
+                  }`}
                 >
                   {item.weight
                     ? `${item.weight} Carat`
                     : "Seller does not provide weight info"}
                 </td>
               </tr>
-              <tr>
-                <th className="detail-label">Purity: </th>
+              <tr className="border-b-2 border-black ">
+                <th className="detail-label border  px-2 py-1">Purity:</th>
                 <td
-                  className={`detail-value ${item.purity ? "" : "opacity-75"}`}
+                  className={`detail-value border  px-2 py-1 ${
+                    item.purity ? "" : "opacity-75"
+                  }`}
                 >
                   {item.purity || "Seller does not provide purity info"}
                 </td>
               </tr>
-              <tr>
-                <th className="detail-label">Shape: </th>
+              <tr className="border-b-2 border-black ">
+                <th className="detail-label border  px-2 py-1">Shape:</th>
                 <td
-                  className={`detail-value ${item.shape ? "" : "opacity-75"}`}
+                  className={`detail-value border  px-2 py-1 ${
+                    item.shape ? "" : "opacity-75"
+                  }`}
                 >
                   {item.shape || "Seller does not provide shape info"}
                 </td>
               </tr>
-              <tr>
-                <th className="detail-label">Dimensions: </th>
+              <tr className="border ">
+                <th className="detail-label border  px-2 py-1">Dimensions:</th>
                 <td
-                  className={`detail-value ${
+                  className={`detail-value border  px-2 py-1 ${
                     item.dimensions ? "" : "opacity-75"
                   }`}
                 >
@@ -133,19 +143,23 @@ const CartCard = ({ item }) => {
         {/* Remove Button */}
         <button
           onClick={handleRemove}
-          className="relative px-6 py-3 font-semibold text-white bg-transparent border border-white hover:border-transparent overflow-hidden group rounded-sm"
+          className="relative px-6 py-3 font-semibold text-white border border-gray-700  overflow-hidden group rounded-sm"
         >
           <span className="absolute inset-0 bg-red-700 transition-all duration-300 ease-out transform scale-x-0 origin-left group-hover:scale-x-100"></span>
-          <span className="relative z-10 text-white">Remove from Cart</span>
+          <span className="relative z-10 text-black group-hover:text-white">
+            Remove from Cart
+          </span>
         </button>
 
         {/* Buy Now Button */}
         <button
-          className="relative px-6 py-3 font-semibold text-white bg-transparent border border-white hover:border-transparent overflow-hidden group rounded-sm"
+          className="relative px-6 py-3 font-semibold text-white border border-gray-700  overflow-hidden group rounded-sm"
           onClick={handleBuyNow}
         >
-          <span className="absolute inset-0 bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4] transition-all duration-300 ease-out transform scale-x-0 origin-left group-hover:scale-x-100"></span>
-          <span className="relative z-10 text-white">Buy Now</span>
+          <span className="absolute inset-0 bg-primary transition-all duration-300 ease-out transform scale-x-0 origin-left group-hover:scale-x-100"></span>
+          <span className="relative z-10 text-black group-hover:text-white">
+            Buy Now
+          </span>
         </button>
       </div>
     </div>

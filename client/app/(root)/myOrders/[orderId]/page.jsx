@@ -39,6 +39,7 @@ const OrderDetailsPage = ({ params }) => {
 
         if (data.status === "success") {
           setOrder(data.data);
+          console.log(data.data);
         } else {
           throw new Error(data.message || "Failed to fetch order details");
         }
@@ -135,9 +136,7 @@ const OrderDetailsPage = ({ params }) => {
 
   return (
     <>
-      {loggedinUser?.role === "admin" ? (
-        <Unauthorized />
-      ) : (
+      {loggedinUser?.userId == order?.buyerId ? (
         <div className="pt-20 min-h-screen bg-[#1a1c1ff8]">
           <div className="grid md:grid-cols-[2fr_3fr] gap-0 min-h-[calc(100vh-8rem)]">
             {/* Left Panel - Order Details */}
@@ -424,6 +423,8 @@ const OrderDetailsPage = ({ params }) => {
             </motion.div>
           </div>
         </div>
+      ) : (
+        <Unauthorized />
       )}
     </>
   );

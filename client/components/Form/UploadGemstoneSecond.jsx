@@ -32,30 +32,24 @@ const UploadGemstoneSecond = ({ setNext, gemData }) => {
     console.log("FIRST PAGE DATA:", gemData);
     console.log("SECOND PAGE DATA:", data);
     console.log(data["transactionHash"]);
-<<<<<<< HEAD
-    console.log(gemData,data)
-    try {
-      const isVerified = await verifySeller(data["transactionHash"],data.category);
-=======
+    console.log(gemData, data);
     setIsLoading(true);
-    const isVerified = await verifySeller(
-      data["transactionHash"],
-      data.category
-    );
->>>>>>> 83c27b6ebb1012883b2eabc26af46d26f2ae87ee
-    if (!isVerified) {
-      toast.error(
-        "Your selected category is not correct!\nReview the certificate and try again."
+    try {
+      const isVerified = await verifySeller(
+        data["transactionHash"],
+        data.category
       );
-      setIsLoading(false);
-      return;
-    } else {
-<<<<<<< HEAD
-        console.log("UPLOAD API PAYLOAD:",gemData)
-=======
-      try {
-        console.log("UPLOAD API PAYLOAD:", gemData);
->>>>>>> 83c27b6ebb1012883b2eabc26af46d26f2ae87ee
+      if (!isVerified) {
+        toast.error(
+          "Your selected category is not correct!\nReview the certificate and try again."
+        );
+        setIsLoading(false);
+        return;
+      } else {
+        let hash=`${data["transactionHash"]}`
+        gemData.append("txHash", String(hash));
+        // let obj= {...gemData,txHash:data["transactionHash"]}
+        console.log("UPLOAD API PAYLOAD:",typeof hash);
         const result = await axios.post(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/gems`,
           gemData,
@@ -74,22 +68,18 @@ const UploadGemstoneSecond = ({ setNext, gemData }) => {
           // console.log(tx)
           if (tx.status == "Success") {
             toast.success(tx.message);
+            router.push(`/products`);
           } else {
             toast.error(tx.message);
           }
         }
-      };
-      } catch (err) {
-<<<<<<< HEAD
-          console.error(err);
-          toast.error(err.message+ "Invalid Data");
-=======
-        console.error(err);
-        toast.error(err.message);
->>>>>>> 83c27b6ebb1012883b2eabc26af46d26f2ae87ee
       }
-      setIsLoading(false);
+    } catch (err) {
+      console.error(err);
+      toast.error(err.message + "Invalid Data");
     }
+    setIsLoading(false);
+  };
 
   return (
     <Form {...form}>
