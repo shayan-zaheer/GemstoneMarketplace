@@ -120,7 +120,7 @@ const OrderDetailsPage = ({ params }) => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-[calc(100vh-8rem)] bg-[#1a1c1ff8]">
+      <div className="flex items-center justify-center h-[calc(100vh-8rem)] bg-main">
         <Loader loading={loading} />
       </div>
     );
@@ -137,7 +137,7 @@ const OrderDetailsPage = ({ params }) => {
   return (
     <>
       {loggedinUser?.userId == order?.buyerId ? (
-        <div className="pt-20 min-h-screen bg-[#1a1c1ff8]">
+        <div className="pt-20 min-h-screen bg-main">
           <div className="grid md:grid-cols-[2fr_3fr] gap-0 min-h-[calc(100vh-8rem)]">
             {/* Left Panel - Order Details */}
             <motion.div
@@ -146,34 +146,36 @@ const OrderDetailsPage = ({ params }) => {
               transition={{ type: "tween", duration: 0.3 }}
               className="md:sticky md:top-20 md:self-start md:max-h-[calc(100vh-5rem)] md:overflow-y-auto p-5 md:pl-12 md:pr-8"
             >
-              <h1 className="bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4] text-transparent bg-clip-text text-4xl md:text-6xl font-bold">
+              <h1 className="text-primary text-4xl md:text-6xl font-bold">
                 Order Details
               </h1>
               <div className="flex items-center gap-2 mt-2">
-                <span className="text-white text-xl font-semibold">
+                <span className="text-black text-xl font-semibold">
                   Order ID:
                 </span>
-                <span className="text-gray-300 text-lg">{order.orderId}</span>
+                <span className="text-gray-800 text-lg italic">
+                  {order.orderId}
+                </span>
               </div>
 
               {/* Buyer & Seller Information */}
-              <div className="mt-6 bg-[#2a2c2f9f] p-4 rounded-lg border border-gray-700">
+              <div className="mt-6 bg-surface p-4 rounded-lg border border-gray-700">
                 <div className="flex items-center gap-2 mb-3">
-                  <FaUserCircle className="text-purple-400 text-xl" />
-                  <h2 className="text-purple-400 font-semibold text-2xl">
+                  <FaUserCircle className="text-primary text-xl" />
+                  <h2 className="text-primary font-semibold text-2xl">
                     Buyer & Seller Information
                   </h2>
                 </div>
                 <div className="pl-2">
                   <div className="mb-3">
-                    <span className="text-white font-medium">Buyer:</span>
+                    <span className="text-black font-medium">Buyer:</span>
                     <Link href={`/user/${order?.buyerId}`}>
                       <div className="flex items-center mt-1">
-                        <span className="text-blue-400 hover:underline">
+                        <span className="text-primary hover:underline">
                           {order.Buyer?.name || loggedinUser?.name || "N/A"}
                         </span>
                         {order?.buyerId === loggedinUser?.userId && (
-                          <span className="ml-2 text-xs bg-blue-500 px-2 py-0.5 rounded-full text-white">
+                          <span className="ml-2 text-xs bg-primary px-2 py-0.5 rounded-full text-white">
                             You
                           </span>
                         )}
@@ -181,10 +183,10 @@ const OrderDetailsPage = ({ params }) => {
                     </Link>
                   </div>
                   <div className="mt-3">
-                    <span className="text-white font-medium">Seller:</span>
+                    <span className="text-black font-medium">Seller:</span>
                     <Link href={`/user/${order?.sellerId}`}>
                       <div className="flex items-center mt-1">
-                        <span className="bg-gradient-to-r to-[#00E8FC] via-[#D400A5] from-[#6A00F4] text-transparent bg-clip-text hover:underline">
+                        <span className="text-primary hover:underline">
                           {order?.Seller?.name || "N/A"}
                         </span>
                         {order?.sellerId === loggedinUser?.userId && (
@@ -199,34 +201,34 @@ const OrderDetailsPage = ({ params }) => {
               </div>
 
               {/* Purchased Item */}
-              <div className="mt-6 bg-[#2a2c2f9f] p-4 rounded-lg border border-gray-700">
+              <div className="mt-6 bg-surface p-4 rounded-lg border border-gray-700">
                 <div className="flex items-center gap-2 mb-3">
-                  <FaBoxOpen className="text-blue-400 text-xl" />
-                  <h2 className="text-blue-400 font-semibold text-2xl">
+                  <FaBoxOpen className="text-primary text-xl" />
+                  <h2 className="text-primary font-semibold text-2xl">
                     Purchased Item
                   </h2>
                 </div>
                 <div className="pl-2">
                   <div className="flex justify-between mb-2">
-                    <span className="text-white font-medium">Gem:</span>
+                    <span className="text-black font-medium">Gem:</span>
                     <Link href={`/product/${order.Gem?.id}`}>
-                      <span className="text-blue-400 hover:underline">
+                      <span className="text-black hover:underline">
                         {order.Gem?.name || "N/A"}
                       </span>
                     </Link>
                   </div>
                   <div className="flex justify-between mb-2">
-                    <span className="text-white font-medium">Price:</span>
-                    <span className="text-white">
+                    <span className="text-black font-medium">Price:</span>
+                    <span className="text-black">
                       {order.Gem?.price || "N/A"} PKR
                     </span>
                   </div>
                   {order.Gem?.description && (
                     <div className="mt-3">
-                      <span className="text-white font-medium">
+                      <span className="text-black font-medium">
                         Description:
                       </span>
-                      <p className="text-slate-300 text-sm italic mt-1">
+                      <p className="text-black text-sm italic mt-1">
                         {order.Gem.description}
                       </p>
                     </div>
@@ -235,18 +237,18 @@ const OrderDetailsPage = ({ params }) => {
               </div>
 
               {/* Payment Information */}
-              <div className="mt-6 bg-[#2a2c2f9f] p-4 rounded-lg border border-gray-700">
+              <div className="mt-6 bg-surface p-4 rounded-lg border border-gray-700">
                 <div className="flex items-center gap-2 mb-3">
-                  <MdPayment className="text-green-400 text-xl" />
-                  <h2 className="text-green-400 font-semibold text-2xl">
+                  <MdPayment className="text-primary text-xl" />
+                  <h2 className="text-primary font-semibold text-2xl">
                     Payment Information
                   </h2>
                 </div>
                 <div className="pl-2">
                   <div className="flex justify-between mb-2">
-                    <span className="text-white font-medium">Status:</span>
+                    <span className="text-black font-medium">Status:</span>
                     <span
-                      className={`font-semibold ${
+                      className={`font-semibold text-black ${
                         order.paymentStatus === "completed"
                           ? "text-green-400"
                           : order.paymentStatus === "pending"
@@ -258,10 +260,10 @@ const OrderDetailsPage = ({ params }) => {
                     </span>
                   </div>
                   <div className="flex justify-between mb-2">
-                    <span className="text-white font-medium">
+                    <span className="text-black font-medium">
                       Transaction ID:
                     </span>
-                    <span className="text-gray-300">
+                    <span className="text-black">
                       {order.transactionId || "Pending"}
                     </span>
                   </div>
@@ -288,14 +290,14 @@ const OrderDetailsPage = ({ params }) => {
                           {!showReviewForm ? (
                             <button
                               onClick={() => setShowReviewForm(true)}
-                              className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                              className="bg-primary hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
                             >
                               Give Review
                             </button>
                           ) : (
                             <div className="mt-4">
                               <div className="flex flex-col items-center mb-4">
-                                <label className="text-white text-lg mb-2">
+                                <label className="text-black text-lg mb-2">
                                   How would you rate this purchase?
                                 </label>
                                 <div className="flex">
@@ -317,13 +319,13 @@ const OrderDetailsPage = ({ params }) => {
                                 value={reviewText}
                                 onChange={(e) => setReviewText(e.target.value)}
                                 placeholder="Share your experience with this purchase..."
-                                className="w-full p-3 rounded bg-[#2a2c2f9f] text-white border border-gray-600 focus:border-blue-500 focus:outline-none"
+                                className="w-full p-3 rounded bg-surface text-white border border-gray-600 focus:border-blue-500 focus:outline-none placeholder:text-black"
                                 rows={5}
                               />
                               <div className="flex gap-3 mt-3">
                                 <button
                                   onClick={handleReviewSubmit}
-                                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                  className="flex-1 btn-primary text-white font-bold py-2 px-4 rounded"
                                 >
                                   Submit Review
                                 </button>
@@ -333,7 +335,7 @@ const OrderDetailsPage = ({ params }) => {
                                     setRating(null);
                                     setReviewText("");
                                   }}
-                                  className="flex-1 bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+                                  className="flex-1 btn-secondary text-white font-bold py-2 px-4 rounded"
                                 >
                                   Cancel
                                 </button>
@@ -342,8 +344,8 @@ const OrderDetailsPage = ({ params }) => {
                           )}
                         </>
                       ) : (
-                        <div className="mt-4 bg-[#2a2c2f9f] p-4 rounded-lg border border-gray-700">
-                          <h3 className="text-lg font-semibold text-purple-400 mb-2">
+                        <div className="mt-4 bg-surface p-4 rounded-lg border border-gray-700">
+                          <h3 className="text-lg font-semibold text-black mb-2">
                             Your Review
                           </h3>
                           <div className="flex items-center mb-2">
@@ -375,14 +377,14 @@ const OrderDetailsPage = ({ params }) => {
               {/* Order Dates */}
               <div className="mt-6">
                 <div className="flex justify-between mb-2">
-                  <span className="text-white font-medium">Ordered On:</span>
-                  <span className="text-blue-400 italic">
+                  <span className="text-black font-medium">Ordered On:</span>
+                  <span className="text-primary italic">
                     {formatDate(order.createdAt)}
                   </span>
                 </div>
                 <div className="flex justify-between mb-2">
-                  <span className="text-white font-medium">Last Updated:</span>
-                  <span className="text-gray-300 italic">
+                  <span className="text-black font-medium">Last Updated:</span>
+                  <span className="text-primary italic">
                     {formatDate(order.updatedAt)}
                   </span>
                 </div>
@@ -391,7 +393,7 @@ const OrderDetailsPage = ({ params }) => {
               {/* Back Button */}
               <div className="mt-6 mb-10">
                 <Link href="/myOrders">
-                  <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                  <button className="bg-primary hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
                     Back to Orders
                   </button>
                 </Link>
