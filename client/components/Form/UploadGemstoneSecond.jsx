@@ -46,10 +46,10 @@ const UploadGemstoneSecond = ({ setNext, gemData }) => {
         setIsLoading(false);
         return;
       } else {
-        let hash=`${data["transactionHash"]}`
+        let hash = `${data["transactionHash"]}`;
         gemData.append("txHash", String(hash));
         // let obj= {...gemData,txHash:data["transactionHash"]}
-        console.log("UPLOAD API PAYLOAD:",typeof hash);
+        console.log("UPLOAD API PAYLOAD:", typeof hash);
         const result = await axios.post(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/gems`,
           gemData,
@@ -87,9 +87,9 @@ const UploadGemstoneSecond = ({ setNext, gemData }) => {
         className="relative z-10 text-white flex flex-col"
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <div className="bg-gradient-to-r p-[0.1rem] from-[#00E8FC] via-[#D400A5] to-[#6A00F4]  md:w-[500px] rounded-lg border-transparent">
-          <div className="min-h-full w-full bg-[#1a1c1cf0] rounded-md text-white p-4 flex justify-center flex-col gap-y-4">
-            <h1 className="from-[#00E8FC] via-[#D400A5] to-[#6A00F4] bg-gradient-to-r text-transparent md:text-3xl text-xl text-center mb-2 font-bold bg-clip-text">
+        <div className="bg-primary p-1  md:w-[500px] rounded-lg border-transparent">
+          <div className="min-h-full w-full bg-surface rounded-md text-black p-4 flex justify-center flex-col gap-y-4">
+            <h1 className="text-primary md:text-3xl text-xl text-center mb-2 font-bold bg-clip-text">
               Upload Gemstone
             </h1>
             <FormInput
@@ -118,11 +118,13 @@ const UploadGemstoneSecond = ({ setNext, gemData }) => {
               <FormButton
                 onClick={() => setNext(false)}
                 text="Back"
+                className={"!btn-primary"}
               ></FormButton>
               <FormButton
                 disabled={isLoading}
                 text="Submit"
                 type={"submit"}
+                className={"!btn-secondary"}
               ></FormButton>
             </div>
           </div>
