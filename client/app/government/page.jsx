@@ -8,7 +8,6 @@ import PizZip from "pizzip";
 import Docxtemplater from "docxtemplater";
 import { saveAs } from "file-saver";
 import { registerSeller, getSellerByWallet } from "@/services/blockchain";
-import { verifySeller } from "@/services/gemBlockchain";
 import toast, { Toaster } from "react-hot-toast";
 import Loader from "@/components/Loader";
 import SellerCategories from "@/components/Modals/SellerCategories";
@@ -46,7 +45,6 @@ const GovernmentDashboard = () => {
                 category: data.categoryName,
             });
 
-           
             const reader = new FileReader();
             reader.onload = function (event) {
                 try {
@@ -93,7 +91,7 @@ const GovernmentDashboard = () => {
                 sellerWallet: address,
             });
 
-            if (categories.length == 0) {
+            if (categories.length === 0) {
                 toast.error(
                     "This wallet address doesn't hold any gem selling certificate."
                 );
@@ -113,24 +111,30 @@ const GovernmentDashboard = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white p-4">
+        <div className="min-h-screen flex items-center justify-center bg-main p-6">
             <Toaster
                 position="bottom-center"
                 toastOptions={{
                     style: { background: "#333", color: "white" },
                 }}
             />
-            {showModal && !isLoading && <SellerCategories categories={categories} showModal={showModal} setShowModal={setShowModal} />}
+            {showModal && !isLoading && (
+                <SellerCategories
+                    categories={categories}
+                    showModal={showModal}
+                    setShowModal={setShowModal}
+                />
+            )}
             {isLoading ? (
                 <Loader />
             ) : (
-                <div className="w-full max-w-2xl bg-gray-800 shadow-lg rounded-lg p-6">
-                    <h1 className="text-center text-3xl font-bold bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4] bg-clip-text text-transparent mb-6">
+                <div className="w-full max-w-3xl bg-card p-8">
+                    <h1 className="text-center text-4xl font-extrabold text-primary mb-8">
                         Government Certification Authority
                     </h1>
                     <Form {...form}>
                         <form
-                            className="flex flex-col gap-y-4"
+                            className="flex flex-col gap-6"
                             onSubmit={form.handleSubmit(onSubmit)}
                         >
                             <FormInput
@@ -164,7 +168,9 @@ const GovernmentDashboard = () => {
                             <FormButton
                                 text="Submit Certification"
                                 type="submit"
+                                className="btn-primary"
                             />
+                            <hr className="my-6 border-primary" />
                             <FormInput
                                 control={form.control}
                                 name="sellerWallet"
@@ -176,6 +182,7 @@ const GovernmentDashboard = () => {
                                 text="Get Categories by Wallet"
                                 type="button"
                                 onClick={getSeller}
+                                className="btn-secondary"
                             />
                         </form>
                     </Form>
