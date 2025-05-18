@@ -9,7 +9,7 @@
 //       <span
 //         className={`absolute inset-0 bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4] transform scale-x-0 origin-left ${
 //           disabled
-//             ? "transition-none border " 
+//             ? "transition-none border "
 //             : "transition-all duration-300 ease-out group-hover:scale-x-100"
 //         }`}
 //       ></span>
@@ -37,9 +37,10 @@ const FormButton = ({ disabled = false, text, type = "button", onClick }) => {
         w-full
         btn-primary
         overflow-hidden
-        ${disabled 
-          ? "opacity-50 cursor-not-allowed pointer-events-none" 
-          : "hover:bg-[#7c3aed]/80 transition-all duration-200 ease-in-out"
+        ${
+          disabled
+            ? "opacity-50 cursor-not-allowed pointer-events-none"
+            : "hover:bg-[#7c3aed]/80 transition-all duration-200 ease-in-out"
         }
       `}
     >
@@ -48,9 +49,10 @@ const FormButton = ({ disabled = false, text, type = "button", onClick }) => {
           absolute inset-0 
           bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4] 
           transform scale-x-0 origin-left 
-          ${disabled 
-            ? "transition-none" 
-            : "transition-all duration-300 ease-out group-hover:scale-x-100"
+          ${
+            disabled
+              ? "transition-none"
+              : "transition-all duration-300 ease-out group-hover:scale-x-100"
           }
         `}
       ></span>

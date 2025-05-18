@@ -10,7 +10,7 @@ import Unauthorized from "@/components/Unauthorized";
 
 const Cart = () => {
   const cartItems = useSelector((store) => store.cart.cartItems);
-  console.log(cartItems)
+  console.log(cartItems);
   const loggedinUser = useSelector((store) => store.user.user);
 
   return (
@@ -18,15 +18,15 @@ const Cart = () => {
       {loggedinUser.role === "admin" ? (
         <Unauthorized />
       ) : (
-        <div className="mt-20 min-h-96 bg-[#1a1c1ff8] p-4">
+        <div className="mt-20 min-h-96 bg-main p-4">
           <div className="flex justify-center items-center h-24 w-full flex-col ">
-            <ShoppingCart className="text-white w-12 h-12 lg:w-20 lg:h-20" />
+            <ShoppingCart className="text-primary w-12 h-12 lg:w-20 lg:h-20" />
             <div className=" flex items-center justify-center max-sm:w-11/12 sm:w-9/12  gap-x-2 mt-2">
-              <div className="flex-grow border-t-4 border-gray-300"></div>
-              <span className="font-bold max-sm:text-3xl sm:text-3xl text-white">
+              <div className="flex-grow border-t-4 border-primary"></div>
+              <span className="font-bold max-sm:text-3xl sm:text-3xl text-primary">
                 Cart
               </span>
-              <div className="flex-grow border-t-4 border-gray-300"></div>
+              <div className="flex-grow border-t-4 border-primary"></div>
             </div>
           </div>
           <div className="flex w-auto h-auto max-lg:flex-col px-[2%]">

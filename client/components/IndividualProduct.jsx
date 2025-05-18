@@ -139,15 +139,15 @@ const IndividualProduct = ({ productID }) => {
             <div className="md:w-[80%] mt-5">
               <table className="border-1 border-gray-900 w-full text-slate-600 sm:text-lg">
                 <tbody>
-                  <tr>
+                  <tr className="border-2 border-gray-700">
                     <th className="detail-label">Dimensions </th>
                     <td className="detail-value">{gem?.dimensions}</td>
                   </tr>
-                  <tr>
+                  <tr className="border-2 border-gray-700">
                     <th className="detail-label">Purity </th>
                     <td className="detail-value">{gem?.purity}</td>
                   </tr>
-                  <tr>
+                  <tr className="border-2 border-gray-700">
                     <th className="detail-label">Weight </th>
                     <td className="detail-value">{gem?.weight} C.T.</td>
                   </tr>

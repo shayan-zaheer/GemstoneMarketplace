@@ -31,7 +31,7 @@ const Web3Provider = ({ children }) => {
     return (
         <WagmiProvider config={config}>
             <QueryClientProvider client={queryClient}>
-                <RainbowKitProvider theme={darkTheme()}>
+                <RainbowKitProvider >
                     <WalletHandler />
                     {children}
                 </RainbowKitProvider>

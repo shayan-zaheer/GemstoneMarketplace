@@ -67,7 +67,7 @@ const SignupForm = () => {
         router.push("/login");
       }
     } catch (error) {
-      setIsLoading(false)
+      setIsLoading(false);
       toast.error(error.response.data.message);
       console.error("Signup Error:", error);
     }
@@ -77,7 +77,7 @@ const SignupForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="relative z-10 text-white flex flex-col gap-y-4"
+        className="relative z-10 text-black flex flex-col gap-y-4"
       >
         <FormInput
           control={form.control}
@@ -102,9 +102,7 @@ const SignupForm = () => {
         />
 
         <div className="flex flex-col">
-          <label className="text-lg font-bold text-gray-300">
-            Profile Image
-          </label>
+          <label className=" text-black">Profile Image</label>
           <div className="w-full">
             <input
               type="file"
@@ -115,7 +113,7 @@ const SignupForm = () => {
             />
             <label
               htmlFor="profileImage"
-              className="block w-full text-sm text-ellipsis truncate text-gray-300 bg-gray-800 border border-gray-600 rounded-md cursor-pointer p-2 text-center hover:bg-gray-700"
+              className="block w-full text-sm text-ellipsis truncate text-white bg-primary border border-gray-600 rounded-md cursor-pointer p-2 text-center hover:bg-purple-700"
             >
               {selectedFile ? selectedFile.name : "Upload Your Image"}
             </label>
@@ -162,7 +160,12 @@ const SignupForm = () => {
         </CustomTooltip>
 
         {isLoading ? (
-          <button className="border border-slate-900 h-10 rounded-sm bg-slate-900" disabled>Processing...</button>
+          <button
+            className="border border-primary text-white h-10 rounded-sm bg-primary"
+            disabled
+          >
+            Processing...
+          </button>
         ) : (
           <FormButton text="Sign Up" type="submit" />
         )}

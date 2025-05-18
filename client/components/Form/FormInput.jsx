@@ -16,10 +16,9 @@ const FormInput = ({
   type = "text",
   disabled = false,
   more = false,
-  handleFileChange
+  handleFileChange,
 }) => {
   return (
-    
     <FormField
       control={control}
       name={name}
@@ -29,25 +28,23 @@ const FormInput = ({
           <FormControl>
             {type == "file" ? (
               <Input
-              // {...field}
-              type="file"
-              className="file:bg-primary 
-                         file:text-white file:font-semibold file:h-full file:px-4 file:rounded-md 
+                // {...field}
+                type="file"
+                className="file:bg-primary file:text-white file:py-1 file:hover:bg-[#7c3aed]/80 file:rounded-md 
                          file:border-none file:cursor-pointer file:mr-4 
-                         px-1 border rounded-lg bg-transparent text-sm"
-              placeholder={placeholder}
-              disabled={disabled}
-              multiple = {more}
-              onChange = {handleFileChange}
-
-            />
+                         px-1 "
+                placeholder={placeholder}
+                disabled={disabled}
+                multiple={more}
+                onChange={handleFileChange}
+              />
             ) : (
               <Input
                 {...field}
                 type={type}
                 placeholder={placeholder}
                 disabled={disabled}
-                
+                style={{ border: "1px solid grey" }}
               />
             )}
           </FormControl>
