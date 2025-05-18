@@ -12,17 +12,17 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #1a1a1a; 
-  border-radius: 10px;
+  background: white; 
+  border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #00E8FC, #D400A5, #6A00F4); 
-  border-radius: 10px;
+  background: #7b3be8; 
+  border-radius: 2px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #6A00F4, #D400A5, #00E8FC); 
+  cursor: pointer;
 }
 
 
@@ -142,7 +142,7 @@
     @apply bg-[#1b1c20] text-white border-b-2 border-white focus:outline-none focus:border-[#0DE8F1] w-11/12 h-10 placeholder:italic
   }
   .navbar-button{
-    @apply  bg-white text-black text-[16px] font-semibold hover:text-white hover:bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4]
+    @apply  !btn-primary
   }
   .responsive-navbar-button{
     @apply hover:bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4] font-semibold hover:text-white

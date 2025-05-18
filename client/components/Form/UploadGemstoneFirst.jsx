@@ -69,9 +69,8 @@ const UploadGemstoneFirst = ({ setNext, receiveData }) => {
         className="relative z-10 text-white flex flex-col"
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <div className="bg-gradient-to-r p-[0.1rem] from-[#00E8FC] via-[#D400A5] to-[#6A00F4]  md:w-[500px] rounded-lg border-transparent">
-          <div className="min-h-full w-full bg-[#1a1c1cf0] rounded-md text-white p-4 flex justify-center flex-col gap-y-4">
-            <h1 className="from-[#00E8FC] via-[#D400A5] to-[#6A00F4] bg-gradient-to-r text-transparent md:text-3xl text-xl text-center mb-2 font-bold bg-clip-text">
+          <div className="md:w-[500px] min-h-full w-full bg-surface border border-primary rounded-md text-gray-700 p-4 flex justify-center flex-col gap-y-4">
+            <h1 className="md:text-3xl text-xl text-center mb-2 font-bold text-primary">
               Upload Gemstone
             </h1>
             <FormInput
@@ -156,7 +155,6 @@ const UploadGemstoneFirst = ({ setNext, receiveData }) => {
             />
             <FormButton text="Next" type="submit" />
           </div>
-        </div>
       </form>
     </Form>
   );

@@ -95,13 +95,13 @@ export function EditModal({ user }) {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         {loggedinUser?.userId === user?.userId && (
-          <Edit className="text-white cursor-pointer" />
+          <Edit className="text-primary cursor-pointer" />
         )}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[450px] max-sm:w-11/12 sm:h-[500px] max-sm:h-[500px] overflow-x-auto bg-[#1a1c1ff8] text-white border- border-gray-700 shadow-xl">
+      <DialogContent className="sm:max-w-[450px] max-sm:w-11/12 sm:h-[500px] max-sm:h-[500px] overflow-x-auto bg-card text-gray-800 border- border-gray-200 shadow-xl">
         <DialogHeader>
-          <DialogTitle className="text-xl">Edit profile</DialogTitle>
-          <DialogDescription className="text-white">
+          <DialogTitle className="text-xl text-primary">Edit profile</DialogTitle>
+          <DialogDescription className="text-gray-700">
             Update your profile information below and save changes.
           </DialogDescription>
         </DialogHeader>
@@ -155,7 +155,7 @@ export function EditModal({ user }) {
                 />
                 <label
                   htmlFor="profileImage"
-                  className="block w-full text-sm text-ellipsis truncate text-gray-300 bg-[#2A2D33] border border-gray-600 rounded-md cursor-pointer p-2 text-center hover:bg-[#23252a]"
+                  className="block w-full !text-sm text-ellipsis truncate btn-primary p-2 rounded-md cursor-pointer text-center"
                 >
                   {selectedFile
                     ? selectedFile.name

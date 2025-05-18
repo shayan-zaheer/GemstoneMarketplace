@@ -51,7 +51,7 @@ const RevenueTrendChart = () => {
   ];
 
   return (
-    <div className="bg-transparent pb-12 pt-4 px-4 rounded-xl w-full  md:h-[37rem] relative">
+    <div className="bg-card !border-purple-700 pb-12 pt-4 px-4 rounded-xl w-full  md:h-[37rem] relative">
       <div className="absolute top-0 left-8 flex md:justify-end  justify-center mt-4">
         <DropdownMenuRadioGroupDemo
           ddText={allMonths[+month - 1]}
@@ -74,7 +74,7 @@ const RevenueTrendChart = () => {
           setStateValue={setMonth}
         />
       </div>
-      <h2 className="bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4]  animate-gradient text-transparent bg-clip-text lg:text-3xl text-xl font-semibold mb-4 text-center">
+      <h2 className="text-primary    lg:text-3xl text-xl font-semibold mb-4 text-center">
         {finalValue == "Revenue" ? "Revenue Trend" : "Sales Trend"}
       </h2>
       <div className="absolute top-0 right-4 flex md:justify-end  justify-center mt-4">
@@ -89,31 +89,24 @@ const RevenueTrendChart = () => {
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
           
-          <defs>
-            <linearGradient id="lineGradient" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stopColor="#00E8FC" />
-              <stop offset="50%" stopColor="#D400A5" />
-              <stop offset="100%" stopColor="#6A00F4" />
-            </linearGradient>
-          </defs>
 
           <CartesianGrid strokeDasharray="3 3" stroke="#444" />
-          <XAxis dataKey="day" stroke="#ccc" />
-          <YAxis stroke="#ccc" />
+          <XAxis dataKey="day" stroke="black" />
+          <YAxis stroke="gray" />
           <Tooltip
             contentStyle={{
-              backgroundColor: "#1f2937",
+              backgroundColor: "#d6d4f7",
               border: "none",
               color: "#fff",
             }}
-            labelStyle={{ color: "#ccc" }}
-            itemStyle={{ color: "#fff" }}
+            labelStyle={{ color: "black" }}
+            itemStyle={{ color: "gray" }}
           />
           {data.length > 0 && (
             <Line
               type="monotone"
               dataKey="revenue"
-              stroke="url(#lineGradient)"
+              stroke="#7c3aed"
               strokeWidth={2}
               dot={{ r: 4, fill: "#fff" }}
               activeDot={{ r: 6 }}

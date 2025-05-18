@@ -32,11 +32,11 @@ const UserProfile = async ({ userid }) => {
   const reviews = await getReviews(userid);
   console.log(reviews);
   return (
-    <div className="min-h-content relative top-20 mb-20  pb-8 bg-[#1a1c1ff8]">
-      <div className="flex flex-col md:flex-row gap-[0.06rem] border-b-2 border-gray-600 bg-gradient-to-b from-[#00E8FC] via-[#D400A5] to-[#6A00F4]">
-        <div className="flex flex-col md:w-[40%] bg-[#1a1c1ff8] ">
+    <div className="min-h-content relative top-20 mb-20  pb-8 bg-main">
+      <div className="flex flex-col md:flex-row gap-[0.06rem] bg-primary border-b-2 border-primary">
+        <div className="flex flex-col md:w-[40%] bg-main">
           <div className="flex justify-between my-2 items-center mx-4">
-            <span className="text-gray-200 font-semibold text-4xl m-5">
+            <span className="text-primary font-semibold text-4xl m-5">
               Profile Section
             </span>
             <EditModal user={user} />
@@ -45,36 +45,23 @@ const UserProfile = async ({ userid }) => {
             <div className="w-72">
               <img
                 src={user?.profileImage}
-                className="border rounded-full shadow-lg"
+                className="border border-primary rounded-full shadow-lg"
                 alt=""
               />
-              <span className="flex justify-center text-white font-semibold mt-4  text-3xl">
+              <span className="flex justify-center text-black font-semibold mt-4  text-3xl">
                 {user?.name}
               </span>
-              <span className="flex items-center justify-center text-gray-300 italic text-md leading-tight mt-2 font-medium">
+              <span className="flex items-center justify-center text-gray-800 italic text-md leading-tight mt-2 font-medium">
                 {user?.residenceAddress}
               </span>
-              <span className="flex items-center justify-center text-gray-300 italic text-sm leading-tight mt-2 font-medium">
+              <span className="flex items-center justify-center text-slate-600 italic text-sm leading-tight mt-2 font-medium">
                 {user?.walletAddress}
               </span>
             </div>
-            {/* <div className="flex gap-6 mt-5 ">
-              <div className="flex border gap-1 px-2 items-center border-gray-700 rounded-lg">
-                <span className="w-1 h-1  rounded-full border-4 border-green-500"></span>
-                <span className="text-gray-300">Active: 5</span>
-              </div>
-              <div className="flex border gap-1 px-2 items-center border-gray-700 rounded-lg">
-                <span className="w-1 h-1  rounded-full border-4 border-red-500"></span>
-                <span className="text-gray-300">Inactive: 2</span>
-              </div>
-              <div className="flex border gap-1 px-2 items-center border-gray-700 rounded-lg">
-                <span className="w-1 h-1  rounded-full border-4 border-blue-500"></span>
-                <span className="text-gray-300">Sold: 5</span>
-              </div>
-            </div> */}
+            
           </div>
         </div>
-        <div className="md:w-[60%] bg-[#1a1c1ff8] px-5 min-h-content ">
+        <div className="md:w-[60%] bg-main px-5 min-h-content ">
           <UserGemstones
             user={user}
             gemstones={user?.ownedGemstones}
@@ -87,37 +74,37 @@ const UserProfile = async ({ userid }) => {
           />
         </div>
       </div>
-      <div className="w-[98vw] h-fit bg-[#1D1B24] mt-4 mx-2  overflow-y-hidden rounded-md mb-3">
+      <div className="w-[98vw] h-fit bg-main mt-4 mx-2  overflow-y-hidden rounded-md mb-3">
         <div
-          className={`bg-[#1e20249f] p-4 rounded-md border border-gray-700 ${
+          className={`bg-surface p-4 rounded-md  ${
             reviews ? "w-fit" : "w-full"
           } h-full`}
         >
-          <h3 className="text-3xl font-bold text-white mb-2">Reviews</h3>
+          <h3 className="text-3xl font-bold text-primary mb-2">Reviews</h3>
           {reviews ? (
             <div className="flex items-center mb-2 w-full ">
               {reviews?.map((review, i) => (
                 <div
-                  className="mt-4 bg-[#414848] p-3 rounded-lg border border-gray-700 w-72 h-[460px] mx-2 "
+                  className="mt-4 bg-card p-3 rounded-lg border border-gray-700 w-72 h-[460px] mx-2 "
                   key={i}
                 >
-                  <div className="w-full h-48 ">
+                  <div className="w-full h-48 rounded">
                     <img
                       src={review.Gem.image}
-                      className="w-full h-full"
+                      className="w-full h-full rounded-lg object-cover"
                       alt="Gem Image"
                     />
                   </div>
-                  <div className="text-white font-bold mt-2 border-b">
-                    <p className="bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4] text-transparent bg-clip-text text-2xl font-bold animate-gradient">
+                  <div className="text-gray-900 font-bold mt-2 border-b border-primary">
+                    <p className="text-primary font-semibold text-xl">
                       {review.Gem.name}
                     </p>
                     <p className="text-lg">{review.Gem.price} PKR</p>
                   </div>
-                  <h3 className="text-white font-semibold mt-2 text-lg">
+                  <h3 className="text-gray-700 font-semibold mt-2 text-lg">
                     Reviewed By:
                   </h3>
-                  <h3 className="text-lg font-semibold text-purple-400 mb-2">
+                  <h3 className="text-md font-semibold text-purple-700 italic mb-2">
                     {review.Buyer.name}
                   </h3>
                   <div className="flex items-center mb-2 w-full">
@@ -133,7 +120,7 @@ const UserProfile = async ({ userid }) => {
                       />
                     ))}
                   </div>
-                  <p className="text-gray-300 mb-2 line-clamp-3">
+                  <p className="text-slate-700 mb-2 line-clamp-3">
                     {review.Review.comment}
                   </p>
                 </div>
@@ -141,7 +128,7 @@ const UserProfile = async ({ userid }) => {
             </div>
           ) : (
             <div className="w-full h-48 flex justify-center items-center ">
-              <p className="font-bold text-4xl text-white opacity-80">
+              <p className="font-bold text-4xl text-black opacity-80">
                 No Reviews
               </p>
             </div>

@@ -150,7 +150,7 @@ const Navbar = () => {
             </>
           )}
           <li className="h-16 px-4 flex items-center">
-            <ConnectWalletBtn className="navbar-button btn-primary">
+            <ConnectWalletBtn className="navbar-button !btn-primary">
               Connect Wallet
             </ConnectWalletBtn>
           </li>

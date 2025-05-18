@@ -5,21 +5,19 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 const COLORS = [
-  "#00E8FC", // Cyan (matches from-[#00E8FC])
-  "#D400A5", // Hot Pink (matches via-[#D400A5])
-  "#6A00F4", // Deep Purple (matches to-[#6A00F4])
-  "#5A00C5", // Indigo
-  "#007CF0", // Electric Blue
-  "#FF00C8", // Fuchsia
-  "#B300FF", // Neon Purple
-  "#00FFC3", // Teal
-  "#FF0099", // Magenta
-];
+  "#ddd6fe", // violet-200
+  "#c4b5fd", // violet-300
+  "#a78bfa", // violet-400
+  "#8b5cf6", // violet-500
+  "#7c3aed", // violet-600 (your base color)
+  "#6d28d9", // violet-700
+  "#5b21b6", // violet-800
+  "#4c1d95", // violet-900
+].reverse();
 
 const DonutChart = () => {
-  
-  const [revenue,setRevenue] = useState([])
-  
+  const [revenue, setRevenue] = useState([]);
+
   const data = revenue;
   const renderCustomLabel = ({
     cx,
@@ -50,35 +48,53 @@ const DonutChart = () => {
     );
   };
   const [finalValue, setFinalValue] = useState("Total");
-
-  const fetchData = async ()=>{
-    try{
-      const res = await axios.get( `${process.env.NEXT_PUBLIC_BACKEND_URL}/admin/revByName`)
-      console.log(res.data)
-      setRevenue(res.data)
-    }
-    catch(e){
-    }
-  }
-  useEffect(()=>{
-    fetchData()
-  },[])
-
+  const fetchData = async () => {
+    try {
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/admin/revByName`
+      );
+      const temp = res.data;
+      const getBaseGemName = (str) => {
+        const name = str.toLowerCase().trim();
+        if (name.includes("emerald")) return "emerald";
+        if (name.includes("opal")) return "opal";
+        if (name.includes("ruby")) return "ruby";
+        if (name.includes("diamond")) return "diamond";
+        if (name.includes("sapphire")) return "sapphire"; // fixed typo: Saphhire
+        return name;
+      };
+      // Grouping and summing values
+      const groupedData = temp.reduce((acc, item) => {
+        const baseName = getBaseGemName(item.name);
+        acc[baseName] = (acc[baseName] || 0) + item.value;
+        return acc;
+      }, {});
+      // Convert back to array format
+      const result = Object.entries(groupedData).map(([name, value]) => ({
+        name,
+        value,
+      }));
+      setRevenue(result);
+    } catch (e) {}
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <div>
-      <h2 className="relative bg-gradient-to-r from-[#00E8FC] via-[#D400A5] to-[#6A00F4]  animate-gradient text-transparent bg-clip-text lg:text-2xl text-xl font-semibold mb-4 text-center">
+      <h2 className="relative text-primary lg:text-2xl text-xl font-semibold mb-4 text-center">
         Revenue Per Category
       </h2>
       <div className="top-0 left-8 flex md:justify-center  justify-center mt-4">
-              <DropdownMenuRadioGroupDemo
-                ddText={finalValue}
-                valuesText={["Total", "Average"]}
-                values={["Total", "Average"]}
-                stateValue={finalValue}
-                setStateValue={setFinalValue}
-              />
-            </div>
+        <DropdownMenuRadioGroupDemo
+          ddText={finalValue}
+          valuesText={["Total", "Average"]}
+          values={["Total", "Average"]}
+          stateValue={finalValue}
+          setStateValue={setFinalValue}
+        />
+      </div>
       <div className="w-full flex justify-start items-center mt-4">
         <PieChart width={470} height={180}>
           <Pie

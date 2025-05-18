@@ -16,7 +16,7 @@ const layout = ({ children }) => {
                     <Toaster
                         position="bottom-center"
                         toastOptions={{
-                            style: { background: "#333", color: "white" },
+                            style: { background: "#d6d4f7", color: "black" },
                         }}
                     />
                     {children}
