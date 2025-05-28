@@ -12,7 +12,7 @@ const HeroCard = () => {
     >
       <div className="overflow-hidden w-[90%] h-[280px] mx-auto mt-6 mb-2 rounded-xl">
         <img
-          src={"/Diamond.jpg"}
+          src={"/diamond.jpg"}
           alt="Gemstone"
           className="w-full h-full object-cover rounded-xl hover:scale-105 transition-all duration-300 ease-in-out"
         />
