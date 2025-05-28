@@ -31,7 +31,7 @@ const FormInput = ({
                 // {...field}
                 type="file"
                 className="file:bg-primary file:text-white file:py-1 file:hover:bg-[#7c3aed]/80 file:rounded-md 
-                         file:border-none file:cursor-pointer file:mr-4 
+                         file:border-none border border-gray-500 text-gray-500 file:cursor-pointer file:mr-4 
                          px-1 "
                 placeholder={placeholder}
                 disabled={disabled}

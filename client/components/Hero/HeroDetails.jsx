@@ -8,9 +8,9 @@ const HeroDetails = () => {
     <motion.div
       initial={{ x: -100, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
-      className="flex flex-col max-sm:w-full sm:w-full md:w-full lg:w-2/3 pr-5"
+      className="flex flex-col max-sm:w-full sm:w-full md:w-full lg:w-2/3"
     >
-      <h1 className="text-black text-5xl sm:text-6xl md:text-7xl font-semibold lg:w-11/12 max-sm:text-4xl max-sm:text-center">
+      <h1 className="text-black text-5xl sm:text-6xl md:text-7xl font-semibold lg:w-11/12 max-sm:text-4xl max-lg:text-center">
         Trade{" "}
         <span className="text-[#7c3aed]">
           Gemstones
@@ -18,11 +18,11 @@ const HeroDetails = () => {
         at the Best Prices
       </h1>
 
-      <p className="text-gray-800 mt-4 w-11/12 sm:text-lg md:text-xl font-medium lg:w-10/12 max-sm:text-center">
+      <p className="text-gray-800 mt-4 w-11/12 sm:text-lg md:text-xl font-medium lg:w-10/12 max-lg:text-center">
         Find rare and certified gemstones in seconds. Buy or sell gemstones with ease.
       </p>
 
-      <div className="flex gap-6 mt-8 max-sm:justify-center max-sm:flex-col sm:flex-row">
+      <div className="flex gap-2 my-6 max-lg:justify-center max-sm:flex-col sm:flex-row">
         <Button
           className="px-6 py-6 text-white bg-[#7c3aed] border hover:bg-[#7c3aed]/80 hover:scale-102 hover:text-white transition-all duration-200 ease-in-out font-semibold text-base md:text-lg"
           variant="outline"

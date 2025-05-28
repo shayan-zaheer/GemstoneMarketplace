@@ -174,7 +174,7 @@ const Navbar = () => {
       <AnimatePresence>
         {openMenu && (
           <motion.div
-            className="responsive-menu bg-[#eef2ff] text-[#1f2937] shadow-lg"
+            className="responsive-menu bg-surface opacity-95  text-[#1f2937] shadow-lg"
             initial={{ x: "200%" }}
             animate={{ x: 0 }}
             exit={{ x: "200%" }}
@@ -185,7 +185,7 @@ const Navbar = () => {
                 className="h-16 border-b px-4 flex items-center"
                 onClick={() => setOpenMenu(false)}
               >
-                <Link href="/products" className="responsive-menu-links">
+                <Link href="/products" className="responsive-menu-links ">
                   Products
                 </Link>
               </li>
@@ -212,7 +212,7 @@ const Navbar = () => {
                     >
                       {" "}
                       Cart
-                      <span className="absolute -top-2 -right-4 bg-red-500 text-black text-xs font-bold px-2 py-0.5 rounded-full">
+                      <span className="absolute -top-2 -right-4 bg-primary text-white text-xs font-bold px-2 py-0.5 rounded-full">
                         {cartItemsLength}
                       </span>
                     </Link>

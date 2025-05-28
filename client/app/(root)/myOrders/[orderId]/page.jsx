@@ -77,14 +77,14 @@ const OrderDetailsPage = ({ params }) => {
       setIsMarkingReceived(false);
     }
   };
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const handleReviewSubmit = async () => {
     try {
       if (!rating) {
         toast.error("Please select a rating");
         return;
       }
-
+      setIsSubmitting(true);
       const { data } = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/buy/review/${orderId}`,
         { rating, comment: reviewText },
@@ -106,6 +106,7 @@ const OrderDetailsPage = ({ params }) => {
       console.error(err);
       toast.error(err.response?.data?.message || "Error submitting review");
     }
+    setIsSubmitting(false);
   };
 
   const formatDate = (dateString) => {
@@ -319,11 +320,12 @@ const OrderDetailsPage = ({ params }) => {
                                 value={reviewText}
                                 onChange={(e) => setReviewText(e.target.value)}
                                 placeholder="Share your experience with this purchase..."
-                                className="w-full p-3 rounded bg-surface text-white border border-gray-600 focus:border-blue-500 focus:outline-none placeholder:text-black"
+                                className="w-full p-3 rounded bg-surface text-black border border-gray-600 focus:border-blue-500 focus:outline-none placeholder:text-black resize-none"
                                 rows={5}
                               />
                               <div className="flex gap-3 mt-3">
                                 <button
+                                  disabled={isSubmitting}
                                   onClick={handleReviewSubmit}
                                   className="flex-1 btn-primary text-white font-bold py-2 px-4 rounded"
                                 >
@@ -361,7 +363,7 @@ const OrderDetailsPage = ({ params }) => {
                               />
                             ))}
                           </div>
-                          <p className="text-gray-300 mb-2">
+                          <p className="text-gray-900 mb-2">
                             {order.Review.comment}
                           </p>
                           <p className="text-gray-500 text-sm">
